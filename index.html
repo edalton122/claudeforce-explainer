@@ -12,10 +12,10 @@
       theme: {
         extend: {
           colors: {
-            sf: { DEFAULT: '#0176D3', dark: '#032D60', med: '#005FB2', deep: '#003B70', light: '#EFF6FF' },
-            terra: { DEFAULT: '#DA7756', dk: '#B85C3A' },
+            sf:    { DEFAULT:'#0176D3', dark:'#032D60', med:'#005FB2', deep:'#003B70', light:'#EFF6FF' },
+            terra: { DEFAULT:'#DA7756', dk:'#B85C3A' }
           },
-          fontFamily: { sans: ['Inter', 'sans-serif'] }
+          fontFamily: { sans:['Inter','sans-serif'] }
         }
       }
     }
@@ -25,41 +25,105 @@
   <style>
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background: #F4F6F9; }
-    input[type=range] { -webkit-appearance: none; width: 100%; height: 5px; background: #E2E8F0; border-radius: 3px; outline: none; cursor: pointer; }
-    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #0176D3; border: 3px solid white; cursor: pointer; box-shadow: 0 2px 8px rgba(1,118,211,0.4); }
-    .tab-btn.active { background: #0176D3; color: white; box-shadow: 0 4px 14px rgba(1,118,211,0.3); }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-    .obj-body { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
-    .obj-card.open .obj-body { max-height: 400px; }
-    .obj-chevron { transition: transform 0.3s; }
+
+    /* ── range inputs ── */
+    input[type=range] {
+      -webkit-appearance: none; width: 100%; height: 5px;
+      background: #E2E8F0; border-radius: 3px; outline: none; cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+      background: #0176D3; border: 3px solid white; cursor: pointer;
+      box-shadow: 0 2px 8px rgba(1,118,211,0.4);
+    }
+    input[type=range].terra::-webkit-slider-thumb { background: #DA7756; box-shadow: 0 2px 8px rgba(218,119,86,0.4); }
+
+    /* ── arch tabs ── */
+    .tab-btn.active { background:#0176D3; color:white; box-shadow: 0 4px 14px rgba(1,118,211,0.28); }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+
+    /* ── objection accordion ── */
+    .obj-body { max-height:0; overflow:hidden; transition: max-height .4s cubic-bezier(.25,.46,.45,.94); }
+    .obj-card.open .obj-body { max-height:420px; }
+    .obj-chevron { transition: transform .3s; }
     .obj-card.open .obj-chevron { transform: rotate(180deg); }
-    .bar-fill { height: 100%; border-radius: 3px; transition: width 0.55s cubic-bezier(0.25,0.46,0.45,0.94); }
-    #progress-bar { position: fixed; top: 62px; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #0176D3, #DA7756); z-index: 999; transition: width 0.1s linear; }
-    .pitch-top-1::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, #0176D3, #0EA5E9); border-radius: 16px 16px 0 0; }
-    .pitch-top-2::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, #DA7756, #F59E6C); border-radius: 16px 16px 0 0; }
-    .pitch-top-3::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, #16A34A, #22C55E); border-radius: 16px 16px 0 0; }
-    .result-top-a::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, #0176D3, #0EA5E9); border-radius: 16px 16px 0 0; }
-    .result-top-b::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, #DA7756, #F59E6C); border-radius: 16px 16px 0 0; }
+
+    /* ── calc accordion ── */
+    .sub-panel { max-height:0; overflow:hidden; transition: max-height .4s cubic-bezier(.25,.46,.45,.94); }
+    .sub-panel.open { max-height:600px; }
+    .sub-chevron { transition: transform .3s; }
+    .sub-open .sub-chevron { transform: rotate(180deg); }
+
+    /* ── bar fills ── */
+    .bar-fill { height:100%; border-radius:3px; transition: width .55s cubic-bezier(.25,.46,.45,.94); }
+
+    /* ── progress bar ── */
+    #progress-bar { position:fixed; top:62px; left:0; height:3px; width:0%;
+      background:linear-gradient(90deg,#0176D3,#DA7756); z-index:999; transition:width .1s linear; }
+
+    /* ── pitch card accent bars ── */
+    .pitch-top-1::before { content:''; position:absolute; top:0; left:0; right:0; height:4px;
+      background:linear-gradient(90deg,#0176D3,#0EA5E9); border-radius:16px 16px 0 0; }
+    .pitch-top-2::before { content:''; position:absolute; top:0; left:0; right:0; height:4px;
+      background:linear-gradient(90deg,#DA7756,#F59E6C); border-radius:16px 16px 0 0; }
+    .pitch-top-3::before { content:''; position:absolute; top:0; left:0; right:0; height:4px;
+      background:linear-gradient(90deg,#16A34A,#22C55E); border-radius:16px 16px 0 0; }
+    .result-top-a::before { content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,#0176D3,#0EA5E9); border-radius:16px 16px 0 0; }
+    .result-top-b::before { content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,#DA7756,#F59E6C); border-radius:16px 16px 0 0; }
+
+    /* ── action cheat sheet drawer ── */
+    #cheat-overlay { position:fixed; inset:0; background:rgba(0,0,0,.4);
+      z-index:9998; display:none; opacity:0; transition: opacity .25s; }
+    #cheat-overlay.visible { display:block; opacity:1; }
+    #cheat-drawer { position:fixed; top:0; right:0; height:100%; width:min(480px,100vw);
+      background:white; z-index:9999; transform:translateX(100%);
+      transition: transform .3s cubic-bezier(.25,.46,.45,.94);
+      overflow-y:auto; box-shadow:-8px 0 40px rgba(0,0,0,.18); }
+    #cheat-drawer.open { transform:translateX(0); }
+
+    /* ── select style ── */
+    select { -webkit-appearance: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; background-size: 18px; }
   </style>
 </head>
 <body class="min-h-screen">
 
-<!-- ════════════════════════════════════
-     TOP NAV
-════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════════
+     FIXED NAV
+═══════════════════════════════════════════════════════════════ -->
 <nav class="fixed top-0 left-0 right-0 z-50 bg-white/97 backdrop-blur-xl border-b border-slate-200 shadow-sm" style="height:62px;">
   <div class="max-w-[1400px] mx-auto px-6 h-full flex items-center justify-between">
+
+    <!-- Logo badge with INLINE SVGs -->
     <div class="flex items-center gap-3">
       <div class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
-        <img src="salesforce-logo.png" alt="Salesforce" class="h-7 w-auto object-contain rounded">
-        <div class="w-px h-5 bg-slate-200"></div>
-        <img src="claude-logo.png" alt="Claude" class="h-6 w-auto object-contain rounded">
-        <div class="w-px h-5 bg-slate-200"></div>
-        <span class="text-[13px] font-extrabold text-sf-dark tracking-tight">AE Strategic Enablement Hub</span>
+        <!-- Salesforce cloud SVG -->
+        <svg viewBox="0 0 56 36" class="h-7 w-auto flex-shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M23 5.5a10 10 0 0 1 17.5 3A8 8 0 0 1 52 16.5 8 8 0 0 1 44 24.5H14A10 10 0 0 1 4 14.5 10 10 0 0 1 14 4.5a9.9 9.9 0 0 1 9 1z" fill="#0176D3"/>
+          <circle cx="40" cy="27.5" r="8" fill="#0176D3"/>
+          <circle cx="14" cy="27.5" r="6" fill="#0176D3"/>
+          <rect x="8" y="23.5" width="36" height="8" rx="4" fill="#0176D3"/>
+        </svg>
+
+        <div class="w-px h-5 bg-slate-300"></div>
+
+        <!-- Claude / Anthropic mark -->
+        <svg viewBox="0 0 28 32" class="h-6 w-auto flex-shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 1L1 31h5.2L14 11.6 22.8 31H28L14 1Z" fill="#DA7756"/>
+          <path d="M8.8 20.5h10.4l-5.2-12.5-5.2 12.5Z" fill="#DA7756" opacity=".4"/>
+        </svg>
+
+        <div class="w-px h-5 bg-slate-300"></div>
+        <span class="text-[13px] font-extrabold text-sf-dark tracking-tight whitespace-nowrap">AE Strategic Enablement Hub</span>
       </div>
-      <span class="text-[10.5px] font-black tracking-widest uppercase text-terra-dk bg-orange-50 border border-orange-200 px-2.5 py-1 rounded-md">INTERNAL ONLY</span>
+      <span class="text-[10px] font-black tracking-widest uppercase text-terra-dk bg-orange-50 border border-orange-200 px-2 py-1 rounded-md hidden sm:inline">INTERNAL ONLY</span>
     </div>
+
+    <!-- Nav links -->
     <div class="hidden lg:flex items-center gap-1">
       <button onclick="goTo('thesis')"       class="nav-link text-[12.5px] font-semibold text-slate-500 hover:text-sf hover:bg-sf-light px-3 py-1.5 rounded-lg transition-all">Executive Thesis</button>
       <button onclick="goTo('pitch')"        class="nav-link text-[12.5px] font-semibold text-slate-500 hover:text-sf hover:bg-sf-light px-3 py-1.5 rounded-lg transition-all">30-Sec Pitch</button>
@@ -71,13 +135,13 @@
 </nav>
 <div id="progress-bar"></div>
 
-<!-- ════════════════════════════════════
-     HERO / THESIS  (light canvas bg)
-════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════════
+     HERO / THESIS  ·  light canvas, high-contrast text
+═══════════════════════════════════════════════════════════════ -->
 <section id="thesis" class="bg-[#F4F6F9] pt-[90px] pb-16">
-  <div class="max-w-[1400px] mx-auto px-6">
+  <div class="max-w-[1400px] mx-auto px-6 py-8">
 
-    <!-- ★ THESIS BILLBOARD (dark blue gradient — matches all section banners) ★ -->
+    <!-- ★ BILLBOARD — dark blue gradient matches all section banners ★ -->
     <div class="bg-gradient-to-r from-[#0176D3] via-[#005FB2] to-[#003B70] p-6 md:p-8 rounded-2xl shadow-xl border border-blue-400/30 mb-10">
       <div class="inline-flex items-center gap-2 bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider px-3 py-1 rounded-full shadow-sm mb-3">
         <span>📢</span> OVERARCHING AE THESIS — MASTER THIS FIRST
@@ -94,11 +158,10 @@
       </p>
     </div>
 
-    <!-- ★ HIGH-CONTRAST HERO CONTENT (dark text on light canvas) ★ -->
-    <div class="mb-6 flex items-center gap-4">
-      <img src="claudeforce-logo.jpg" alt="Claudeforce" class="h-14 w-auto object-contain rounded-xl shadow-md">
+    <!-- ★ HIGH-CONTRAST HERO CONTENT on light canvas ★ -->
+    <div class="mb-5 flex items-center gap-4 flex-wrap">
       <span class="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-500 text-xs font-bold tracking-wide px-4 py-1.5 rounded-full shadow-sm">
-        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
         Dreamforce 2026 · AE Strategic Enablement · Not for Customer Distribution
       </span>
     </div>
@@ -111,15 +174,15 @@
     </p>
 
     <div class="flex gap-3 flex-wrap mb-10">
-      <button onclick="goTo('calculator')" class="bg-[#0176D3] text-white font-extrabold text-sm px-7 py-3 rounded-xl border-none cursor-pointer flex items-center gap-2 hover:bg-sf-med hover:-translate-y-0.5 hover:shadow-lg transition-all">
+      <button onclick="goTo('calculator')" class="bg-[#0176D3] text-white font-extrabold text-sm px-7 py-3 rounded-xl flex items-center gap-2 hover:bg-sf-med hover:-translate-y-0.5 hover:shadow-lg transition-all">
         <i data-lucide="calculator" class="w-4 h-4"></i> Open Token Calculator
       </button>
-      <button onclick="goTo('objections')" class="bg-white text-slate-700 font-bold text-sm px-7 py-3 rounded-xl border border-slate-200 cursor-pointer flex items-center gap-2 hover:border-sf hover:text-sf hover:-translate-y-0.5 transition-all shadow-sm">
+      <button onclick="goTo('objections')" class="bg-white text-slate-700 font-bold text-sm px-7 py-3 rounded-xl border border-slate-200 flex items-center gap-2 hover:border-sf hover:text-sf hover:-translate-y-0.5 transition-all shadow-sm">
         <i data-lucide="shield" class="w-4 h-4"></i> Launch Objection Matrix
       </button>
     </div>
 
-    <!-- 4-column metrics (white cards, high contrast) -->
+    <!-- 4-column metrics grid — pure white cards -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all text-center">
         <div class="text-3xl font-black text-[#0176D3] mb-1">95.7%</div>
@@ -142,16 +205,16 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     SECTION 1 — 30-SEC PITCH
-════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 1 — 30-SECOND SELLER PITCH
+═══════════════════════════════════════════════════════════════ -->
 <section id="pitch" class="bg-white border-t border-slate-200">
   <div class="max-w-[1400px] mx-auto px-6 py-14">
 
     <!-- BILLBOARD -->
     <div class="bg-gradient-to-r from-[#0176D3] via-[#005FB2] to-[#003B70] p-6 md:p-8 rounded-2xl shadow-xl border border-blue-400/30 mb-8">
       <div class="inline-flex items-center gap-2 bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider px-3 py-1 rounded-full shadow-sm mb-3">
-        <span>💬</span> EXACT CUSTOMER SCRIPT — 30-SECOND PITCH
+        <span>📢</span> EXACT CUSTOMER SCRIPT — 30-SECOND PITCH
       </div>
       <h2 class="text-xl md:text-2xl font-black text-white mb-2 flex items-center gap-2">
         <i data-lucide="megaphone" class="w-6 h-6 text-amber-400 flex-shrink-0"></i>
@@ -165,14 +228,10 @@
       </p>
     </div>
 
-    <!-- Section label -->
-    <div class="mb-7">
-      <div class="text-xs font-black tracking-widest uppercase text-sf mb-2">Section 1</div>
-      <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">The 30-Second Seller Pitch</h2>
-      <p class="text-slate-500 text-[15px]">Three cards. One per objection stage. Read all three before every Copilot replacement call.</p>
-    </div>
+    <div class="text-xs font-black tracking-widest uppercase text-sf mb-2">Section 1</div>
+    <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">The 30-Second Seller Pitch</h2>
+    <p class="text-slate-500 text-[15px] mb-7">Three cards. One per objection stage. Read all three before every Copilot replacement call.</p>
 
-    <!-- 3-col pitch cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
 
       <div class="pitch-top-1 relative bg-white border border-slate-200 rounded-2xl p-7 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all overflow-hidden">
@@ -181,11 +240,11 @@
         <div class="flex flex-col gap-3">
           <div class="bg-red-50 border border-red-200 rounded-xl p-3.5">
             <div class="text-[10px] font-black text-red-600 uppercase tracking-widest mb-1.5">Copilot</div>
-            <p class="text-[13.5px] text-slate-700 leading-relaxed">Treats your CRM like unstructured text documents. Every query forces it to parse raw spreadsheets — breaking permissions and burning 35,000+ tokens before it can answer anything.</p>
+            <p class="text-[13.5px] text-slate-700 leading-relaxed">Treats your CRM like unstructured text. Every query forces it to parse raw spreadsheets — breaking permissions and burning 35,000+ tokens before answering anything.</p>
           </div>
           <div class="bg-green-50 border border-green-200 rounded-xl p-3.5">
             <div class="text-[10px] font-black text-green-700 uppercase tracking-widest mb-1.5">Claudeforce</div>
-            <p class="text-[13.5px] text-slate-700 leading-relaxed">Arrives with 37 prebuilt sales skills that natively understand Accounts, Opportunities, Contact Roles, and Stage Logic — no retraining or raw data dumps required.</p>
+            <p class="text-[13.5px] text-slate-700 leading-relaxed">Arrives with 37 prebuilt sales skills that natively understand Accounts, Opportunities, Contact Roles, and Stage Logic — no retraining required.</p>
           </div>
         </div>
       </div>
@@ -205,18 +264,18 @@
             <div class="text-[11px] text-slate-500 mt-0.5">tokens/query · Claudeforce</div>
           </div>
         </div>
-        <p class="text-[13px] text-slate-500 leading-relaxed">Claudeforce uses targeted MCP skill contracts — a <strong class="text-slate-800">96% reduction</strong> in token consumption with 7× faster response times.</p>
+        <p class="text-[13px] text-slate-500 leading-relaxed">Claudeforce uses targeted MCP skill contracts — <strong class="text-slate-800">96% fewer tokens</strong> with 7× faster response times.</p>
       </div>
 
       <div class="pitch-top-3 relative bg-white border border-slate-200 rounded-2xl p-7 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all overflow-hidden">
         <div class="inline-block bg-green-50 text-green-700 text-[10.5px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg mb-4">03 · CIO Pitch</div>
         <h3 class="text-[18px] font-black text-slate-900 mb-4">The Cost Control Strategy</h3>
-        <p class="text-[14px] text-slate-600 leading-relaxed mb-4">CIOs fear runaway AI vendor bills. Claudeforce is the answer:</p>
+        <p class="text-[14px] text-slate-600 leading-relaxed mb-4">CIOs fear runaway AI bills. Claudeforce is the answer:</p>
         <div class="flex flex-col gap-2.5">
-          <div class="flex gap-3 items-start text-[13.5px] text-slate-700"><i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i><span><strong>Fixed $0.10 per action</strong> — Finance can model this on a spreadsheet</span></div>
-          <div class="flex gap-3 items-start text-[13.5px] text-slate-700"><i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i><span><strong>Zero third-party model training</strong> — passes InfoSec on first read</span></div>
-          <div class="flex gap-3 items-start text-[13.5px] text-slate-700"><i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i><span><strong>Existing Salesforce permissions enforced</strong> — no new security review</span></div>
-          <div class="flex gap-3 items-start text-[13.5px] text-slate-700"><i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i><span><strong>Zero setup</strong> — 37 skills live on day one, no IT project</span></div>
+          <div class="flex gap-3 items-start text-[13.5px] text-slate-700"><i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i><span><strong>Fixed $0.10 per action</strong> — Finance can model this</span></div>
+          <div class="flex gap-3 items-start text-[13.5px] text-slate-700"><i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i><span><strong>Zero model training</strong> — passes InfoSec first read</span></div>
+          <div class="flex gap-3 items-start text-[13.5px] text-slate-700"><i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i><span><strong>Existing permissions enforced</strong> — no new security review</span></div>
+          <div class="flex gap-3 items-start text-[13.5px] text-slate-700"><i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i><span><strong>Zero setup</strong> — 37 skills live on day one</span></div>
         </div>
       </div>
 
@@ -224,9 +283,9 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════
+<!-- ═══════════════════════════════════════════════════════════════
      SECTION 2 — ARCHITECTURE
-════════════════════════════════════ -->
+═══════════════════════════════════════════════════════════════ -->
 <section id="architecture" class="bg-[#F4F6F9] border-t border-slate-200">
   <div class="max-w-[1400px] mx-auto px-6 py-14">
 
@@ -247,21 +306,18 @@
       </p>
     </div>
 
-    <!-- Section label -->
-    <div class="mb-7">
-      <div class="text-xs font-black tracking-widest uppercase text-sf mb-2">Section 2</div>
-      <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">AIforce vs. Claudeforce Architecture</h2>
-      <p class="text-slate-500 text-[15px]">Three components. Three distinct value propositions. Know all three to win the architecture conversation.</p>
-    </div>
+    <div class="text-xs font-black tracking-widest uppercase text-sf mb-2">Section 2</div>
+    <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">AIforce vs. Claudeforce Architecture</h2>
+    <p class="text-slate-500 text-[15px] mb-7">Three components. Three distinct value propositions. Know all three to win the architecture conversation.</p>
 
     <!-- Tab bar -->
     <div class="flex bg-white border border-slate-200 rounded-xl p-1.5 gap-1.5 mb-6 shadow-sm max-w-2xl">
-      <button class="tab-btn active flex-1 text-[13px] font-bold py-2.5 px-4 rounded-lg text-slate-500 border-none cursor-pointer transition-all" onclick="switchTab(0)">AIforce (The Engine)</button>
-      <button class="tab-btn flex-1 text-[13px] font-bold py-2.5 px-4 rounded-lg text-slate-500 border-none cursor-pointer transition-all" onclick="switchTab(1)">Salesforce in Claude (Beta)</button>
-      <button class="tab-btn flex-1 text-[13px] font-bold py-2.5 px-4 rounded-lg text-slate-500 border-none cursor-pointer transition-all" onclick="switchTab(2)">Claude in Agentforce</button>
+      <button class="tab-btn active flex-1 text-[13px] font-bold py-2.5 px-4 rounded-lg text-slate-500 transition-all" onclick="switchTab(0)">AIforce (The Engine)</button>
+      <button class="tab-btn flex-1 text-[13px] font-bold py-2.5 px-4 rounded-lg text-slate-500 transition-all" onclick="switchTab(1)">Salesforce in Claude</button>
+      <button class="tab-btn flex-1 text-[13px] font-bold py-2.5 px-4 rounded-lg text-slate-500 transition-all" onclick="switchTab(2)">Claude in Agentforce</button>
     </div>
 
-    <!-- Tab 0: AIforce -->
+    <!-- Tab 0 -->
     <div id="atab-0" class="tab-panel active">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm">
@@ -278,13 +334,13 @@
           <div class="grid grid-cols-2 gap-5">
             <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="database" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Core Definition</div><p class="text-[12px] text-slate-500 leading-relaxed">Permission-aware API layer exposing CRM ontology to any authorized AI surface via structured queries.</p></div></div>
             <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="code-2" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Plain English</div><p class="text-[12px] text-slate-500 leading-relaxed">AI asks structured questions instead of parsing your entire CRM as a raw text wall.</p></div></div>
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="trophy" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">AE Advantage</div><p class="text-[12px] text-slate-500 leading-relaxed">Your competitive moat. 25 years of CRM ontology that no Microsoft connector can replicate.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="trophy" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">AE Advantage</div><p class="text-[12px] text-slate-500 leading-relaxed">25 years of CRM ontology that no Microsoft Graph connector can replicate.</p></div></div>
             <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="shield-check" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Technical Spec</div><p class="text-[12px] text-slate-500 leading-relaxed">REST + GraphQL. Row-level security and field encryption enforced at query time.</p></div></div>
           </div>
           <div class="flex flex-wrap gap-2 mt-5 pt-4 border-t border-slate-100">
             <span class="text-[10.5px] font-black text-slate-400 uppercase tracking-widest mr-1">Specs:</span>
-            <span class="text-[11.5px] font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-700">CRM Ontology Aware</span>
-            <span class="text-[11.5px] font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-700">Sharing Rules Enforced</span>
+            <span class="text-[11.5px] font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-700">CRM Ontology</span>
+            <span class="text-[11.5px] font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-700">Sharing Rules</span>
             <span class="text-[11.5px] font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-700">Real-Time API</span>
             <span class="text-[11.5px] font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-700">No RAG Stuffing</span>
           </div>
@@ -292,13 +348,13 @@
       </div>
     </div>
 
-    <!-- Tab 1: Salesforce in Claude -->
+    <!-- Tab 1 -->
     <div id="atab-1" class="tab-panel">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm">
           <div class="inline-block bg-orange-50 text-terra-dk text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-lg mb-4">Salesforce in Claude · Beta</div>
           <h3 class="text-2xl font-black text-slate-900 mb-3">37 Skills. Zero API Setup.</h3>
-          <p class="text-[14.5px] text-slate-600 leading-relaxed mb-5">Working directly inside Claude Desktop or Web, using 37 prebuilt MCP skills to query pipeline metrics without opening browser tabs. Salesforce ships as the MCP server — Claude is the client. 1,500 tokens instead of 35,000.</p>
+          <p class="text-[14.5px] text-slate-600 leading-relaxed mb-5">Working directly inside Claude Desktop or Web, sellers invoke 37 prebuilt MCP skills to query pipeline metrics without opening browser tabs. Salesforce ships as the MCP server — Claude is the client. 1,500 tokens instead of 35,000.</p>
           <div class="bg-orange-50 border border-orange-200 rounded-xl p-4 flex gap-3">
             <i data-lucide="quote" class="w-5 h-5 text-terra flex-shrink-0 mt-0.5"></i>
             <p class="text-[13.5px] font-semibold text-slate-800 leading-relaxed">"Sellers who prefer Claude can manage their CRM directly from their chat workspace — no browser tabs, no logins, no context switching."</p>
@@ -308,12 +364,11 @@
           <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-5">Feature Breakdown</div>
           <div class="grid grid-cols-2 gap-5">
             <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="server" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Core Definition</div><p class="text-[12px] text-slate-500 leading-relaxed">Salesforce = prebuilt MCP server. Claude = MCP client. Natural language triggers structured skill calls.</p></div></div>
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="message-circle" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Plain English</div><p class="text-[12px] text-slate-500 leading-relaxed">"What deals are at risk?" → Claude calls skill → 1,500-token structured answer in plain English. 7× faster.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="message-circle" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Plain English</div><p class="text-[12px] text-slate-500 leading-relaxed">"What deals are at risk?" → Claude calls skill → 1,500-token structured answer. 7× faster.</p></div></div>
             <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="zap" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">AE Advantage</div><p class="text-[12px] text-slate-500 leading-relaxed">Closes "we already have Claude" instantly. Claude without 37 SF skills is just a generic chatbot.</p></div></div>
             <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="git-branch" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Technical Spec</div><p class="text-[12px] text-slate-500 leading-relaxed">MCP Protocol. Works in Claude Desktop + Slack. Zero API plumbing required out of the box.</p></div></div>
           </div>
           <div class="flex flex-wrap gap-2 mt-5 pt-4 border-t border-slate-100">
-            <span class="text-[10.5px] font-black text-slate-400 uppercase tracking-widest mr-1">Specs:</span>
             <span class="text-[11.5px] font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-700">MCP Protocol</span>
             <span class="text-[11.5px] font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-700">37 Sales Skills</span>
             <span class="text-[11.5px] font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-700">1,500 tokens/query</span>
@@ -323,13 +378,13 @@
       </div>
     </div>
 
-    <!-- Tab 2: Claude in Agentforce -->
+    <!-- Tab 2 -->
     <div id="atab-2" class="tab-panel">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm">
           <div class="inline-block bg-green-50 text-green-700 text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-lg mb-4">Claude in Agentforce</div>
           <h3 class="text-2xl font-black text-slate-900 mb-3">Frontier AI. Trust Layer Enforced.</h3>
-          <p class="text-[14.5px] text-slate-600 leading-relaxed mb-5">Claude 3.5/3.7 integrated as the default reasoning engine inside Salesforce Lightning and Agentforce Coworker — with Zero Data Retention enforced via Amazon Bedrock. Enterprise AI, not consumer AI.</p>
+          <p class="text-[14.5px] text-slate-600 leading-relaxed mb-5">Claude 3.5/3.7 integrated as the default reasoning engine inside Salesforce Lightning and Agentforce Coworker — with Zero Data Retention enforced via Amazon Bedrock.</p>
           <div class="bg-green-50 border border-green-200 rounded-xl p-4 flex gap-3">
             <i data-lucide="quote" class="w-5 h-5 text-green-700 flex-shrink-0 mt-0.5"></i>
             <p class="text-[13.5px] font-semibold text-slate-800 leading-relaxed">"Deep, autonomous CRM action execution directly on your Lightning record pages — every move logged, permissioned, and reversible."</p>
@@ -340,11 +395,10 @@
           <div class="grid grid-cols-2 gap-5">
             <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="sparkles" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Core Definition</div><p class="text-[12px] text-slate-500 leading-relaxed">When Agentforce reasons or drafts, Claude 3.5/3.7 Sonnet is the model doing the thinking inside your org.</p></div></div>
             <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="shield" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Plain English</div><p class="text-[12px] text-slate-500 leading-relaxed">Deal-coach agent triggers on a Lightning page. Claude scores deal health, drafts summaries, surfaces next best actions.</p></div></div>
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="lock" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">AE Advantage</div><p class="text-[12px] text-slate-500 leading-relaxed">Demolishes "AI isn't safe." ZDR means customer data is never retained, logged, or used for model training.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="lock" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">AE Advantage</div><p class="text-[12px] text-slate-500 leading-relaxed">Demolishes "AI isn't safe." ZDR means customer data is never retained or used for model training.</p></div></div>
             <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="cloud" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Technical Spec</div><p class="text-[12px] text-slate-500 leading-relaxed">Amazon Bedrock ZDR. Einstein Trust Layer. Claude 3.5 + 3.7 Sonnet. Stateless. Full audit logging.</p></div></div>
           </div>
           <div class="flex flex-wrap gap-2 mt-5 pt-4 border-t border-slate-100">
-            <span class="text-[10.5px] font-black text-slate-400 uppercase tracking-widest mr-1">Specs:</span>
             <span class="text-[11.5px] font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-700">Bedrock ZDR</span>
             <span class="text-[11.5px] font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-700">Claude 3.5 / 3.7</span>
             <span class="text-[11.5px] font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg text-slate-700">Einstein Trust Layer</span>
@@ -357,9 +411,9 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     SECTION 3 — CALCULATOR
-════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 3 — MULTI-TIERED CALCULATOR
+═══════════════════════════════════════════════════════════════ -->
 <section id="calculator" class="bg-white border-t border-slate-200">
   <div class="max-w-[1400px] mx-auto px-6 py-14">
 
@@ -373,75 +427,178 @@
         Why We Built This Calculator &amp; How to Use It
       </h2>
       <div class="text-base md:text-lg font-bold text-white border-l-4 border-amber-400 pl-4 py-2 my-3 leading-relaxed bg-white/10 rounded-r-lg p-3">
-        "Use this live tool during client meetings to prove to CIOs that <span class="text-amber-300">Copilot's context-stuffing model creates massive, unpredictable token bills</span>, whereas Claudeforce's skill-based architecture delivers guaranteed <span class="text-amber-300">$0.10 unit economics</span>."
+        "Use this live tool during client meetings to prove to CIOs that <span class="text-amber-300">Copilot's context-stuffing creates massive, unpredictable token bills</span>, whereas Claudeforce's skill-based architecture delivers guaranteed <span class="text-amber-300">$0.10 unit economics</span>."
       </div>
       <p class="text-xs text-blue-200 font-medium tracking-wide uppercase flex items-center gap-1 mt-2">
-        <span>💰</span> Turn technical token bloat into a financial cost-containment win.
+        <span>💰</span> Turn technical token bloat into a financial cost-containment win for Finance.
       </p>
     </div>
 
-    <!-- Section label -->
-    <div class="mb-7">
-      <div class="text-xs font-black tracking-widest uppercase text-sf mb-2">Section 3</div>
-      <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">Flex Credit &amp; Token Calculator</h2>
-      <p class="text-slate-500 text-[15px]">Official pricing: $500 / 100K Flex Credits · 20 credits per action = $0.10 · Adjust sliders to match your prospect.</p>
-    </div>
+    <div class="text-xs font-black tracking-widest uppercase text-sf mb-2">Section 3</div>
+    <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">Flex Credit &amp; Token Calculator</h2>
+    <p class="text-slate-500 text-[15px] mb-7">Official rates: $500 / 100K Flex Credits · 20 credits/action = $0.10 · 22 business days/month · Adjust inputs below.</p>
 
-    <div class="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6">
-      <!-- Sliders -->
-      <div class="bg-[#F4F6F9] border border-slate-200 rounded-2xl p-7 shadow-sm self-start">
-        <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-6">Configure Your Team</div>
-        <div class="mb-7">
-          <div class="flex justify-between items-baseline mb-2"><span class="text-[14px] font-bold text-slate-900">Sales Reps</span><span class="text-[22px] font-black text-sf" id="repVal">100</span></div>
-          <input type="range" id="repSlider" min="10" max="1000" value="100" step="10" oninput="calc()">
-          <div class="flex justify-between text-[11px] text-slate-400 mt-1.5"><span>10</span><span>1,000</span></div>
+    <div class="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-6">
+
+      <!-- ── LEFT: INPUT PANEL ── -->
+      <div class="flex flex-col gap-4">
+
+        <!-- LAYER 1: Surface Controls -->
+        <div class="bg-[#F4F6F9] border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-5 flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-sf text-white text-[10px] font-black flex items-center justify-center">1</span>
+            Layer 1 — Surface Controls
+          </div>
+
+          <!-- Team size slider -->
+          <div class="mb-6">
+            <div class="flex justify-between items-baseline mb-2">
+              <span class="text-[14px] font-bold text-slate-900">Sales Team Size</span>
+              <span class="text-[24px] font-black text-sf leading-none" id="repVal">100</span>
+            </div>
+            <input type="range" id="repSlider" min="10" max="1000" value="100" step="10" oninput="onRepChange()">
+            <div class="flex justify-between text-[11px] text-slate-400 mt-1.5"><span>10 reps</span><span>1,000 reps</span></div>
+          </div>
+
+          <!-- Role preset dropdown -->
+          <div>
+            <label class="text-[14px] font-bold text-slate-900 block mb-2">Role Preset</label>
+            <div class="relative">
+              <select id="rolePreset" onchange="onRoleChange()" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-[13.5px] font-semibold text-slate-700 cursor-pointer hover:border-sf transition-all pr-10 focus:outline-none focus:ring-2 focus:ring-sf/30">
+                <option value="15,3,4,5,3">Enterprise AE (15 actions/day)</option>
+                <option value="23,3,5,10,5">Outbound SDR / BDR (23 actions/day)</option>
+                <option value="16,4,4,5,3">Account Manager / CS (16 actions/day)</option>
+                <option value="17,5,5,4,3">Sales Manager / RVP (17 actions/day)</option>
+                <option value="custom">Custom Configuration</option>
+              </select>
+            </div>
+            <div class="mt-3 bg-white border border-slate-200 rounded-xl p-3 text-center">
+              <div class="text-[11px] text-slate-400 uppercase tracking-widest font-bold mb-0.5">Daily Actions / Rep</div>
+              <div class="text-[28px] font-black text-sf leading-none" id="totalActionsDisplay">15</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">based on sub-slider sum</div>
+            </div>
+          </div>
         </div>
-        <div class="mb-7">
-          <div class="flex justify-between items-baseline mb-2"><span class="text-[14px] font-bold text-slate-900">Daily CRM Queries / Rep</span><span class="text-[22px] font-black text-sf" id="qryVal">20</span></div>
-          <input type="range" id="qrySlider" min="5" max="50" value="20" step="1" oninput="calc()">
-          <div class="flex justify-between text-[11px] text-slate-400 mt-1.5"><span>5</span><span>50</span></div>
+
+        <!-- LAYER 2: Sub-Slider Accordion -->
+        <div class="bg-[#F4F6F9] border border-slate-200 rounded-2xl overflow-hidden shadow-sm" id="subAccordionWrap">
+          <button onclick="toggleSubPanel()" class="w-full flex items-center justify-between p-5 hover:bg-slate-100 transition-all" id="subAccordionBtn">
+            <span class="text-[13px] font-black text-sf flex items-center gap-2">
+              <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+              View &amp; Customize Daily Workflow Assumptions
+            </span>
+            <i data-lucide="chevron-down" class="sub-chevron w-5 h-5 text-slate-400 flex-shrink-0"></i>
+          </button>
+
+          <div class="sub-panel" id="subPanel">
+            <div class="px-5 pb-5 flex flex-col gap-5 border-t border-slate-200 pt-5">
+
+              <!-- Sub-slider 1 -->
+              <div>
+                <div class="flex justify-between items-baseline mb-1.5">
+                  <div>
+                    <div class="text-[13px] font-bold text-slate-800">Account Prep &amp; Research</div>
+                    <div class="text-[11px] text-slate-400">Briefing summaries, stakeholder lookups</div>
+                  </div>
+                  <span class="text-[20px] font-black text-sf" id="s1Val">3</span>
+                </div>
+                <input type="range" id="s1" min="0" max="15" value="3" step="1" oninput="onSubChange()">
+              </div>
+
+              <!-- Sub-slider 2 -->
+              <div>
+                <div class="flex justify-between items-baseline mb-1.5">
+                  <div>
+                    <div class="text-[13px] font-bold text-slate-800">Pipeline &amp; Deal Reviews</div>
+                    <div class="text-[11px] text-slate-400">Stage health checks, risk scoring</div>
+                  </div>
+                  <span class="text-[20px] font-black text-sf" id="s2Val">4</span>
+                </div>
+                <input type="range" id="s2" min="0" max="15" value="4" step="1" oninput="onSubChange()">
+              </div>
+
+              <!-- Sub-slider 3 -->
+              <div>
+                <div class="flex justify-between items-baseline mb-1.5">
+                  <div>
+                    <div class="text-[13px] font-bold text-slate-800">CRM Auto-Logging &amp; Notes</div>
+                    <div class="text-[11px] text-slate-400">Call summaries, field updates, task creation</div>
+                  </div>
+                  <span class="text-[20px] font-black text-sf" id="s3Val">5</span>
+                </div>
+                <input type="range" id="s3" min="0" max="15" value="5" step="1" oninput="onSubChange()">
+              </div>
+
+              <!-- Sub-slider 4 -->
+              <div>
+                <div class="flex justify-between items-baseline mb-1.5">
+                  <div>
+                    <div class="text-[13px] font-bold text-slate-800">AI Email &amp; Outreach Drafts</div>
+                    <div class="text-[11px] text-slate-400">Contextual sequences, follow-ups</div>
+                  </div>
+                  <span class="text-[20px] font-black text-sf" id="s4Val">3</span>
+                </div>
+                <input type="range" id="s4" min="0" max="15" value="3" step="1" oninput="onSubChange()">
+              </div>
+
+              <!-- Cheat sheet button -->
+              <button onclick="openCheatSheet()" class="w-full flex items-center justify-center gap-2.5 bg-amber-50 border border-amber-200 text-amber-800 font-bold text-[13px] rounded-xl px-4 py-3 hover:bg-amber-100 transition-all mt-1">
+                <span>💡</span> What Counts as an Action? Open Cheat Sheet
+              </button>
+
+            </div>
+          </div>
         </div>
+
+        <!-- Pricing footnote -->
         <div class="bg-white border border-slate-200 rounded-xl p-4">
           <div class="text-[10.5px] font-black tracking-widest uppercase text-slate-400 mb-2.5">Pricing Math</div>
-          <div class="text-[12px] text-slate-600 leading-[1.9]">
-            Copilot RAG: Reps × Queries × 30d × <strong class="text-slate-800">35,000 tokens</strong><br>
-            Claudeforce MCP: Reps × Queries × 30d × <strong class="text-slate-800">1,500 tokens</strong><br>
-            Action Cost: Reps × Queries × 30d × <strong class="text-slate-800">20 credits @ $0.005</strong>
+          <div class="text-[12px] text-slate-600 leading-[2]">
+            Work Days / Month: <strong class="text-slate-800">22 business days</strong><br>
+            Daily Actions: <strong class="text-slate-800">Sub-slider sum</strong><br>
+            Claudeforce cost: <strong class="text-slate-800">Actions × $0.10/action</strong><br>
+            Copilot RAG tokens: <strong class="text-slate-800">Actions × 35,000</strong><br>
+            Claudeforce tokens: <strong class="text-slate-800">Actions × 1,500</strong>
           </div>
-          <div class="text-[11px] text-slate-400 mt-2">$500 / 100K credits = $0.005/credit · 20 credits/action = $0.10</div>
         </div>
+
       </div>
 
-      <!-- Result cards -->
+      <!-- ── RIGHT: OUTPUT CARDS ── -->
       <div class="flex flex-col gap-4">
-        <!-- Card A: Token Bloat -->
+
+        <!-- Card A: Token bloat -->
         <div class="result-top-a relative bg-white border border-slate-200 rounded-2xl p-6 shadow-sm overflow-hidden">
-          <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-4">Monthly Token Bloat Saved</div>
+          <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-4">Card 1 · Monthly Token Bloat Saved</div>
           <div class="flex gap-5">
             <div class="flex-1">
               <div class="text-[11px] font-black uppercase tracking-wide text-red-600 mb-1">Copilot RAG</div>
-              <div class="text-[28px] font-black text-red-600 leading-none" id="rA-cop">105B</div>
+              <div class="text-[28px] font-black text-red-600 leading-none" id="rA-cop">231M</div>
               <div class="text-[11.5px] text-slate-400 mt-1">tokens / month</div>
               <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="bar-fill bg-red-500" id="bA-cop" style="width:100%;"></div></div>
             </div>
             <div class="w-px bg-slate-100 flex-shrink-0"></div>
             <div class="flex-1">
               <div class="text-[11px] font-black uppercase tracking-wide text-sf mb-1">Claudeforce MCP</div>
-              <div class="text-[28px] font-black text-sf leading-none" id="rA-cf">4.5B</div>
+              <div class="text-[28px] font-black text-sf leading-none" id="rA-cf">9.9M</div>
               <div class="text-[11.5px] text-slate-400 mt-1">tokens / month</div>
               <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="bar-fill bg-sf" id="bA-cf" style="width:4.3%;"></div></div>
             </div>
           </div>
-          <div class="mt-4 inline-flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl px-4 py-2.5 text-[13px] font-bold text-green-700">
-            <i data-lucide="trending-down" class="w-4 h-4"></i><span id="rA-pct">95.7% token reduction</span>
+          <div class="mt-4 flex items-center gap-3 flex-wrap">
+            <div class="inline-flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl px-4 py-2.5 text-[13px] font-bold text-green-700">
+              <i data-lucide="trending-down" class="w-4 h-4"></i><span id="rA-pct">95.7% token reduction</span>
+            </div>
+            <div class="text-[12px] text-slate-400">vs. Copilot context-stuffing</div>
           </div>
         </div>
 
         <!-- Cards B + C side by side -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
           <!-- Card B: Latency -->
           <div class="result-top-b relative bg-white border border-slate-200 rounded-2xl p-6 shadow-sm overflow-hidden">
-            <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-4">Response Latency</div>
+            <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-4">Card 2 · Response Latency</div>
             <div class="flex gap-5">
               <div class="flex-1">
                 <div class="text-[11px] font-black uppercase tracking-wide text-red-600 mb-1">Copilot RAG</div>
@@ -462,25 +619,26 @@
             </div>
           </div>
 
-          <!-- Card C: Cost -->
+          <!-- Card C: Predictable Budget -->
           <div class="relative bg-gradient-to-br from-[#032D60] to-[#043473] rounded-2xl p-6 shadow-sm overflow-hidden">
-            <div class="text-[11px] font-black tracking-widest uppercase text-white/50 mb-3">Predictable Monthly Compute Cost</div>
-            <div class="text-[52px] font-black text-white leading-none mb-2" id="rC-cost">$6,000</div>
-            <div class="text-[12px] text-white/50 mb-4 leading-relaxed" id="rC-sub">100 reps × 20 queries × 30d × 20 credits × $0.005</div>
+            <div class="text-[11px] font-black tracking-widest uppercase text-white/50 mb-2">Card 3 · Predictable Monthly Compute Budget</div>
+            <div class="text-[46px] font-black text-white leading-none mb-1" id="rC-cost">$3,300</div>
+            <div class="text-[12px] text-white/50 mb-1" id="rC-sub">100 reps × 15 actions × 22 days × $0.10</div>
+            <div class="text-[14px] font-bold text-amber-300 mb-4" id="rC-per">= $33 / user / month</div>
             <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-[13px] font-bold text-white/90">
-              <i data-lucide="lock" class="w-4 h-4"></i> Fixed credits — no token consumption spikes
+              <i data-lucide="lock" class="w-4 h-4"></i> Fixed credits — no token spikes
             </div>
           </div>
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     SECTION 4 — OBJECTION MATRIX
-════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 4 — 8-CARD OBJECTION MATRIX
+═══════════════════════════════════════════════════════════════ -->
 <section id="objections" class="bg-[#F4F6F9] border-t border-slate-200">
   <div class="max-w-[1400px] mx-auto px-6 py-14">
 
@@ -501,17 +659,12 @@
       </p>
     </div>
 
-    <!-- Section label -->
-    <div class="mb-7">
-      <div class="text-xs font-black tracking-widest uppercase text-sf mb-2">Section 4</div>
-      <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">8-Card Competitive Objection Matrix</h2>
-      <p class="text-slate-500 text-[15px]">Click any card to reveal the 30-second AE script. Use these verbatim — they are tested talking tracks.</p>
-    </div>
+    <div class="text-xs font-black tracking-widest uppercase text-sf mb-2">Section 4</div>
+    <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">8-Card Competitive Objection Matrix</h2>
+    <p class="text-slate-500 text-[15px] mb-7">Click any card to reveal the 30-second AE script. Use these verbatim — they are tested talking tracks.</p>
 
-    <!-- 4×2 grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-      <!-- 01 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">01</div>
@@ -521,13 +674,12 @@
         <div class="obj-body"><div class="px-5 pb-5">
           <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
             <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-            <p class="text-[13px] text-slate-700 leading-relaxed">Copilot is great for drafting emails in Word, but it <strong>lacks CRM ontology</strong>. It pulls flat data out of Salesforce, breaking permissions and forcing context-stuffing. Active Copilot usage on CRM tasks drops below 10% due to slow response times.</p>
+            <p class="text-[13px] text-slate-700 leading-relaxed">Copilot is great for drafting emails in Word, but it <strong>lacks CRM ontology</strong>. It pulls flat data from Salesforce, breaking permissions and forcing context-stuffing. Active Copilot usage on CRM tasks drops below 10% due to slow response times.</p>
           </div>
           <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Fixed $0.10/action vs. unpredictable token pools</div>
         </div></div>
       </div>
 
-      <!-- 02 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">02</div>
@@ -537,13 +689,12 @@
         <div class="obj-body"><div class="px-5 pb-5">
           <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
             <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-            <p class="text-[13px] text-slate-700 leading-relaxed">Custom connectors require ongoing API maintenance, custom security mappings, and continuous prompt engineering. <strong>Claudeforce delivers 37 prebuilt, native sales skills</strong> out of the box with zero custom code.</p>
+            <p class="text-[13px] text-slate-700 leading-relaxed">Custom connectors require ongoing API maintenance, security mappings, and continuous prompt engineering. <strong>Claudeforce delivers 37 prebuilt, native sales skills</strong> out of the box with zero custom code.</p>
           </div>
           <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Live in days, not quarters — zero IT scope creep</div>
         </div></div>
       </div>
 
-      <!-- 03 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">03</div>
@@ -553,13 +704,12 @@
         <div class="obj-body"><div class="px-5 pb-5">
           <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
             <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-            <p class="text-[13px] text-slate-700 leading-relaxed">No. All queries process through the <strong>Salesforce Trust Boundary via Amazon Bedrock</strong> under Zero Data Retention. Your customer data is never retained or used to train third-party models.</p>
+            <p class="text-[13px] text-slate-700 leading-relaxed">No. All queries process through the <strong>Salesforce Trust Boundary via Amazon Bedrock</strong> under Zero Data Retention. Customer data is never retained or used to train third-party models.</p>
           </div>
           <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: No new vendor risk assessment required</div>
         </div></div>
       </div>
 
-      <!-- 04 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">04</div>
@@ -569,13 +719,12 @@
         <div class="obj-body"><div class="px-5 pb-5">
           <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
             <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-            <p class="text-[13px] text-slate-700 leading-relaxed">Flat licenses force you to pay for unused seats. <strong>Flex Credits provide consumption predictability</strong> — you only pay $0.10 per standard executed action, eliminating waste. Finance can audit by user, workflow, and department.</p>
+            <p class="text-[13px] text-slate-700 leading-relaxed">Flat licenses force you to pay for unused seats. <strong>Flex Credits provide consumption predictability</strong> — you only pay $0.10 per executed action. Finance can audit by user, workflow, and department.</p>
           </div>
           <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Auditable per-action cost vs. opaque per-seat waste</div>
         </div></div>
       </div>
 
-      <!-- 05 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">05</div>
@@ -585,13 +734,12 @@
         <div class="obj-body"><div class="px-5 pb-5">
           <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
             <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-            <p class="text-[13px] text-slate-700 leading-relaxed">With AIforce, sellers don't have to switch tools. They can invoke Salesforce skills directly inside <strong>Claude CoWork or Slack</strong>, or work natively in Lightning. No new login. No new app. No change management.</p>
+            <p class="text-[13px] text-slate-700 leading-relaxed">With AIforce, sellers don't switch tools. They invoke Salesforce skills directly inside <strong>Claude CoWork or Slack</strong>, or work natively in Lightning. No new login. No new app. No change management.</p>
           </div>
-          <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: No new app — AI added to existing workflow</div>
+          <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: AI added to existing workflow — no new app</div>
         </div></div>
       </div>
 
-      <!-- 06 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">06</div>
@@ -607,7 +755,6 @@
         </div></div>
       </div>
 
-      <!-- 07 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">07</div>
@@ -617,13 +764,12 @@
         <div class="obj-body"><div class="px-5 pb-5">
           <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
             <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-            <p class="text-[13px] text-slate-700 leading-relaxed">Claudeforce <strong>respects your exact Salesforce profile permissions and sharing rules</strong>. High-impact actions can require explicit human-in-the-loop approval before committing. Your governance policies transfer directly.</p>
+            <p class="text-[13px] text-slate-700 leading-relaxed">Claudeforce <strong>respects your exact Salesforce permissions and sharing rules</strong>. High-impact actions require explicit human-in-the-loop approval before committing. Your governance policies transfer directly.</p>
           </div>
           <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Existing permissions govern AI — no new security layer</div>
         </div></div>
       </div>
 
-      <!-- 08 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">08</div>
@@ -633,7 +779,7 @@
         <div class="obj-body"><div class="px-5 pb-5">
           <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
             <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-            <p class="text-[13px] text-slate-700 leading-relaxed">Generic LLM connectors will always rely on <strong>context window retrieval (RAG)</strong>. Only native Claudeforce skills understand Salesforce schema logic at the database level, ensuring 7× faster speeds and zero credit waste. RAG is the ceiling — MCP skills are the floor.</p>
+            <p class="text-[13px] text-slate-700 leading-relaxed">Generic LLM connectors always rely on <strong>context window retrieval (RAG)</strong>. Only native Claudeforce skills understand Salesforce schema logic at the database level — ensuring 7× faster speeds. RAG is the ceiling. MCP skills are the floor.</p>
           </div>
           <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Different architecture — RAG will never match native MCP</div>
         </div></div>
@@ -657,38 +803,158 @@
   </div>
 </section>
 
-<!-- Footer -->
+<!-- ═══════════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════════ -->
 <div class="bg-[#032D60] py-6 px-6">
   <div class="max-w-[1400px] mx-auto flex items-center justify-between flex-wrap gap-4">
     <div class="flex items-center gap-3">
-      <img src="salesforce-logo.png" alt="Salesforce" class="h-7 w-auto object-contain opacity-80 rounded">
+      <svg viewBox="0 0 56 36" class="h-7 w-auto flex-shrink-0 opacity-70" fill="none">
+        <path d="M23 5.5a10 10 0 0 1 17.5 3A8 8 0 0 1 52 16.5 8 8 0 0 1 44 24.5H14A10 10 0 0 1 4 14.5 10 10 0 0 1 14 4.5a9.9 9.9 0 0 1 9 1z" fill="white"/>
+        <circle cx="40" cy="27.5" r="8" fill="white"/>
+        <circle cx="14" cy="27.5" r="6" fill="white"/>
+        <rect x="8" y="23.5" width="36" height="8" rx="4" fill="white"/>
+      </svg>
       <div class="w-px h-5 bg-white/20"></div>
-      <img src="claude-logo.png" alt="Claude" class="h-6 w-auto object-contain opacity-70 rounded">
-      <span class="text-[14px] font-bold text-white/80 ml-1">Claudeforce AE Battlecard · Strategic Enablement</span>
+      <svg viewBox="0 0 28 32" class="h-6 w-auto flex-shrink-0 opacity-60" fill="none">
+        <path d="M14 1L1 31h5.2L14 11.6 22.8 31H28L14 1Z" fill="white"/>
+      </svg>
+      <span class="text-[14px] font-bold text-white/70 ml-1">Claudeforce AE Battlecard · Strategic Enablement</span>
     </div>
     <div class="text-[12px] text-white/35">Internal Use Only · Not for Customer Distribution · Dreamforce 2026</div>
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     ACTION CHEAT SHEET DRAWER
+═══════════════════════════════════════════════════════════════ -->
+<div id="cheat-overlay" onclick="closeCheatSheet()"></div>
+
+<div id="cheat-drawer">
+  <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-10">
+    <div>
+      <div class="text-[11px] font-black tracking-widest uppercase text-sf mb-0.5">Flex Credit Reference</div>
+      <h3 class="text-[18px] font-black text-slate-900">Action Cheat Sheet</h3>
+    </div>
+    <button onclick="closeCheatSheet()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition-all">
+      <i data-lucide="x" class="w-5 h-5"></i>
+    </button>
+  </div>
+
+  <div class="px-6 py-5">
+
+    <!-- Pricing rule -->
+    <div class="bg-gradient-to-r from-[#0176D3] via-[#005FB2] to-[#003B70] rounded-2xl p-5 mb-6">
+      <div class="text-[11px] font-black uppercase tracking-widest text-blue-200 mb-3">The Golden Rule</div>
+      <div class="flex items-center gap-3 mb-3 flex-wrap">
+        <div class="bg-white/15 rounded-xl px-4 py-2.5 text-center">
+          <div class="text-[24px] font-black text-white">1</div>
+          <div class="text-[10px] text-blue-200 uppercase font-bold">Action</div>
+        </div>
+        <div class="text-white/60 text-xl">=</div>
+        <div class="bg-white/15 rounded-xl px-4 py-2.5 text-center">
+          <div class="text-[24px] font-black text-white">20</div>
+          <div class="text-[10px] text-blue-200 uppercase font-bold">Flex Credits</div>
+        </div>
+        <div class="text-white/60 text-xl">=</div>
+        <div class="bg-amber-400 rounded-xl px-4 py-2.5 text-center">
+          <div class="text-[24px] font-black text-slate-950">$0.10</div>
+          <div class="text-[10px] text-slate-800 uppercase font-bold">Fixed Cost</div>
+        </div>
+      </div>
+      <p class="text-[13px] text-blue-100 leading-relaxed">$500 per 100,000 Flex Credits · 20 credits = 1 completed action · Cost is always $0.10 regardless of complexity.</p>
+    </div>
+
+    <!-- What IS an action -->
+    <div class="mb-6">
+      <div class="text-[12px] font-black tracking-widest uppercase text-slate-400 mb-3">What Counts as 1 Action ($0.10)</div>
+      <div class="flex flex-col gap-2.5">
+        <div class="flex gap-3 items-start bg-green-50 border border-green-200 rounded-xl p-3.5">
+          <span class="text-green-600 font-black text-[13px] flex-shrink-0">✓</span>
+          <div>
+            <div class="text-[13px] font-bold text-slate-900">Summarize top 5 deals for Account X</div>
+            <div class="text-[11.5px] text-slate-500">1 completed summarization = 1 Action = $0.10</div>
+          </div>
+        </div>
+        <div class="flex gap-3 items-start bg-green-50 border border-green-200 rounded-xl p-3.5">
+          <span class="text-green-600 font-black text-[13px] flex-shrink-0">✓</span>
+          <div>
+            <div class="text-[13px] font-bold text-slate-900">Update close date on Acme opportunity</div>
+            <div class="text-[11.5px] text-slate-500">1 field update = 1 Action = $0.10</div>
+          </div>
+        </div>
+        <div class="flex gap-3 items-start bg-green-50 border border-green-200 rounded-xl p-3.5">
+          <span class="text-green-600 font-black text-[13px] flex-shrink-0">✓</span>
+          <div>
+            <div class="text-[13px] font-bold text-slate-900">Draft follow-up email for a prospect</div>
+            <div class="text-[11.5px] text-slate-500">1 drafted communication = 1 Action = $0.10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What counts as multiple actions -->
+    <div class="mb-6">
+      <div class="text-[12px] font-black tracking-widest uppercase text-slate-400 mb-3">What Counts as Multiple Actions</div>
+      <div class="flex flex-col gap-2.5">
+        <div class="flex gap-3 items-start bg-amber-50 border border-amber-200 rounded-xl p-3.5">
+          <span class="text-amber-600 font-black text-[13px] flex-shrink-0">→</span>
+          <div>
+            <div class="text-[13px] font-bold text-slate-900">Summarize account + create follow-up task + update stage</div>
+            <div class="text-[11.5px] text-slate-500">3 discrete tasks = 3 Actions = $0.30</div>
+          </div>
+        </div>
+        <div class="flex gap-3 items-start bg-amber-50 border border-amber-200 rounded-xl p-3.5">
+          <span class="text-amber-600 font-black text-[13px] flex-shrink-0">→</span>
+          <div>
+            <div class="text-[13px] font-bold text-slate-900">Build pipeline forecast + send exec summary + flag 3 at-risk deals</div>
+            <div class="text-[11.5px] text-slate-500">3 discrete outputs = 3 Actions = $0.30</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Free reads -->
+    <div class="mb-6">
+      <div class="text-[12px] font-black tracking-widest uppercase text-slate-400 mb-3">What Costs $0.00 (Read-Only)</div>
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col gap-2">
+        <div class="flex gap-2.5 items-center text-[13px] text-slate-700"><i data-lucide="eye" class="w-4 h-4 text-slate-400 flex-shrink-0"></i> Viewing a record (no AI reasoning triggered)</div>
+        <div class="flex gap-2.5 items-center text-[13px] text-slate-700"><i data-lucide="eye" class="w-4 h-4 text-slate-400 flex-shrink-0"></i> Dashboard navigation / standard report views</div>
+        <div class="flex gap-2.5 items-center text-[13px] text-slate-700"><i data-lucide="eye" class="w-4 h-4 text-slate-400 flex-shrink-0"></i> Manual data entry (no AI action invoked)</div>
+      </div>
+    </div>
+
+    <!-- AE tip -->
+    <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5">
+      <div class="text-[11px] font-black tracking-widest uppercase text-sf mb-2">AE Tip for CIO Meetings</div>
+      <p class="text-[13.5px] text-slate-700 leading-relaxed">Compare this to Copilot's context-stuffing model where <strong>every single query burns 35,000 tokens</strong> at variable per-token rates. Claudeforce's $0.10 flat action cost is the same whether the task takes 1 second or 10 seconds.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════════════════ -->
 <script>
   lucide.createIcons();
 
-  // Progress bar + nav active state
+  // ── nav scroll & progress ──────────────────────────────────
+  const NAV_IDS = ['thesis','pitch','architecture','calculator','objections'];
   window.addEventListener('scroll', () => {
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     document.getElementById('progress-bar').style.width = pct + '%';
-    const ids = ['thesis','pitch','architecture','calculator','objections'];
     let cur = '';
-    ids.forEach(id => {
+    NAV_IDS.forEach(id => {
       const el = document.getElementById(id);
       if (el && window.scrollY >= el.offsetTop - 80) cur = id;
     });
-    document.querySelectorAll('.nav-link').forEach((l,i) => {
-      const active = ids[i] === cur;
-      l.classList.toggle('text-sf', active);
-      l.classList.toggle('bg-sf-light', active);
-      l.classList.toggle('font-bold', active);
-      l.classList.toggle('text-slate-500', !active);
+    document.querySelectorAll('.nav-link').forEach((l, i) => {
+      const on = NAV_IDS[i] === cur;
+      l.classList.toggle('text-sf', on);
+      l.classList.toggle('bg-sf-light', on);
+      l.classList.toggle('font-bold', on);
+      l.classList.toggle('text-slate-500', !on);
     });
   });
 
@@ -696,14 +962,14 @@
     document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // Architecture tabs
+  // ── architecture tabs ──────────────────────────────────────
   function switchTab(idx) {
-    document.querySelectorAll('.tab-btn').forEach((b,i)   => b.classList.toggle('active', i === idx));
-    document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i === idx));
+    document.querySelectorAll('.tab-btn').forEach((b, i)   => b.classList.toggle('active', i === idx));
+    document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
     lucide.createIcons();
   }
 
-  // Objection accordion — one open at a time
+  // ── objection accordion (one open at a time) ──────────────
   function toggleObj(card) {
     const wasOpen = card.classList.contains('open');
     document.querySelectorAll('.obj-card').forEach(c => c.classList.remove('open'));
@@ -711,38 +977,127 @@
     lucide.createIcons();
   }
 
-  // Calculator
+  // ── sub-slider accordion ──────────────────────────────────
+  let subOpen = false;
+  function toggleSubPanel() {
+    subOpen = !subOpen;
+    document.getElementById('subPanel').classList.toggle('open', subOpen);
+    document.getElementById('subAccordionBtn').classList.toggle('sub-open', subOpen);
+    lucide.createIcons();
+  }
+
+  // ── role preset ───────────────────────────────────────────
+  const PRESETS = {
+    '15,3,4,5,3':  [3, 4, 5, 3],
+    '23,3,5,10,5': [3, 5, 10, 5],
+    '16,4,4,5,3':  [4, 4, 5, 3],
+    '17,5,5,4,3':  [5, 5, 4, 3],
+  };
+
+  function onRoleChange() {
+    const v = document.getElementById('rolePreset').value;
+    if (v === 'custom') { calc(); return; }
+    const vals = PRESETS[v];
+    ['s1','s2','s3','s4'].forEach((id, i) => { document.getElementById(id).value = vals[i]; });
+    updateSubDisplays();
+    calc();
+  }
+
+  function onSubChange() {
+    // Switch dropdown to Custom if user manually drags
+    const roleEl = document.getElementById('rolePreset');
+    const currentVals = [
+      +document.getElementById('s1').value,
+      +document.getElementById('s2').value,
+      +document.getElementById('s3').value,
+      +document.getElementById('s4').value,
+    ];
+    let matched = false;
+    for (const [key, vals] of Object.entries(PRESETS)) {
+      if (vals.every((v, i) => v === currentVals[i])) { matched = true; break; }
+    }
+    if (!matched) roleEl.value = 'custom';
+    updateSubDisplays();
+    calc();
+  }
+
+  function onRepChange() {
+    document.getElementById('repVal').textContent = (+document.getElementById('repSlider').value).toLocaleString();
+    calc();
+  }
+
+  function updateSubDisplays() {
+    ['s1','s2','s3','s4'].forEach(id => {
+      document.getElementById(id + 'Val').textContent = document.getElementById(id).value;
+    });
+  }
+
+  // ── calculator math ───────────────────────────────────────
   function fmt(n) {
     if (n >= 1e12) return (n/1e12).toFixed(1)+'T';
-    if (n >= 1e9)  return (n/1e9).toFixed(1)+'B';
+    if (n >= 1e9)  return (n/1e9).toFixed(2)+'B';
     if (n >= 1e6)  return (n/1e6).toFixed(1)+'M';
     if (n >= 1e3)  return (n/1e3).toFixed(1)+'K';
     return n.toLocaleString();
   }
   function fmtD(n) {
-    if (n >= 1e6) return '$'+(n/1e6).toFixed(2)+'M';
-    if (n >= 1e3) return '$'+(n/1e3).toFixed(0)+'K';
+    if (n >= 1e6)  return '$'+(n/1e6).toFixed(2)+'M';
+    if (n >= 1e3)  return '$'+(n/1e3).toFixed(0)+'K';
     return '$'+n.toLocaleString();
   }
 
   function calc() {
-    const reps = parseInt(document.getElementById('repSlider').value);
-    const qpd  = parseInt(document.getElementById('qrySlider').value);
-    document.getElementById('repVal').textContent = reps.toLocaleString();
-    document.getElementById('qryVal').textContent = qpd;
-    const ragTok = reps * qpd * 30 * 35000;
-    const mcpTok = reps * qpd * 30 * 1500;
-    const pct    = ((ragTok - mcpTok) / ragTok * 100).toFixed(1);
-    const barPct = (mcpTok / ragTok * 100).toFixed(2);
-    const cost   = reps * qpd * 30 * 20 * 0.005;
-    document.getElementById('rA-cop').textContent  = fmt(ragTok);
-    document.getElementById('rA-cf').textContent   = fmt(mcpTok);
-    document.getElementById('rA-pct').textContent  = pct + '% token reduction';
-    document.getElementById('bA-cf').style.width   = barPct + '%';
+    const reps     = +document.getElementById('repSlider').value;
+    const daily    = +document.getElementById('s1').value + +document.getElementById('s2').value
+                   + +document.getElementById('s3').value + +document.getElementById('s4').value;
+    const WORK_DAYS = 22;
+    const monthlyActions = reps * daily * WORK_DAYS;
+
+    const ragTok   = monthlyActions * 35000;
+    const mcpTok   = monthlyActions * 1500;
+    const pct      = ragTok > 0 ? ((ragTok - mcpTok) / ragTok * 100).toFixed(1) : '0.0';
+    const barPct   = ragTok > 0 ? (mcpTok / ragTok * 100).toFixed(3) : 0;
+    const cost     = monthlyActions * 0.10;
+    const perUser  = reps > 0 ? (cost / reps).toFixed(0) : 0;
+
+    // Display daily action total
+    document.getElementById('totalActionsDisplay').textContent = daily;
+
+    // Card A
+    document.getElementById('rA-cop').textContent = fmt(ragTok);
+    document.getElementById('rA-cf').textContent  = fmt(mcpTok);
+    document.getElementById('rA-pct').textContent = pct + '% token reduction';
+    document.getElementById('bA-cf').style.width  = Math.max(Number(barPct), 0.5) + '%';
+
+    // Card C
     document.getElementById('rC-cost').textContent = fmtD(cost);
-    document.getElementById('rC-sub').textContent  = `${reps.toLocaleString()} reps × ${qpd} queries × 30d × 20 credits × $0.005`;
+    document.getElementById('rC-sub').textContent  =
+      `${reps.toLocaleString()} reps × ${daily} actions × ${WORK_DAYS} days × $0.10`;
+    document.getElementById('rC-per').textContent  = `= $${perUser} / user / month`;
   }
 
+  // ── cheat sheet drawer ─────────────────────────────────────
+  function openCheatSheet() {
+    const overlay = document.getElementById('cheat-overlay');
+    const drawer  = document.getElementById('cheat-drawer');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => {
+      overlay.style.opacity = '1';
+      drawer.classList.add('open');
+    });
+    document.body.style.overflow = 'hidden';
+    lucide.createIcons();
+  }
+  function closeCheatSheet() {
+    const overlay = document.getElementById('cheat-overlay');
+    const drawer  = document.getElementById('cheat-drawer');
+    overlay.style.opacity = '0';
+    drawer.classList.remove('open');
+    setTimeout(() => { overlay.style.display = 'none'; }, 250);
+    document.body.style.overflow = '';
+  }
+
+  // ── init ───────────────────────────────────────────────────
   calc();
 </script>
 </body>
