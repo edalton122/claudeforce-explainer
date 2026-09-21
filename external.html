@@ -246,8 +246,11 @@
 
 <!-- Nav -->
 <nav id="topnav">
-  <a href="#" id="nav-logo">
-    <div class="nav-brand">Claudeforce<span>™</span></div>
+  <a href="#" id="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <img src="salesforce-logo.png" alt="Salesforce" style="height:32px;width:auto;object-fit:contain;border-radius:4px;">
+    <span style="width:1px;height:22px;background:#E2E8F0;display:inline-block;"></span>
+    <img src="claude-logo.png" alt="Claude" style="height:28px;width:auto;object-fit:contain;border-radius:4px;">
+    <span style="font-size:14px;font-weight:800;color:#032D60;letter-spacing:-0.01em;margin-left:2px;">Claudeforce</span>
   </a>
   <div id="topnav-links">
     <button class="tn-link" onclick="scrollTo('what-is')">What Is It</button>
@@ -266,11 +269,14 @@
 <section id="hero">
   <div class="hero-dots"></div>
   <div class="hero-glow"></div>
-  <div class="hero-inner">
-    <div class="hero-badge">
-      <span class="badge-dot"></span>
-      Announced August 2026 · Salesforce + Anthropic
-    </div>
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Announced August 2026 · Salesforce + Anthropic
+      </div>
+      <div style="margin-bottom:28px;">
+        <img src="claudeforce-logo.jpg" alt="Claudeforce" style="height:72px;width:auto;object-fit:contain;border-radius:12px;box-shadow:0 6px 24px rgba(1,118,211,0.18);">
+      </div>
     <h1 class="hero-title">
       The world's #1 CRM.<br>
       Now powered by <span class="highlight">Claude AI.</span>
@@ -288,15 +294,9 @@
       </button>
     </div>
     <div class="hero-logos">
-      <div class="logo-chip">
-        <span class="dot" style="background:#0176D3;"></span>
-        Salesforce
-      </div>
+      <img src="salesforce-logo.png" alt="Salesforce" style="height:40px;width:auto;object-fit:contain;background:white;padding:6px 12px;border:1px solid #E2E8F0;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
       <div class="logo-plus">+</div>
-      <div class="logo-chip">
-        <span class="dot" style="background:#DA7756;"></span>
-        Anthropic · Claude
-      </div>
+      <img src="claude-logo.png" alt="Claude" style="height:40px;width:auto;object-fit:contain;background:white;padding:6px 12px;border:1px solid #E2E8F0;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
     </div>
   </div>
 </section>
@@ -554,7 +554,11 @@
 <!-- Footer -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand">Claudeforce — Salesforce × Anthropic</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <img src="salesforce-logo.png" alt="Salesforce" style="height:26px;width:auto;object-fit:contain;opacity:0.8;border-radius:3px;">
+      <span style="width:1px;height:18px;background:rgba(255,255,255,0.2);display:inline-block;"></span>
+      <img src="claude-logo.png" alt="Claude" style="height:22px;width:auto;object-fit:contain;opacity:0.75;border-radius:3px;">
+    </div>
     <div class="footer-links">
       <a href="https://www.salesforce.com/ap/news/press-releases/2026/08/27/ph-salesforce-and-anthropic-announce-claudeforce-the-1-ai-meets-the-1-ai-crm/" target="_blank">Official Press Release</a>
       <a href="https://www.salesforceben.com/salesforce-and-anthropic-announce-claudeforce-in-q2-27-earnings/" target="_blank">Salesforce Ben Analysis</a>
