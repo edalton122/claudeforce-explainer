@@ -34,24 +34,22 @@
     .obj-card.open .obj-body { max-height: 400px; }
     .obj-chevron { transition: transform 0.3s; }
     .obj-card.open .obj-chevron { transform: rotate(180deg); }
-    .metric-bar { height: 100%; border-radius: 3px; transition: width 0.55s cubic-bezier(0.25,0.46,0.45,0.94); }
-    #progress-bar { position: fixed; top: 60px; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #0176D3, #DA7756); z-index: 999; transition: width 0.1s linear; }
-    .hero-bg { background: linear-gradient(135deg, #0176D3 0%, #005FB2 50%, #003B70 100%); }
-    .grid-overlay { background-image: linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px); background-size: 52px 52px; }
-    .pitch-card-1::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, #0176D3, #0EA5E9); border-radius: 16px 16px 0 0; }
-    .pitch-card-2::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, #DA7756, #F59E6C); border-radius: 16px 16px 0 0; }
-    .pitch-card-3::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, #16A34A, #22C55E); border-radius: 16px 16px 0 0; }
-    .result-a::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, #0176D3, #0EA5E9); border-radius: 16px 16px 0 0; }
-    .result-b::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, #DA7756, #F59E6C); border-radius: 16px 16px 0 0; }
+    .bar-fill { height: 100%; border-radius: 3px; transition: width 0.55s cubic-bezier(0.25,0.46,0.45,0.94); }
+    #progress-bar { position: fixed; top: 62px; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #0176D3, #DA7756); z-index: 999; transition: width 0.1s linear; }
+    .pitch-top-1::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, #0176D3, #0EA5E9); border-radius: 16px 16px 0 0; }
+    .pitch-top-2::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, #DA7756, #F59E6C); border-radius: 16px 16px 0 0; }
+    .pitch-top-3::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background: linear-gradient(90deg, #16A34A, #22C55E); border-radius: 16px 16px 0 0; }
+    .result-top-a::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, #0176D3, #0EA5E9); border-radius: 16px 16px 0 0; }
+    .result-top-b::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, #DA7756, #F59E6C); border-radius: 16px 16px 0 0; }
   </style>
 </head>
 <body class="min-h-screen">
 
-<!-- ████ TOPNAV ████ -->
+<!-- ════════════════════════════════════
+     TOP NAV
+════════════════════════════════════ -->
 <nav class="fixed top-0 left-0 right-0 z-50 bg-white/97 backdrop-blur-xl border-b border-slate-200 shadow-sm" style="height:62px;">
   <div class="max-w-[1400px] mx-auto px-6 h-full flex items-center justify-between">
-
-    <!-- Logo -->
     <div class="flex items-center gap-3">
       <div class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
         <img src="salesforce-logo.png" alt="Salesforce" class="h-7 w-auto object-contain rounded">
@@ -62,26 +60,25 @@
       </div>
       <span class="text-[10.5px] font-black tracking-widest uppercase text-terra-dk bg-orange-50 border border-orange-200 px-2.5 py-1 rounded-md">INTERNAL ONLY</span>
     </div>
-
-    <!-- Nav links -->
     <div class="hidden lg:flex items-center gap-1">
-      <button onclick="goTo('thesis')"      class="nav-link text-[12.5px] font-semibold text-slate-500 hover:text-sf hover:bg-sf-light px-3 py-1.5 rounded-lg transition-all">Executive Thesis</button>
-      <button onclick="goTo('pitch')"       class="nav-link text-[12.5px] font-semibold text-slate-500 hover:text-sf hover:bg-sf-light px-3 py-1.5 rounded-lg transition-all">30-Sec Pitch</button>
+      <button onclick="goTo('thesis')"       class="nav-link text-[12.5px] font-semibold text-slate-500 hover:text-sf hover:bg-sf-light px-3 py-1.5 rounded-lg transition-all">Executive Thesis</button>
+      <button onclick="goTo('pitch')"        class="nav-link text-[12.5px] font-semibold text-slate-500 hover:text-sf hover:bg-sf-light px-3 py-1.5 rounded-lg transition-all">30-Sec Pitch</button>
       <button onclick="goTo('architecture')" class="nav-link text-[12.5px] font-semibold text-slate-500 hover:text-sf hover:bg-sf-light px-3 py-1.5 rounded-lg transition-all">AIforce vs Claudeforce</button>
-      <button onclick="goTo('calculator')"  class="nav-link text-[12.5px] font-semibold text-slate-500 hover:text-sf hover:bg-sf-light px-3 py-1.5 rounded-lg transition-all">Flex Credit Calculator</button>
-      <button onclick="goTo('objections')"  class="nav-link text-[12.5px] font-semibold text-slate-500 hover:text-sf hover:bg-sf-light px-3 py-1.5 rounded-lg transition-all">8-Card Objection Matrix</button>
+      <button onclick="goTo('calculator')"   class="nav-link text-[12.5px] font-semibold text-slate-500 hover:text-sf hover:bg-sf-light px-3 py-1.5 rounded-lg transition-all">Flex Credit Calculator</button>
+      <button onclick="goTo('objections')"   class="nav-link text-[12.5px] font-semibold text-slate-500 hover:text-sf hover:bg-sf-light px-3 py-1.5 rounded-lg transition-all">8-Card Objection Matrix</button>
     </div>
   </div>
 </nav>
 <div id="progress-bar"></div>
 
-<!-- ████ HERO / THESIS ████ -->
-<section id="thesis" class="hero-bg grid-overlay relative overflow-hidden pt-[110px] pb-16">
-  <div class="absolute inset-0 z-0" style="background:radial-gradient(circle at 20% 60%, rgba(255,255,255,0.06) 0%, transparent 55%), radial-gradient(circle at 85% 25%, rgba(218,119,86,0.18) 0%, transparent 50%);"></div>
-  <div class="max-w-[1400px] mx-auto px-6 relative z-10">
+<!-- ════════════════════════════════════
+     HERO / THESIS  (light canvas bg)
+════════════════════════════════════ -->
+<section id="thesis" class="bg-[#F4F6F9] pt-[90px] pb-16">
+  <div class="max-w-[1400px] mx-auto px-6">
 
-    <!-- ★ BILLBOARD PANEL ★ -->
-    <div class="bg-white/10 border border-white/20 rounded-2xl p-6 md:p-8 shadow-xl backdrop-blur-sm mb-10">
+    <!-- ★ THESIS BILLBOARD (dark blue gradient — matches all section banners) ★ -->
+    <div class="bg-gradient-to-r from-[#0176D3] via-[#005FB2] to-[#003B70] p-6 md:p-8 rounded-2xl shadow-xl border border-blue-400/30 mb-10">
       <div class="inline-flex items-center gap-2 bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider px-3 py-1 rounded-full shadow-sm mb-3">
         <span>📢</span> OVERARCHING AE THESIS — MASTER THIS FIRST
       </div>
@@ -89,7 +86,7 @@
         <i data-lucide="target" class="w-6 h-6 text-amber-400 flex-shrink-0"></i>
         The 15-Second Copilot Killer Pitch
       </h2>
-      <div class="text-base md:text-lg font-bold text-blue-50 border-l-4 border-amber-400 pl-4 my-3 leading-relaxed bg-white/5 rounded-r-lg p-3">
+      <div class="text-base md:text-lg font-bold text-white border-l-4 border-amber-400 pl-4 py-2 my-3 leading-relaxed bg-white/10 rounded-r-lg p-3">
         "Copilot acts like a generic temp who has to re-read your entire CRM spreadsheet on every query — wasting thousands of credits and taking 8+ seconds to respond. <span class="text-amber-300">Claudeforce speaks Salesforce natively out of the box</span>, executing tasks in under 1.5 seconds while cutting token costs by 95%."
       </div>
       <p class="text-xs text-blue-200 font-medium tracking-wide uppercase flex items-center gap-1 mt-2">
@@ -97,57 +94,62 @@
       </p>
     </div>
 
-    <!-- Hero content -->
-    <div class="text-center max-w-3xl mx-auto">
-      <div class="mb-5">
-        <img src="claudeforce-logo.jpg" alt="Claudeforce" class="h-16 w-auto object-contain rounded-xl shadow-xl mx-auto" style="box-shadow:0 8px 32px rgba(0,0,0,0.3);">
-      </div>
-      <div class="inline-flex items-center gap-2 bg-white/15 border border-white/25 text-white text-xs font-bold tracking-wide px-4 py-1.5 rounded-full mb-5 backdrop-blur-sm">
-        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+    <!-- ★ HIGH-CONTRAST HERO CONTENT (dark text on light canvas) ★ -->
+    <div class="mb-6 flex items-center gap-4">
+      <img src="claudeforce-logo.jpg" alt="Claudeforce" class="h-14 w-auto object-contain rounded-xl shadow-md">
+      <span class="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-500 text-xs font-bold tracking-wide px-4 py-1.5 rounded-full shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-green-500"></span>
         Dreamforce 2026 · AE Strategic Enablement · Not for Customer Distribution
-      </div>
-      <h1 class="text-4xl md:text-6xl font-black text-white leading-[1.06] tracking-tight mb-4">
-        Defeat the <span class="text-amber-300">Copilot</span> Objection<br>with <span class="text-sky-300">CRM-Native AI</span>
-      </h1>
-      <p class="text-lg text-white/80 leading-relaxed mb-8 max-w-xl mx-auto">The enterprise seller playbook for positioning Claudeforce, AIforce, and predictable Flex Credit unit economics.</p>
-      <div class="flex justify-center gap-3 flex-wrap mb-12">
-        <button onclick="goTo('calculator')" class="bg-white text-sf font-extrabold text-sm px-7 py-3 rounded-xl border-none cursor-pointer flex items-center gap-2 hover:-translate-y-0.5 hover:shadow-xl transition-all">
-          <i data-lucide="calculator" class="w-4 h-4"></i> Open Token Calculator
-        </button>
-        <button onclick="goTo('objections')" class="bg-white/15 text-white font-bold text-sm px-7 py-3 rounded-xl border border-white/30 cursor-pointer flex items-center gap-2 hover:bg-white/25 hover:-translate-y-0.5 transition-all backdrop-blur-sm">
-          <i data-lucide="shield" class="w-4 h-4"></i> Launch Objection Matrix
-        </button>
-      </div>
+      </span>
+    </div>
 
-      <!-- 4-metric bar -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-white/10 border border-white/20 rounded-2xl p-5 backdrop-blur-sm hover:bg-white/18 transition-all">
-          <div class="text-4xl font-black text-white mb-1">95.7%</div>
-          <div class="text-xs text-white/60 leading-tight">Token Reduction vs. Copilot Raw RAG</div>
-        </div>
-        <div class="bg-white/10 border border-white/20 rounded-2xl p-5 backdrop-blur-sm hover:bg-white/18 transition-all">
-          <div class="text-4xl font-black text-white mb-1">37</div>
-          <div class="text-xs text-white/60 leading-tight">Native Prebuilt MCP Sales Skills</div>
-        </div>
-        <div class="bg-white/10 border border-white/20 rounded-2xl p-5 backdrop-blur-sm hover:bg-white/18 transition-all">
-          <div class="text-4xl font-black text-white mb-1">&lt;1.5s</div>
-          <div class="text-xs text-white/60 leading-tight">Response Latency (vs. 8.5s Copilot)</div>
-        </div>
-        <div class="bg-white/10 border border-white/20 rounded-2xl p-5 backdrop-blur-sm hover:bg-white/18 transition-all">
-          <div class="text-4xl font-black text-white mb-1">$0.10</div>
-          <div class="text-xs text-white/60 leading-tight">Fixed Per-Action Cost (20 Flex Credits)</div>
-        </div>
+    <h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 mb-4 leading-[1.06]">
+      Defeat the Copilot Objection <span class="text-[#0176D3]">with CRM-Native AI</span>
+    </h1>
+    <p class="text-lg text-slate-600 max-w-3xl mb-8 leading-relaxed">
+      The enterprise seller playbook for positioning Claudeforce, AIforce, and predictable Flex Credit unit economics.
+    </p>
+
+    <div class="flex gap-3 flex-wrap mb-10">
+      <button onclick="goTo('calculator')" class="bg-[#0176D3] text-white font-extrabold text-sm px-7 py-3 rounded-xl border-none cursor-pointer flex items-center gap-2 hover:bg-sf-med hover:-translate-y-0.5 hover:shadow-lg transition-all">
+        <i data-lucide="calculator" class="w-4 h-4"></i> Open Token Calculator
+      </button>
+      <button onclick="goTo('objections')" class="bg-white text-slate-700 font-bold text-sm px-7 py-3 rounded-xl border border-slate-200 cursor-pointer flex items-center gap-2 hover:border-sf hover:text-sf hover:-translate-y-0.5 transition-all shadow-sm">
+        <i data-lucide="shield" class="w-4 h-4"></i> Launch Objection Matrix
+      </button>
+    </div>
+
+    <!-- 4-column metrics (white cards, high contrast) -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all text-center">
+        <div class="text-3xl font-black text-[#0176D3] mb-1">95.7%</div>
+        <div class="text-[12px] text-slate-500 leading-tight font-medium">Token Reduction vs. Copilot Raw RAG</div>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all text-center">
+        <div class="text-3xl font-black text-[#0176D3] mb-1">37</div>
+        <div class="text-[12px] text-slate-500 leading-tight font-medium">Native Prebuilt MCP Sales Skills</div>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all text-center">
+        <div class="text-3xl font-black text-[#0176D3] mb-1">&lt;1.5s</div>
+        <div class="text-[12px] text-slate-500 leading-tight font-medium">Response Latency (vs. 8.5s Copilot)</div>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all text-center">
+        <div class="text-3xl font-black text-[#0176D3] mb-1">$0.10</div>
+        <div class="text-[12px] text-slate-500 leading-tight font-medium">Fixed Per-Action Cost (20 Flex Credits)</div>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- ████ SECTION 1: 30-SEC PITCH ████ -->
-<section id="pitch" class="bg-[#F4F6F9]">
-  <div class="max-w-[1400px] mx-auto px-6 py-16">
+<!-- ════════════════════════════════════
+     SECTION 1 — 30-SEC PITCH
+════════════════════════════════════ -->
+<section id="pitch" class="bg-white border-t border-slate-200">
+  <div class="max-w-[1400px] mx-auto px-6 py-14">
 
     <!-- BILLBOARD -->
-    <div class="bg-gradient-to-r from-[#0176D3] via-[#005FB2] to-[#003B70] text-white p-6 md:p-8 rounded-2xl shadow-xl border border-blue-400/30 mb-8">
+    <div class="bg-gradient-to-r from-[#0176D3] via-[#005FB2] to-[#003B70] p-6 md:p-8 rounded-2xl shadow-xl border border-blue-400/30 mb-8">
       <div class="inline-flex items-center gap-2 bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider px-3 py-1 rounded-full shadow-sm mb-3">
         <span>💬</span> EXACT CUSTOMER SCRIPT — 30-SECOND PITCH
       </div>
@@ -155,27 +157,27 @@
         <i data-lucide="megaphone" class="w-6 h-6 text-amber-400 flex-shrink-0"></i>
         How to Explain Claudeforce to a Buyer in 30 Seconds
       </h2>
-      <div class="text-base md:text-lg font-bold text-blue-50 border-l-4 border-amber-400 pl-4 my-3 leading-relaxed bg-white/5 rounded-r-lg p-3">
-        "Tell the buyer: <span class="text-amber-300">'Copilot extracts flat data out of Salesforce into M365, breaking permissions and burning massive tokens. Claudeforce brings Claude's reasoning directly into your existing Salesforce workflows with zero setup, zero data retention, and instant CRM fluency.'"</span>
+      <div class="text-base md:text-lg font-bold text-white border-l-4 border-amber-400 pl-4 py-2 my-3 leading-relaxed bg-white/10 rounded-r-lg p-3">
+        "Tell the buyer: '<span class="text-amber-300">Copilot extracts flat data out of Salesforce into M365, breaking permissions and burning massive tokens.</span> Claudeforce brings Claude's reasoning directly into your existing Salesforce workflows with zero setup, zero data retention, and instant CRM fluency.'"
       </div>
       <p class="text-xs text-blue-200 font-medium tracking-wide uppercase flex items-center gap-1 mt-2">
         <span>🎯</span> Use this response the second a customer says "We already have Copilot."
       </p>
     </div>
 
-    <!-- Section header -->
-    <div class="mb-8">
+    <!-- Section label -->
+    <div class="mb-7">
       <div class="text-xs font-black tracking-widest uppercase text-sf mb-2">Section 1</div>
-      <h2 class="text-3xl md:text-4xl font-black text-sf-dark tracking-tight mb-3">The 30-Second Seller Pitch</h2>
-      <p class="text-slate-500 text-base max-w-xl">Three cards. One per objection stage. Read all three before every Copilot replacement call.</p>
+      <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">The 30-Second Seller Pitch</h2>
+      <p class="text-slate-500 text-[15px]">Three cards. One per objection stage. Read all three before every Copilot replacement call.</p>
     </div>
 
     <!-- 3-col pitch cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-      <div class="pitch-card-1 relative bg-white border border-slate-200 rounded-2xl p-7 shadow-sm hover:shadow-md transition-all overflow-hidden">
+      <div class="pitch-top-1 relative bg-white border border-slate-200 rounded-2xl p-7 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all overflow-hidden">
         <div class="inline-block bg-blue-50 text-sf text-[10.5px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg mb-4">01 · What It Is</div>
-        <h3 class="text-[18px] font-black text-sf-dark mb-4">The Intern vs. The Expert</h3>
+        <h3 class="text-[18px] font-black text-slate-900 mb-4">The Intern vs. The Expert</h3>
         <div class="flex flex-col gap-3">
           <div class="bg-red-50 border border-red-200 rounded-xl p-3.5">
             <div class="text-[10px] font-black text-red-600 uppercase tracking-widest mb-1.5">Copilot</div>
@@ -188,16 +190,16 @@
         </div>
       </div>
 
-      <div class="pitch-card-2 relative bg-white border border-slate-200 rounded-2xl p-7 shadow-sm hover:shadow-md transition-all overflow-hidden">
+      <div class="pitch-top-2 relative bg-white border border-slate-200 rounded-2xl p-7 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all overflow-hidden">
         <div class="inline-block bg-orange-50 text-terra-dk text-[10.5px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg mb-4">02 · Why It Matters</div>
-        <h3 class="text-[18px] font-black text-sf-dark mb-4">The Token Bill Shock</h3>
-        <p class="text-[14px] text-slate-600 leading-relaxed mb-4">Context-stuffing in Copilot causes extreme latency (~8s) and unpredictable credit burn that Finance can't budget against.</p>
+        <h3 class="text-[18px] font-black text-slate-900 mb-4">The Token Bill Shock</h3>
+        <p class="text-[14px] text-slate-600 leading-relaxed mb-4">Context-stuffing in Copilot causes extreme latency (~8s) and unpredictable credit burn that Finance can't model.</p>
         <div class="flex gap-2 mb-4">
           <div class="flex-1 bg-red-50 border border-red-200 rounded-xl p-3 text-center">
             <div class="text-2xl font-black text-red-600">35K</div>
             <div class="text-[11px] text-slate-500 mt-0.5">tokens/query · Copilot</div>
           </div>
-          <div class="flex items-center text-slate-400 font-light text-lg">vs</div>
+          <div class="flex items-center text-slate-300 font-light text-lg px-1">vs</div>
           <div class="flex-1 bg-green-50 border border-green-200 rounded-xl p-3 text-center">
             <div class="text-2xl font-black text-green-700">1.5K</div>
             <div class="text-[11px] text-slate-500 mt-0.5">tokens/query · Claudeforce</div>
@@ -206,27 +208,15 @@
         <p class="text-[13px] text-slate-500 leading-relaxed">Claudeforce uses targeted MCP skill contracts — a <strong class="text-slate-800">96% reduction</strong> in token consumption with 7× faster response times.</p>
       </div>
 
-      <div class="pitch-card-3 relative bg-white border border-slate-200 rounded-2xl p-7 shadow-sm hover:shadow-md transition-all overflow-hidden">
+      <div class="pitch-top-3 relative bg-white border border-slate-200 rounded-2xl p-7 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all overflow-hidden">
         <div class="inline-block bg-green-50 text-green-700 text-[10.5px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg mb-4">03 · CIO Pitch</div>
-        <h3 class="text-[18px] font-black text-sf-dark mb-4">The Cost Control Strategy</h3>
-        <p class="text-[14px] text-slate-600 leading-relaxed mb-4">CIOs fear runaway AI vendor bills. Claudeforce is the answer to that exact fear.</p>
-        <div class="flex flex-col gap-3">
-          <div class="flex gap-3 items-start text-[13.5px] text-slate-700">
-            <i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i>
-            <span><strong>Fixed $0.10 per action</strong> — Finance can model this on a spreadsheet</span>
-          </div>
-          <div class="flex gap-3 items-start text-[13.5px] text-slate-700">
-            <i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i>
-            <span><strong>Zero third-party model training</strong> — passes InfoSec on first read</span>
-          </div>
-          <div class="flex gap-3 items-start text-[13.5px] text-slate-700">
-            <i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i>
-            <span><strong>Existing Salesforce permissions enforced</strong> — no new security review</span>
-          </div>
-          <div class="flex gap-3 items-start text-[13.5px] text-slate-700">
-            <i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i>
-            <span><strong>Zero setup</strong> — 37 skills live on day one, no IT project</span>
-          </div>
+        <h3 class="text-[18px] font-black text-slate-900 mb-4">The Cost Control Strategy</h3>
+        <p class="text-[14px] text-slate-600 leading-relaxed mb-4">CIOs fear runaway AI vendor bills. Claudeforce is the answer:</p>
+        <div class="flex flex-col gap-2.5">
+          <div class="flex gap-3 items-start text-[13.5px] text-slate-700"><i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i><span><strong>Fixed $0.10 per action</strong> — Finance can model this on a spreadsheet</span></div>
+          <div class="flex gap-3 items-start text-[13.5px] text-slate-700"><i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i><span><strong>Zero third-party model training</strong> — passes InfoSec on first read</span></div>
+          <div class="flex gap-3 items-start text-[13.5px] text-slate-700"><i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i><span><strong>Existing Salesforce permissions enforced</strong> — no new security review</span></div>
+          <div class="flex gap-3 items-start text-[13.5px] text-slate-700"><i data-lucide="check-circle" class="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5"></i><span><strong>Zero setup</strong> — 37 skills live on day one, no IT project</span></div>
         </div>
       </div>
 
@@ -234,12 +224,14 @@
   </div>
 </section>
 
-<!-- ████ SECTION 2: ARCHITECTURE ████ -->
-<section id="architecture" class="bg-white border-t border-slate-200">
-  <div class="max-w-[1400px] mx-auto px-6 py-16">
+<!-- ════════════════════════════════════
+     SECTION 2 — ARCHITECTURE
+════════════════════════════════════ -->
+<section id="architecture" class="bg-[#F4F6F9] border-t border-slate-200">
+  <div class="max-w-[1400px] mx-auto px-6 py-14">
 
     <!-- BILLBOARD -->
-    <div class="bg-gradient-to-r from-[#0176D3] via-[#005FB2] to-[#003B70] text-white p-6 md:p-8 rounded-2xl shadow-xl border border-blue-400/30 mb-8">
+    <div class="bg-gradient-to-r from-[#0176D3] via-[#005FB2] to-[#003B70] p-6 md:p-8 rounded-2xl shadow-xl border border-blue-400/30 mb-8">
       <div class="inline-flex items-center gap-2 bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider px-3 py-1 rounded-full shadow-sm mb-3">
         <span>⚡</span> ARCHITECTURE TALK TRACK — SIMPLE DEFINITION
       </div>
@@ -247,7 +239,7 @@
         <i data-lucide="cpu" class="w-6 h-6 text-amber-400 flex-shrink-0"></i>
         How to Explain the Technical Difference Simply
       </h2>
-      <div class="text-base md:text-lg font-bold text-blue-50 border-l-4 border-amber-400 pl-4 my-3 leading-relaxed bg-white/5 rounded-r-lg p-3">
+      <div class="text-base md:text-lg font-bold text-white border-l-4 border-amber-400 pl-4 py-2 my-3 leading-relaxed bg-white/10 rounded-r-lg p-3">
         "<span class="text-amber-300">AIforce</span> is the invisible engine that exposes Salesforce data and security rules to outside apps. <span class="text-amber-300">Claudeforce</span> is Claude operating natively inside Salesforce (or vice versa) using 37 prebuilt sales skills."
       </div>
       <p class="text-xs text-blue-200 font-medium tracking-wide uppercase flex items-center gap-1 mt-2">
@@ -255,11 +247,11 @@
       </p>
     </div>
 
-    <!-- Section header -->
-    <div class="mb-8">
+    <!-- Section label -->
+    <div class="mb-7">
       <div class="text-xs font-black tracking-widest uppercase text-sf mb-2">Section 2</div>
-      <h2 class="text-3xl md:text-4xl font-black text-sf-dark tracking-tight mb-3">AIforce vs. Claudeforce Architecture</h2>
-      <p class="text-slate-500 text-base max-w-xl">Three components. Three distinct value propositions. Know all three to win the architecture conversation.</p>
+      <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">AIforce vs. Claudeforce Architecture</h2>
+      <p class="text-slate-500 text-[15px]">Three components. Three distinct value propositions. Know all three to win the architecture conversation.</p>
     </div>
 
     <!-- Tab bar -->
@@ -269,25 +261,25 @@
       <button class="tab-btn flex-1 text-[13px] font-bold py-2.5 px-4 rounded-lg text-slate-500 border-none cursor-pointer transition-all" onclick="switchTab(2)">Claude in Agentforce</button>
     </div>
 
-    <!-- Tab panels -->
+    <!-- Tab 0: AIforce -->
     <div id="atab-0" class="tab-panel active">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm">
           <div class="inline-block bg-blue-50 text-sf text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-lg mb-4">AIforce · Interface Layer</div>
-          <h3 class="text-2xl font-black text-sf-dark mb-3">The Headless Governance Engine</h3>
+          <h3 class="text-2xl font-black text-slate-900 mb-3">The Headless Governance Engine</h3>
           <p class="text-[14.5px] text-slate-600 leading-relaxed mb-5">The headless connector that makes your Salesforce workflows, sharing rules, and data accessible to any AI surface without custom API coding. It's why Claudeforce can't be replicated by a Microsoft Graph connector.</p>
           <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 flex gap-3">
             <i data-lucide="quote" class="w-5 h-5 text-sf flex-shrink-0 mt-0.5"></i>
-            <p class="text-[13.5px] font-semibold text-sf-dark leading-relaxed">"AIforce ensures your security rules follow the AI wherever it works — there's no way to query data you don't already have permission to see."</p>
+            <p class="text-[13.5px] font-semibold text-slate-800 leading-relaxed">"AIforce ensures your security rules follow the AI wherever it works — there's no way to query data you don't already have permission to see."</p>
           </div>
         </div>
         <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm">
           <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-5">Feature Breakdown</div>
           <div class="grid grid-cols-2 gap-5">
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="database" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-sf-dark mb-1">Core Definition</div><p class="text-[12px] text-slate-500 leading-relaxed">Permission-aware API layer exposing CRM ontology to any authorized AI via structured queries.</p></div></div>
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="code-2" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-sf-dark mb-1">Plain English</div><p class="text-[12px] text-slate-500 leading-relaxed">AI asks structured questions instead of parsing your entire CRM as a text wall.</p></div></div>
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="trophy" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-sf-dark mb-1">AE Advantage</div><p class="text-[12px] text-slate-500 leading-relaxed">Your competitive moat. 25 years of CRM ontology that no competitor can replicate.</p></div></div>
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="shield-check" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-sf-dark mb-1">Technical Spec</div><p class="text-[12px] text-slate-500 leading-relaxed">REST + GraphQL. Row-level security and field encryption enforced at query time.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="database" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Core Definition</div><p class="text-[12px] text-slate-500 leading-relaxed">Permission-aware API layer exposing CRM ontology to any authorized AI surface via structured queries.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="code-2" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Plain English</div><p class="text-[12px] text-slate-500 leading-relaxed">AI asks structured questions instead of parsing your entire CRM as a raw text wall.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="trophy" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">AE Advantage</div><p class="text-[12px] text-slate-500 leading-relaxed">Your competitive moat. 25 years of CRM ontology that no Microsoft connector can replicate.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0"><i data-lucide="shield-check" class="w-4 h-4 text-sf"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Technical Spec</div><p class="text-[12px] text-slate-500 leading-relaxed">REST + GraphQL. Row-level security and field encryption enforced at query time.</p></div></div>
           </div>
           <div class="flex flex-wrap gap-2 mt-5 pt-4 border-t border-slate-100">
             <span class="text-[10.5px] font-black text-slate-400 uppercase tracking-widest mr-1">Specs:</span>
@@ -300,12 +292,13 @@
       </div>
     </div>
 
+    <!-- Tab 1: Salesforce in Claude -->
     <div id="atab-1" class="tab-panel">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm">
           <div class="inline-block bg-orange-50 text-terra-dk text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-lg mb-4">Salesforce in Claude · Beta</div>
-          <h3 class="text-2xl font-black text-sf-dark mb-3">37 Skills. Zero API Setup.</h3>
-          <p class="text-[14.5px] text-slate-600 leading-relaxed mb-5">Working directly inside Claude Desktop or Web, using 37 prebuilt MCP skills to query pipeline metrics without opening browser tabs. Salesforce ships as the MCP server — Claude is the client.</p>
+          <h3 class="text-2xl font-black text-slate-900 mb-3">37 Skills. Zero API Setup.</h3>
+          <p class="text-[14.5px] text-slate-600 leading-relaxed mb-5">Working directly inside Claude Desktop or Web, using 37 prebuilt MCP skills to query pipeline metrics without opening browser tabs. Salesforce ships as the MCP server — Claude is the client. 1,500 tokens instead of 35,000.</p>
           <div class="bg-orange-50 border border-orange-200 rounded-xl p-4 flex gap-3">
             <i data-lucide="quote" class="w-5 h-5 text-terra flex-shrink-0 mt-0.5"></i>
             <p class="text-[13.5px] font-semibold text-slate-800 leading-relaxed">"Sellers who prefer Claude can manage their CRM directly from their chat workspace — no browser tabs, no logins, no context switching."</p>
@@ -314,10 +307,10 @@
         <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm">
           <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-5">Feature Breakdown</div>
           <div class="grid grid-cols-2 gap-5">
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="server" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-sf-dark mb-1">Core Definition</div><p class="text-[12px] text-slate-500 leading-relaxed">Salesforce = prebuilt MCP server. Claude = MCP client. Natural language triggers structured skill calls.</p></div></div>
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="message-circle" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-sf-dark mb-1">Plain English</div><p class="text-[12px] text-slate-500 leading-relaxed">"What deals are at risk?" → Claude calls risk-scoring skill → 1,500-token structured answer → plain English.</p></div></div>
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="zap" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-sf-dark mb-1">AE Advantage</div><p class="text-[12px] text-slate-500 leading-relaxed">Closes "we already have Claude" instantly. Yes — but Claude without 37 Salesforce skills is just a chatbot.</p></div></div>
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="git-branch" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-sf-dark mb-1">Technical Spec</div><p class="text-[12px] text-slate-500 leading-relaxed">MCP (Model Context Protocol). Works in Claude Desktop + Slack. Zero API plumbing required.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="server" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Core Definition</div><p class="text-[12px] text-slate-500 leading-relaxed">Salesforce = prebuilt MCP server. Claude = MCP client. Natural language triggers structured skill calls.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="message-circle" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Plain English</div><p class="text-[12px] text-slate-500 leading-relaxed">"What deals are at risk?" → Claude calls skill → 1,500-token structured answer in plain English. 7× faster.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="zap" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">AE Advantage</div><p class="text-[12px] text-slate-500 leading-relaxed">Closes "we already have Claude" instantly. Claude without 37 SF skills is just a generic chatbot.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="git-branch" class="w-4 h-4 text-terra"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Technical Spec</div><p class="text-[12px] text-slate-500 leading-relaxed">MCP Protocol. Works in Claude Desktop + Slack. Zero API plumbing required out of the box.</p></div></div>
           </div>
           <div class="flex flex-wrap gap-2 mt-5 pt-4 border-t border-slate-100">
             <span class="text-[10.5px] font-black text-slate-400 uppercase tracking-widest mr-1">Specs:</span>
@@ -330,11 +323,12 @@
       </div>
     </div>
 
+    <!-- Tab 2: Claude in Agentforce -->
     <div id="atab-2" class="tab-panel">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm">
           <div class="inline-block bg-green-50 text-green-700 text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-lg mb-4">Claude in Agentforce</div>
-          <h3 class="text-2xl font-black text-sf-dark mb-3">Frontier AI. Trust Layer Enforced.</h3>
+          <h3 class="text-2xl font-black text-slate-900 mb-3">Frontier AI. Trust Layer Enforced.</h3>
           <p class="text-[14.5px] text-slate-600 leading-relaxed mb-5">Claude 3.5/3.7 integrated as the default reasoning engine inside Salesforce Lightning and Agentforce Coworker — with Zero Data Retention enforced via Amazon Bedrock. Enterprise AI, not consumer AI.</p>
           <div class="bg-green-50 border border-green-200 rounded-xl p-4 flex gap-3">
             <i data-lucide="quote" class="w-5 h-5 text-green-700 flex-shrink-0 mt-0.5"></i>
@@ -344,10 +338,10 @@
         <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm">
           <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-5">Feature Breakdown</div>
           <div class="grid grid-cols-2 gap-5">
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="sparkles" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-sf-dark mb-1">Core Definition</div><p class="text-[12px] text-slate-500 leading-relaxed">When Agentforce reasons or drafts, Claude 3.5/3.7 Sonnet is the model doing the thinking — inside your Salesforce org.</p></div></div>
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="shield" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-sf-dark mb-1">Plain English</div><p class="text-[12px] text-slate-500 leading-relaxed">Deal-coach agent triggers on Lightning. Claude scores deal health, drafts summaries, surfaces next best actions.</p></div></div>
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="lock" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-sf-dark mb-1">AE Advantage</div><p class="text-[12px] text-slate-500 leading-relaxed">Demolishes "AI isn't safe." ZDR means no customer data is ever retained, logged, or used for model training.</p></div></div>
-            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="cloud" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-sf-dark mb-1">Technical Spec</div><p class="text-[12px] text-slate-500 leading-relaxed">Amazon Bedrock ZDR. Einstein Trust Layer. Claude 3.5 + 3.7 Sonnet. Stateless inference. Full audit logging.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="sparkles" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Core Definition</div><p class="text-[12px] text-slate-500 leading-relaxed">When Agentforce reasons or drafts, Claude 3.5/3.7 Sonnet is the model doing the thinking inside your org.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="shield" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Plain English</div><p class="text-[12px] text-slate-500 leading-relaxed">Deal-coach agent triggers on a Lightning page. Claude scores deal health, drafts summaries, surfaces next best actions.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="lock" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">AE Advantage</div><p class="text-[12px] text-slate-500 leading-relaxed">Demolishes "AI isn't safe." ZDR means customer data is never retained, logged, or used for model training.</p></div></div>
+            <div class="flex gap-3"><div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="cloud" class="w-4 h-4 text-green-700"></i></div><div><div class="text-[13px] font-bold text-slate-900 mb-1">Technical Spec</div><p class="text-[12px] text-slate-500 leading-relaxed">Amazon Bedrock ZDR. Einstein Trust Layer. Claude 3.5 + 3.7 Sonnet. Stateless. Full audit logging.</p></div></div>
           </div>
           <div class="flex flex-wrap gap-2 mt-5 pt-4 border-t border-slate-100">
             <span class="text-[10.5px] font-black text-slate-400 uppercase tracking-widest mr-1">Specs:</span>
@@ -363,20 +357,22 @@
   </div>
 </section>
 
-<!-- ████ SECTION 3: CALCULATOR ████ -->
-<section id="calculator" class="bg-[#F4F6F9] border-t border-slate-200">
-  <div class="max-w-[1400px] mx-auto px-6 py-16">
+<!-- ════════════════════════════════════
+     SECTION 3 — CALCULATOR
+════════════════════════════════════ -->
+<section id="calculator" class="bg-white border-t border-slate-200">
+  <div class="max-w-[1400px] mx-auto px-6 py-14">
 
     <!-- BILLBOARD -->
-    <div class="bg-gradient-to-r from-[#0176D3] via-[#005FB2] to-[#003B70] text-white p-6 md:p-8 rounded-2xl shadow-xl border border-blue-400/30 mb-8">
+    <div class="bg-gradient-to-r from-[#0176D3] via-[#005FB2] to-[#003B70] p-6 md:p-8 rounded-2xl shadow-xl border border-blue-400/30 mb-8">
       <div class="inline-flex items-center gap-2 bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider px-3 py-1 rounded-full shadow-sm mb-3">
         <span>📊</span> CIO VALUE TALK TRACK — COST CONTROL
       </div>
       <h2 class="text-xl md:text-2xl font-black text-white mb-2 flex items-center gap-2">
         <i data-lucide="calculator" class="w-6 h-6 text-amber-400 flex-shrink-0"></i>
-        Why We Built This Calculator & How to Use It
+        Why We Built This Calculator &amp; How to Use It
       </h2>
-      <div class="text-base md:text-lg font-bold text-blue-50 border-l-4 border-amber-400 pl-4 my-3 leading-relaxed bg-white/5 rounded-r-lg p-3">
+      <div class="text-base md:text-lg font-bold text-white border-l-4 border-amber-400 pl-4 py-2 my-3 leading-relaxed bg-white/10 rounded-r-lg p-3">
         "Use this live tool during client meetings to prove to CIOs that <span class="text-amber-300">Copilot's context-stuffing model creates massive, unpredictable token bills</span>, whereas Claudeforce's skill-based architecture delivers guaranteed <span class="text-amber-300">$0.10 unit economics</span>."
       </div>
       <p class="text-xs text-blue-200 font-medium tracking-wide uppercase flex items-center gap-1 mt-2">
@@ -384,98 +380,95 @@
       </p>
     </div>
 
-    <!-- Section header -->
-    <div class="mb-8">
+    <!-- Section label -->
+    <div class="mb-7">
       <div class="text-xs font-black tracking-widest uppercase text-sf mb-2">Section 3</div>
-      <h2 class="text-3xl md:text-4xl font-black text-sf-dark tracking-tight mb-2">Flex Credit &amp; Token Calculator</h2>
-      <p class="text-slate-500 text-base">Official pricing: $500 / 100K Flex Credits · 20 credits per action = $0.10 · Move the sliders to match your prospect.</p>
+      <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">Flex Credit &amp; Token Calculator</h2>
+      <p class="text-slate-500 text-[15px]">Official pricing: $500 / 100K Flex Credits · 20 credits per action = $0.10 · Adjust sliders to match your prospect.</p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-7">
+    <div class="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6">
       <!-- Sliders -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm self-start">
+      <div class="bg-[#F4F6F9] border border-slate-200 rounded-2xl p-7 shadow-sm self-start">
         <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-6">Configure Your Team</div>
         <div class="mb-7">
-          <div class="flex justify-between items-baseline mb-2">
-            <span class="text-[14px] font-bold text-sf-dark">Sales Reps</span>
-            <span class="text-[22px] font-black text-sf" id="repVal">100</span>
-          </div>
+          <div class="flex justify-between items-baseline mb-2"><span class="text-[14px] font-bold text-slate-900">Sales Reps</span><span class="text-[22px] font-black text-sf" id="repVal">100</span></div>
           <input type="range" id="repSlider" min="10" max="1000" value="100" step="10" oninput="calc()">
           <div class="flex justify-between text-[11px] text-slate-400 mt-1.5"><span>10</span><span>1,000</span></div>
         </div>
         <div class="mb-7">
-          <div class="flex justify-between items-baseline mb-2">
-            <span class="text-[14px] font-bold text-sf-dark">Daily CRM Queries / Rep</span>
-            <span class="text-[22px] font-black text-sf" id="qryVal">20</span>
-          </div>
+          <div class="flex justify-between items-baseline mb-2"><span class="text-[14px] font-bold text-slate-900">Daily CRM Queries / Rep</span><span class="text-[22px] font-black text-sf" id="qryVal">20</span></div>
           <input type="range" id="qrySlider" min="5" max="50" value="20" step="1" oninput="calc()">
           <div class="flex justify-between text-[11px] text-slate-400 mt-1.5"><span>5</span><span>50</span></div>
         </div>
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
-          <div class="text-[10.5px] font-black tracking-widest uppercase text-slate-400 mb-3">Pricing Math</div>
+        <div class="bg-white border border-slate-200 rounded-xl p-4">
+          <div class="text-[10.5px] font-black tracking-widest uppercase text-slate-400 mb-2.5">Pricing Math</div>
           <div class="text-[12px] text-slate-600 leading-[1.9]">
             Copilot RAG: Reps × Queries × 30d × <strong class="text-slate-800">35,000 tokens</strong><br>
             Claudeforce MCP: Reps × Queries × 30d × <strong class="text-slate-800">1,500 tokens</strong><br>
             Action Cost: Reps × Queries × 30d × <strong class="text-slate-800">20 credits @ $0.005</strong>
           </div>
-          <div class="text-[11px] text-slate-400 mt-2">$500 / 100K credits = $0.005/credit · 20 credits/action = $0.10/action</div>
+          <div class="text-[11px] text-slate-400 mt-2">$500 / 100K credits = $0.005/credit · 20 credits/action = $0.10</div>
         </div>
       </div>
 
       <!-- Result cards -->
-      <div class="flex flex-col gap-5">
+      <div class="flex flex-col gap-4">
         <!-- Card A: Token Bloat -->
-        <div class="result-a relative bg-white border border-slate-200 rounded-2xl p-6 shadow-sm overflow-hidden">
+        <div class="result-top-a relative bg-white border border-slate-200 rounded-2xl p-6 shadow-sm overflow-hidden">
           <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-4">Monthly Token Bloat Saved</div>
-          <div class="flex gap-4">
+          <div class="flex gap-5">
             <div class="flex-1">
               <div class="text-[11px] font-black uppercase tracking-wide text-red-600 mb-1">Copilot RAG</div>
-              <div class="text-[26px] font-black text-red-600" id="rA-cop">105B</div>
-              <div class="text-[11.5px] text-slate-400 mt-0.5">tokens / month</div>
-              <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="metric-bar bg-red-500" id="bA-cop" style="width:100%;"></div></div>
+              <div class="text-[28px] font-black text-red-600 leading-none" id="rA-cop">105B</div>
+              <div class="text-[11.5px] text-slate-400 mt-1">tokens / month</div>
+              <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="bar-fill bg-red-500" id="bA-cop" style="width:100%;"></div></div>
             </div>
-            <div class="w-px bg-slate-100"></div>
+            <div class="w-px bg-slate-100 flex-shrink-0"></div>
             <div class="flex-1">
               <div class="text-[11px] font-black uppercase tracking-wide text-sf mb-1">Claudeforce MCP</div>
-              <div class="text-[26px] font-black text-sf" id="rA-cf">4.5B</div>
-              <div class="text-[11.5px] text-slate-400 mt-0.5">tokens / month</div>
-              <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="metric-bar bg-sf" id="bA-cf" style="width:4.3%;"></div></div>
+              <div class="text-[28px] font-black text-sf leading-none" id="rA-cf">4.5B</div>
+              <div class="text-[11.5px] text-slate-400 mt-1">tokens / month</div>
+              <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="bar-fill bg-sf" id="bA-cf" style="width:4.3%;"></div></div>
             </div>
           </div>
-          <div class="mt-4 flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl px-3.5 py-2.5 text-[13px] font-bold text-green-700">
-            <i data-lucide="trending-down" class="w-4 h-4"></i>
-            <span id="rA-pct">95.7% token reduction</span>
+          <div class="mt-4 inline-flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl px-4 py-2.5 text-[13px] font-bold text-green-700">
+            <i data-lucide="trending-down" class="w-4 h-4"></i><span id="rA-pct">95.7% token reduction</span>
           </div>
         </div>
-        <!-- Card B: Latency + Card C: Cost — side by side -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div class="result-b relative bg-white border border-slate-200 rounded-2xl p-6 shadow-sm overflow-hidden">
+
+        <!-- Cards B + C side by side -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Card B: Latency -->
+          <div class="result-top-b relative bg-white border border-slate-200 rounded-2xl p-6 shadow-sm overflow-hidden">
             <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-4">Response Latency</div>
-            <div class="flex gap-4">
+            <div class="flex gap-5">
               <div class="flex-1">
                 <div class="text-[11px] font-black uppercase tracking-wide text-red-600 mb-1">Copilot RAG</div>
-                <div class="text-[26px] font-black text-red-600">~8.5s</div>
-                <div class="text-[11.5px] text-slate-400 mt-0.5">context-stuffing lag</div>
-                <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="metric-bar bg-red-500" style="width:100%;"></div></div>
+                <div class="text-[28px] font-black text-red-600 leading-none">~8.5s</div>
+                <div class="text-[11.5px] text-slate-400 mt-1">context-stuffing lag</div>
+                <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="bar-fill bg-red-500" style="width:100%;"></div></div>
               </div>
-              <div class="w-px bg-slate-100"></div>
+              <div class="w-px bg-slate-100 flex-shrink-0"></div>
               <div class="flex-1">
                 <div class="text-[11px] font-black uppercase tracking-wide text-green-700 mb-1">Claudeforce MCP</div>
-                <div class="text-[26px] font-black text-green-700">&lt;1.5s</div>
-                <div class="text-[11.5px] text-slate-400 mt-0.5">structured tool call</div>
-                <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="metric-bar bg-green-500" style="width:17.6%;"></div></div>
+                <div class="text-[28px] font-black text-green-700 leading-none">&lt;1.5s</div>
+                <div class="text-[11.5px] text-slate-400 mt-1">structured tool call</div>
+                <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="bar-fill bg-green-500" style="width:17.6%;"></div></div>
               </div>
             </div>
-            <div class="mt-4 flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl px-3.5 py-2.5 text-[13px] font-bold text-green-700">
+            <div class="mt-4 inline-flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl px-4 py-2.5 text-[13px] font-bold text-green-700">
               <i data-lucide="zap" class="w-4 h-4"></i> 7× faster average response
             </div>
           </div>
-          <div class="relative bg-gradient-to-br from-sf-dark to-[#043473] rounded-2xl p-6 shadow-sm overflow-hidden">
-            <div class="text-[11px] font-black tracking-widest uppercase text-white/50 mb-4">Predictable Monthly Compute Cost</div>
-            <div class="text-[48px] font-black text-white leading-none mb-2" id="rC-cost">$6,000</div>
-            <div class="text-[12px] text-white/55 mb-4 leading-relaxed" id="rC-sub">100 reps × 20 queries × 30d × 20 credits × $0.005</div>
-            <div class="flex items-center gap-2 bg-white/10 border border-white/20 rounded-xl px-3.5 py-2.5 text-[13px] font-bold text-white/90">
-              <i data-lucide="lock" class="w-4 h-4"></i> Fixed credits — no token spikes
+
+          <!-- Card C: Cost -->
+          <div class="relative bg-gradient-to-br from-[#032D60] to-[#043473] rounded-2xl p-6 shadow-sm overflow-hidden">
+            <div class="text-[11px] font-black tracking-widest uppercase text-white/50 mb-3">Predictable Monthly Compute Cost</div>
+            <div class="text-[52px] font-black text-white leading-none mb-2" id="rC-cost">$6,000</div>
+            <div class="text-[12px] text-white/50 mb-4 leading-relaxed" id="rC-sub">100 reps × 20 queries × 30d × 20 credits × $0.005</div>
+            <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-[13px] font-bold text-white/90">
+              <i data-lucide="lock" class="w-4 h-4"></i> Fixed credits — no token consumption spikes
             </div>
           </div>
         </div>
@@ -485,12 +478,14 @@
   </div>
 </section>
 
-<!-- ████ SECTION 4: OBJECTION MATRIX ████ -->
-<section id="objections" class="bg-white border-t border-slate-200">
-  <div class="max-w-[1400px] mx-auto px-6 py-16">
+<!-- ════════════════════════════════════
+     SECTION 4 — OBJECTION MATRIX
+════════════════════════════════════ -->
+<section id="objections" class="bg-[#F4F6F9] border-t border-slate-200">
+  <div class="max-w-[1400px] mx-auto px-6 py-14">
 
     <!-- BILLBOARD -->
-    <div class="bg-gradient-to-r from-[#0176D3] via-[#005FB2] to-[#003B70] text-white p-6 md:p-8 rounded-2xl shadow-xl border border-blue-400/30 mb-8">
+    <div class="bg-gradient-to-r from-[#0176D3] via-[#005FB2] to-[#003B70] p-6 md:p-8 rounded-2xl shadow-xl border border-blue-400/30 mb-8">
       <div class="inline-flex items-center gap-2 bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider px-3 py-1 rounded-full shadow-sm mb-3">
         <span>🛡️</span> OBJECTION HANDLING STRATEGY
       </div>
@@ -498,7 +493,7 @@
         <i data-lucide="swords" class="w-6 h-6 text-amber-400 flex-shrink-0"></i>
         How to Win Against the M365 Bundling Trap
       </h2>
-      <div class="text-base md:text-lg font-bold text-blue-50 border-l-4 border-amber-400 pl-4 my-3 leading-relaxed bg-white/5 rounded-r-lg p-3">
+      <div class="text-base md:text-lg font-bold text-white border-l-4 border-amber-400 pl-4 py-2 my-3 leading-relaxed bg-white/10 rounded-r-lg p-3">
         "Customers often default to Microsoft Copilot because it is <span class="text-amber-300">bundled with M365</span>. Use these 8 interactive battlecards to immediately turn customer pushback into a clear Claudeforce value win."
       </div>
       <p class="text-xs text-blue-200 font-medium tracking-wide uppercase flex items-center gap-1 mt-2">
@@ -506,186 +501,156 @@
       </p>
     </div>
 
-    <!-- Section header -->
-    <div class="mb-8">
+    <!-- Section label -->
+    <div class="mb-7">
       <div class="text-xs font-black tracking-widest uppercase text-sf mb-2">Section 4</div>
-      <h2 class="text-3xl md:text-4xl font-black text-sf-dark tracking-tight mb-2">8-Card Competitive Objection Matrix</h2>
-      <p class="text-slate-500 text-base">Click any card to reveal the 30-second AE script. Use these verbatim — they're tested talking tracks.</p>
+      <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">8-Card Competitive Objection Matrix</h2>
+      <p class="text-slate-500 text-[15px]">Click any card to reveal the 30-second AE script. Use these verbatim — they are tested talking tracks.</p>
     </div>
 
-    <!-- 4-col x 2-row objection grid -->
+    <!-- 4×2 grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
+      <!-- 01 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">01</div>
-          <p class="text-[13.5px] font-bold text-sf-dark leading-snug">"We already pay $30/user/month for Microsoft Copilot."</p>
-          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5 ml-auto"></i>
+          <p class="text-[13.5px] font-bold text-slate-800 leading-snug flex-1">"We already pay $30/user/month for Microsoft Copilot."</p>
+          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
         </div>
-        <div class="obj-body">
-          <div class="px-5 pb-5">
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
-              <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-              <p class="text-[13px] text-slate-700 leading-relaxed">Copilot is great for drafting emails in Word, but it <strong>lacks CRM ontology</strong>. It pulls flat data out of Salesforce, breaking permissions and forcing context-stuffing. Active Copilot usage on CRM tasks drops below 10% due to slow response times.</p>
-            </div>
-            <div class="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
-              <i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Fixed $0.10/action vs. unpredictable token pools
-            </div>
+        <div class="obj-body"><div class="px-5 pb-5">
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
+            <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">Copilot is great for drafting emails in Word, but it <strong>lacks CRM ontology</strong>. It pulls flat data out of Salesforce, breaking permissions and forcing context-stuffing. Active Copilot usage on CRM tasks drops below 10% due to slow response times.</p>
           </div>
-        </div>
+          <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Fixed $0.10/action vs. unpredictable token pools</div>
+        </div></div>
       </div>
 
+      <!-- 02 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">02</div>
-          <p class="text-[13.5px] font-bold text-sf-dark leading-snug">"Why can't we just build custom connectors between Teams and Salesforce?"</p>
-          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5 ml-auto"></i>
+          <p class="text-[13.5px] font-bold text-slate-800 leading-snug flex-1">"Why can't we just build custom connectors between Teams and Salesforce?"</p>
+          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
         </div>
-        <div class="obj-body">
-          <div class="px-5 pb-5">
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
-              <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-              <p class="text-[13px] text-slate-700 leading-relaxed">Custom connectors require ongoing API maintenance, custom security mappings, and continuous prompt engineering. <strong>Claudeforce delivers 37 prebuilt, native sales skills</strong> out of the box with zero custom code.</p>
-            </div>
-            <div class="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
-              <i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Live in days, not quarters — zero IT scope creep
-            </div>
+        <div class="obj-body"><div class="px-5 pb-5">
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
+            <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">Custom connectors require ongoing API maintenance, custom security mappings, and continuous prompt engineering. <strong>Claudeforce delivers 37 prebuilt, native sales skills</strong> out of the box with zero custom code.</p>
           </div>
-        </div>
+          <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Live in days, not quarters — zero IT scope creep</div>
+        </div></div>
       </div>
 
+      <!-- 03 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">03</div>
-          <p class="text-[13.5px] font-bold text-sf-dark leading-snug">"Is sending CRM data to Claude a security or compliance risk?"</p>
-          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5 ml-auto"></i>
+          <p class="text-[13.5px] font-bold text-slate-800 leading-snug flex-1">"Is sending CRM data to Claude a security or compliance risk?"</p>
+          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
         </div>
-        <div class="obj-body">
-          <div class="px-5 pb-5">
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
-              <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-              <p class="text-[13px] text-slate-700 leading-relaxed">No. All queries process through the <strong>Salesforce Trust Boundary via Amazon Bedrock</strong> under Zero Data Retention. Your customer data is never retained or used to train third-party models.</p>
-            </div>
-            <div class="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
-              <i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: No new vendor risk assessment required
-            </div>
+        <div class="obj-body"><div class="px-5 pb-5">
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
+            <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">No. All queries process through the <strong>Salesforce Trust Boundary via Amazon Bedrock</strong> under Zero Data Retention. Your customer data is never retained or used to train third-party models.</p>
           </div>
-        </div>
+          <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: No new vendor risk assessment required</div>
+        </div></div>
       </div>
 
+      <!-- 04 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">04</div>
-          <p class="text-[13.5px] font-bold text-sf-dark leading-snug">"How does Flex Credit pricing compare to flat per-user licensing?"</p>
-          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5 ml-auto"></i>
+          <p class="text-[13.5px] font-bold text-slate-800 leading-snug flex-1">"How does Flex Credit pricing compare to flat per-user licensing?"</p>
+          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
         </div>
-        <div class="obj-body">
-          <div class="px-5 pb-5">
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
-              <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-              <p class="text-[13px] text-slate-700 leading-relaxed">Flat licenses force you to pay for unused seats. <strong>Flex Credits provide consumption predictability</strong> — you only pay $0.10 per standard executed action, eliminating waste.</p>
-            </div>
-            <div class="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
-              <i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Auditable per-action cost vs. opaque per-seat waste
-            </div>
+        <div class="obj-body"><div class="px-5 pb-5">
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
+            <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">Flat licenses force you to pay for unused seats. <strong>Flex Credits provide consumption predictability</strong> — you only pay $0.10 per standard executed action, eliminating waste. Finance can audit by user, workflow, and department.</p>
           </div>
-        </div>
+          <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Auditable per-action cost vs. opaque per-seat waste</div>
+        </div></div>
       </div>
 
+      <!-- 05 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">05</div>
-          <p class="text-[13.5px] font-bold text-sf-dark leading-snug">"Our sellers live in Teams and Outlook — why force another tool?"</p>
-          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5 ml-auto"></i>
+          <p class="text-[13.5px] font-bold text-slate-800 leading-snug flex-1">"Our sellers live in Teams and Outlook — why force another tool?"</p>
+          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
         </div>
-        <div class="obj-body">
-          <div class="px-5 pb-5">
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
-              <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-              <p class="text-[13px] text-slate-700 leading-relaxed">With AIforce, sellers don't have to switch tools. They can invoke Salesforce skills directly inside <strong>Claude CoWork or Slack</strong>, or work natively in Lightning.</p>
-            </div>
-            <div class="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
-              <i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: No new app — existing workflow + AI capability
-            </div>
+        <div class="obj-body"><div class="px-5 pb-5">
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
+            <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">With AIforce, sellers don't have to switch tools. They can invoke Salesforce skills directly inside <strong>Claude CoWork or Slack</strong>, or work natively in Lightning. No new login. No new app. No change management.</p>
           </div>
-        </div>
+          <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: No new app — AI added to existing workflow</div>
+        </div></div>
       </div>
 
+      <!-- 06 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">06</div>
-          <p class="text-[13.5px] font-bold text-sf-dark leading-snug">"We heard Agentforce / Claudeforce takes months to configure."</p>
-          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5 ml-auto"></i>
+          <p class="text-[13.5px] font-bold text-slate-800 leading-snug flex-1">"We heard Agentforce / Claudeforce takes months to configure."</p>
+          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
         </div>
-        <div class="obj-body">
-          <div class="px-5 pb-5">
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
-              <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-              <p class="text-[13px] text-slate-700 leading-relaxed">Claudeforce uses prebuilt <strong>Model Context Protocol (MCP) contracts</strong>. An admin connects Salesforce as an MCP server in clicks, enabling immediate pipeline reviews and account summaries.</p>
-            </div>
-            <div class="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
-              <i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Days to value — not a multi-quarter implementation
-            </div>
+        <div class="obj-body"><div class="px-5 pb-5">
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
+            <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">Claudeforce uses prebuilt <strong>Model Context Protocol (MCP) contracts</strong>. An admin connects Salesforce as an MCP server in clicks, enabling immediate pipeline reviews and account summaries. You're live in days.</p>
           </div>
-        </div>
+          <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Days to value — not a multi-quarter project</div>
+        </div></div>
       </div>
 
+      <!-- 07 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">07</div>
-          <p class="text-[13.5px] font-bold text-sf-dark leading-snug">"How do we prevent AI from making unauthorized record updates?"</p>
-          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5 ml-auto"></i>
+          <p class="text-[13.5px] font-bold text-slate-800 leading-snug flex-1">"How do we prevent AI from making unauthorized record updates?"</p>
+          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
         </div>
-        <div class="obj-body">
-          <div class="px-5 pb-5">
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
-              <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-              <p class="text-[13px] text-slate-700 leading-relaxed">Claudeforce <strong>respects your exact Salesforce profile permissions and sharing rules</strong>. High-impact actions can require explicit human-in-the-loop approval before committing.</p>
-            </div>
-            <div class="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
-              <i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Existing permissions govern AI — no new security layer
-            </div>
+        <div class="obj-body"><div class="px-5 pb-5">
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
+            <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">Claudeforce <strong>respects your exact Salesforce profile permissions and sharing rules</strong>. High-impact actions can require explicit human-in-the-loop approval before committing. Your governance policies transfer directly.</p>
           </div>
-        </div>
+          <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Existing permissions govern AI — no new security layer</div>
+        </div></div>
       </div>
 
+      <!-- 08 -->
       <div class="obj-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer" onclick="toggleObj(this)">
         <div class="flex gap-3 items-start p-5">
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-sf text-[13px] font-black flex items-center justify-center flex-shrink-0">08</div>
-          <p class="text-[13.5px] font-bold text-sf-dark leading-snug">"Microsoft promised Copilot will integrate deeper into Salesforce soon."</p>
-          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5 ml-auto"></i>
+          <p class="text-[13.5px] font-bold text-slate-800 leading-snug flex-1">"Microsoft promised Copilot will integrate deeper into Salesforce soon."</p>
+          <i data-lucide="chevron-down" class="obj-chevron w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
         </div>
-        <div class="obj-body">
-          <div class="px-5 pb-5">
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
-              <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-              <p class="text-[13px] text-slate-700 leading-relaxed">Generic LLM connectors will always rely on <strong>context window retrieval (RAG)</strong>. Only native Claudeforce skills understand Salesforce schema logic at the database level, ensuring 7× faster speeds and zero credit waste.</p>
-            </div>
-            <div class="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
-              <i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: RAG is the ceiling — MCP skills are the floor
-            </div>
+        <div class="obj-body"><div class="px-5 pb-5">
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
+            <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">Generic LLM connectors will always rely on <strong>context window retrieval (RAG)</strong>. Only native Claudeforce skills understand Salesforce schema logic at the database level, ensuring 7× faster speeds and zero credit waste. RAG is the ceiling — MCP skills are the floor.</p>
           </div>
-        </div>
+          <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Different architecture — RAG will never match native MCP</div>
+        </div></div>
       </div>
 
     </div>
 
     <!-- Resources strip -->
-    <div class="mt-10 bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-wrap items-center justify-between gap-5">
+    <div class="mt-10 bg-white border border-slate-200 rounded-2xl p-6 flex flex-wrap items-center justify-between gap-5 shadow-sm">
       <div>
         <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-1">Verified Sources — Send to Champions Pre-Call</div>
-        <div class="text-[14px] font-bold text-sf-dark">Third-party validation closes faster than first-party claims.</div>
+        <div class="text-[14px] font-bold text-slate-900">Third-party validation closes faster than first-party claims.</div>
       </div>
       <div class="flex flex-wrap gap-3">
-        <a href="https://www.salesforce.com/ap/news/press-releases/2026/08/27/ph-salesforce-and-anthropic-announce-claudeforce-the-1-ai-meets-the-1-ai-crm/" target="_blank" class="inline-flex items-center gap-2 text-[13px] font-bold text-sf bg-blue-50 border border-blue-200 px-4 py-2 rounded-lg hover:bg-blue-100 transition-all no-underline">
-          Official Press Release <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-        </a>
-        <a href="https://www.salesforceben.com/salesforce-and-anthropic-announce-claudeforce-in-q2-27-earnings/" target="_blank" class="inline-flex items-center gap-2 text-[13px] font-bold text-slate-600 bg-white border border-slate-200 px-4 py-2 rounded-lg hover:border-sf hover:text-sf transition-all no-underline">
-          Salesforce Ben Analysis <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-        </a>
-        <a href="https://triggerhours.com/claudeforce-salesforce-anthropic-partnership/" target="_blank" class="inline-flex items-center gap-2 text-[13px] font-bold text-slate-600 bg-white border border-slate-200 px-4 py-2 rounded-lg hover:border-sf hover:text-sf transition-all no-underline">
-          Architecture Deep Dive <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-        </a>
+        <a href="https://www.salesforce.com/ap/news/press-releases/2026/08/27/ph-salesforce-and-anthropic-announce-claudeforce-the-1-ai-meets-the-1-ai-crm/" target="_blank" class="inline-flex items-center gap-2 text-[13px] font-bold text-sf bg-blue-50 border border-blue-200 px-4 py-2 rounded-lg hover:bg-blue-100 transition-all no-underline">Official Press Release <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>
+        <a href="https://www.salesforceben.com/salesforce-and-anthropic-announce-claudeforce-in-q2-27-earnings/" target="_blank" class="inline-flex items-center gap-2 text-[13px] font-bold text-slate-600 bg-white border border-slate-200 px-4 py-2 rounded-lg hover:border-sf hover:text-sf transition-all no-underline">Salesforce Ben Analysis <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>
+        <a href="https://triggerhours.com/claudeforce-salesforce-anthropic-partnership/" target="_blank" class="inline-flex items-center gap-2 text-[13px] font-bold text-slate-600 bg-white border border-slate-200 px-4 py-2 rounded-lg hover:border-sf hover:text-sf transition-all no-underline">Architecture Deep Dive <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>
       </div>
     </div>
 
@@ -693,13 +658,13 @@
 </section>
 
 <!-- Footer -->
-<div class="bg-sf-dark py-6 px-6">
+<div class="bg-[#032D60] py-6 px-6">
   <div class="max-w-[1400px] mx-auto flex items-center justify-between flex-wrap gap-4">
     <div class="flex items-center gap-3">
       <img src="salesforce-logo.png" alt="Salesforce" class="h-7 w-auto object-contain opacity-80 rounded">
       <div class="w-px h-5 bg-white/20"></div>
       <img src="claude-logo.png" alt="Claude" class="h-6 w-auto object-contain opacity-70 rounded">
-      <span class="text-[14px] font-bold text-white/80">Claudeforce AE Battlecard · Strategic Enablement</span>
+      <span class="text-[14px] font-bold text-white/80 ml-1">Claudeforce AE Battlecard · Strategic Enablement</span>
     </div>
     <div class="text-[12px] text-white/35">Internal Use Only · Not for Customer Distribution · Dreamforce 2026</div>
   </div>
@@ -708,7 +673,7 @@
 <script>
   lucide.createIcons();
 
-  // Progress bar + nav active
+  // Progress bar + nav active state
   window.addEventListener('scroll', () => {
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     document.getElementById('progress-bar').style.width = pct + '%';
@@ -719,9 +684,11 @@
       if (el && window.scrollY >= el.offsetTop - 80) cur = id;
     });
     document.querySelectorAll('.nav-link').forEach((l,i) => {
-      l.classList.toggle('text-sf', ids[i] === cur);
-      l.classList.toggle('bg-sf-light', ids[i] === cur);
-      l.classList.toggle('font-bold', ids[i] === cur);
+      const active = ids[i] === cur;
+      l.classList.toggle('text-sf', active);
+      l.classList.toggle('bg-sf-light', active);
+      l.classList.toggle('font-bold', active);
+      l.classList.toggle('text-slate-500', !active);
     });
   });
 
@@ -729,12 +696,14 @@
     document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  // Architecture tabs
   function switchTab(idx) {
     document.querySelectorAll('.tab-btn').forEach((b,i)   => b.classList.toggle('active', i === idx));
     document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i === idx));
     lucide.createIcons();
   }
 
+  // Objection accordion — one open at a time
   function toggleObj(card) {
     const wasOpen = card.classList.contains('open');
     document.querySelectorAll('.obj-card').forEach(c => c.classList.remove('open'));
@@ -761,13 +730,11 @@
     const qpd  = parseInt(document.getElementById('qrySlider').value);
     document.getElementById('repVal').textContent = reps.toLocaleString();
     document.getElementById('qryVal').textContent = qpd;
-
     const ragTok = reps * qpd * 30 * 35000;
     const mcpTok = reps * qpd * 30 * 1500;
     const pct    = ((ragTok - mcpTok) / ragTok * 100).toFixed(1);
     const barPct = (mcpTok / ragTok * 100).toFixed(2);
     const cost   = reps * qpd * 30 * 20 * 0.005;
-
     document.getElementById('rA-cop').textContent  = fmt(ragTok);
     document.getElementById('rA-cf').textContent   = fmt(mcpTok);
     document.getElementById('rA-pct').textContent  = pct + '% token reduction';
