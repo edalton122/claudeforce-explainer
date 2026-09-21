@@ -456,64 +456,56 @@
     <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">Flex Credit &amp; Token Calculator</h2>
     <p class="text-slate-500 text-[15px] mb-7">Official rates: $500 / 100K Flex Credits · 20 credits/action = $0.10 · 22 business days/month · Adjust inputs below.</p>
 
-    <div class="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-6">
+    <!-- ═══ CONSOLIDATED LIGHT-THEMED 2-COLUMN DASHBOARD ═══ -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-      <!-- ── LEFT: INPUT PANEL ── -->
-      <div class="flex flex-col gap-4">
+      <!-- ══ LEFT COLUMN (col-span-5): INPUTS & WORKFLOW ACCORDION ══ -->
+      <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-5 flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full bg-sf text-white text-[10px] font-black flex items-center justify-center">1</span>
+          Team Controls
+        </div>
 
-        <!-- LAYER 1: Surface Controls -->
-        <div class="bg-[#F4F6F9] border border-slate-200 rounded-2xl p-6 shadow-sm">
-          <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-5 flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-sf text-white text-[10px] font-black flex items-center justify-center">1</span>
-            Layer 1 — Surface Controls
+        <!-- Team size slider -->
+        <div class="mb-6">
+          <div class="flex justify-between items-baseline mb-2">
+            <span class="text-[14px] font-bold text-slate-900">Sales Team Size</span>
+            <span class="text-[24px] font-black text-sf leading-none" id="repVal">100</span>
           </div>
+          <input type="range" id="repSlider" min="10" max="1000" value="100" step="10" oninput="onRepChange()">
+          <div class="flex justify-between text-[11px] text-slate-400 mt-1.5"><span>10 reps</span><span>1,000 reps</span></div>
+        </div>
 
-          <!-- Team size slider -->
-          <div class="mb-6">
-            <div class="flex justify-between items-baseline mb-2">
-              <span class="text-[14px] font-bold text-slate-900">Sales Team Size</span>
-              <span class="text-[24px] font-black text-sf leading-none" id="repVal">100</span>
-            </div>
-            <input type="range" id="repSlider" min="10" max="1000" value="100" step="10" oninput="onRepChange()">
-            <div class="flex justify-between text-[11px] text-slate-400 mt-1.5"><span>10 reps</span><span>1,000 reps</span></div>
-          </div>
-
-          <!-- Role preset dropdown -->
-          <div>
-            <label class="text-[14px] font-bold text-slate-900 block mb-2">Role Preset</label>
-            <div class="relative">
-              <select id="rolePreset" onchange="onRoleChange()" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-[13.5px] font-semibold text-slate-700 cursor-pointer hover:border-sf transition-all pr-10 focus:outline-none focus:ring-2 focus:ring-sf/30">
-                <option value="15,3,4,5,3">Enterprise AE (15 actions/day)</option>
-                <option value="23,3,5,10,5">Outbound SDR / BDR (23 actions/day)</option>
-                <option value="16,4,4,5,3">Account Manager / CS (16 actions/day)</option>
-                <option value="17,5,5,4,3">Sales Manager / RVP (17 actions/day)</option>
-                <option value="custom">Custom Configuration</option>
-              </select>
-            </div>
-            <div class="mt-3 bg-white border border-slate-200 rounded-xl p-3 text-center">
-              <div class="text-[11px] text-slate-400 uppercase tracking-widest font-bold mb-0.5">Daily Actions / Rep</div>
-              <div class="text-[28px] font-black text-sf leading-none" id="totalActionsDisplay">15</div>
-              <div class="text-[11px] text-slate-400 mt-0.5">based on sub-slider sum below</div>
-            </div>
-
-            <!-- ★ ALWAYS-VISIBLE Cheat Sheet Button ★ -->
-            <button onclick="openCheatSheet()" class="mt-4 w-full flex items-center justify-center gap-2.5 bg-amber-50 border-2 border-amber-300 text-amber-900 font-black text-[13px] rounded-xl px-4 py-3 hover:bg-amber-100 hover:border-amber-400 shadow-sm transition-all">
-              <span>💡</span> What counts as an action? Open Cheat Sheet
-            </button>
-
+        <!-- Role preset dropdown -->
+        <div class="mb-4">
+          <label class="text-[14px] font-bold text-slate-900 block mb-2">Role Preset</label>
+          <select id="rolePreset" onchange="onRoleChange()" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-[13.5px] font-semibold text-slate-700 cursor-pointer hover:border-sf transition-all pr-10 focus:outline-none focus:ring-2 focus:ring-sf/30">
+            <option value="15,3,4,5,3">Enterprise AE (15 actions/day)</option>
+            <option value="23,3,5,10,5">Outbound SDR / BDR (23 actions/day)</option>
+            <option value="16,4,4,5,3">Account Manager / CS (16 actions/day)</option>
+            <option value="17,5,5,4,3">Sales Manager / RVP (17 actions/day)</option>
+            <option value="custom">Custom Configuration</option>
+          </select>
+          <div class="mt-3 bg-[#F4F6F9] border border-slate-200 rounded-xl p-3 text-center">
+            <div class="text-[11px] text-slate-400 uppercase tracking-widest font-bold mb-0.5">Daily Actions / Rep</div>
+            <div class="text-[28px] font-black text-sf leading-none" id="totalActionsDisplay">15</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">sum of the 4 workflow sliders</div>
           </div>
         </div>
 
-        <!-- LAYER 2: Sub-Slider Accordion -->
+        <!-- ★ ALWAYS-VISIBLE Cheat Sheet Button ★ -->
+        <button onclick="openCheatSheet()" class="w-full flex items-center justify-center gap-2.5 bg-sf-light border-2 border-blue-300 text-sf-dark font-black text-[13px] rounded-xl px-4 py-3 hover:bg-blue-100 hover:border-blue-400 shadow-sm transition-all mb-4">
+          <span>💡</span> What counts as an action? Open Cheat Sheet
+        </button>
+
+        <!-- ★ PULSATING Workflow Accordion (sub-sliders live strictly inside this column) ★ -->
         <div class="rounded-2xl overflow-hidden" id="subAccordionWrap">
           <button onclick="toggleSubPanel()" class="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all duration-300 ring-2 ring-blue-400/30" id="subAccordionBtn">
-            <span class="text-[13.5px] font-black text-sf-dark flex items-center gap-2.5">
-              <!-- pulsing amber dot -->
+            <span class="text-[13px] font-black text-sf-dark flex items-center gap-2.5 text-left">
               <span class="relative flex h-3 w-3 flex-shrink-0">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-400"></span>
               </span>
-              <i data-lucide="sliders-horizontal" class="w-4 h-4 text-sf"></i>
               ⚙️ View &amp; Customize Daily Workflow Assumptions
             </span>
             <i data-lucide="chevron-down" class="sub-chevron w-5 h-5 text-sf flex-shrink-0"></i>
@@ -522,7 +514,6 @@
           <div class="sub-panel" id="subPanel">
             <div class="px-5 pb-5 flex flex-col gap-5 bg-blue-50 border-x-2 border-b-2 border-blue-300 rounded-b-2xl pt-5">
 
-              <!-- Sub-slider 1 -->
               <div>
                 <div class="flex justify-between items-baseline mb-1.5">
                   <div>
@@ -534,7 +525,6 @@
                 <input type="range" id="s1" min="0" max="15" value="3" step="1" oninput="onSubChange()">
               </div>
 
-              <!-- Sub-slider 2 -->
               <div>
                 <div class="flex justify-between items-baseline mb-1.5">
                   <div>
@@ -546,7 +536,6 @@
                 <input type="range" id="s2" min="0" max="15" value="4" step="1" oninput="onSubChange()">
               </div>
 
-              <!-- Sub-slider 3 -->
               <div>
                 <div class="flex justify-between items-baseline mb-1.5">
                   <div>
@@ -558,7 +547,6 @@
                 <input type="range" id="s3" min="0" max="15" value="5" step="1" oninput="onSubChange()">
               </div>
 
-              <!-- Sub-slider 4 -->
               <div>
                 <div class="flex justify-between items-baseline mb-1.5">
                   <div>
@@ -573,174 +561,103 @@
             </div>
           </div>
         </div>
-
-        <!-- Pricing footnote (replaced by full-width math panel below) -->
-
       </div>
 
-      <!-- ── RIGHT: OUTPUT CARDS ── -->
-      <div class="flex flex-col gap-4">
+      <!-- ══ RIGHT COLUMN (col-span-7): REAL-TIME MATH & OUTPUT DASHBOARD ══ -->
+      <div class="lg:col-span-7 space-y-6">
 
-        <!-- Card A: Token bloat -->
-        <div class="result-top-a relative bg-white border border-slate-200 rounded-2xl p-6 shadow-sm overflow-hidden">
-          <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-4">Card 1 · Monthly Token Bloat Saved</div>
-          <div class="flex gap-5">
-            <div class="flex-1">
-              <div class="text-[11px] font-black uppercase tracking-wide text-red-600 mb-1">Copilot RAG</div>
-              <div class="text-[28px] font-black text-red-600 leading-none" id="rA-cop">231M</div>
-              <div class="text-[11.5px] text-slate-400 mt-1">tokens / month</div>
-              <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="bar-fill bg-red-500" id="bA-cop" style="width:100%;"></div></div>
+        <!-- Top Summary Banner Card -->
+        <div class="bg-white p-6 rounded-2xl border-2 border-blue-500/20 shadow-sm">
+          <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-4">Live Bottom Line</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <div>
+              <div class="text-[11px] text-slate-400 uppercase tracking-widest font-bold mb-1">Total Monthly Spend</div>
+              <div class="text-[44px] font-black text-sf leading-none" id="sum-cost">$3,300</div>
+              <div class="text-[12px] text-slate-400 mt-1">/ month</div>
             </div>
-            <div class="w-px bg-slate-100 flex-shrink-0"></div>
-            <div class="flex-1">
-              <div class="text-[11px] font-black uppercase tracking-wide text-sf mb-1">Claudeforce MCP</div>
-              <div class="text-[28px] font-black text-sf leading-none" id="rA-cf">9.9M</div>
-              <div class="text-[11.5px] text-slate-400 mt-1">tokens / month</div>
-              <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="bar-fill bg-sf" id="bA-cf" style="width:4.3%;"></div></div>
+            <div class="sm:border-l sm:border-slate-100 sm:pl-5">
+              <div class="text-[11px] text-slate-400 uppercase tracking-widest font-bold mb-1">Per-User Cost</div>
+              <div class="text-[44px] font-black text-slate-900 leading-none" id="sum-per">$33</div>
+              <div class="text-[12px] text-slate-400 mt-1">/ user / month</div>
             </div>
           </div>
-          <div class="mt-4 flex items-center gap-3 flex-wrap">
+          <div class="flex flex-wrap gap-3 pt-4 border-t border-slate-100">
             <div class="inline-flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl px-4 py-2.5 text-[13px] font-bold text-green-700">
-              <i data-lucide="trending-down" class="w-4 h-4"></i><span id="rA-pct">95.7% token reduction</span>
+              <i data-lucide="trending-down" class="w-4 h-4"></i> 95.7% Token Reduction
             </div>
-            <div class="text-[12px] text-slate-400">vs. Copilot context-stuffing</div>
-          </div>
-        </div>
-
-        <!-- Cards B + C side by side -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-          <!-- Card B: Latency -->
-          <div class="result-top-b relative bg-white border border-slate-200 rounded-2xl p-6 shadow-sm overflow-hidden">
-            <div class="text-[11px] font-black tracking-widest uppercase text-slate-400 mb-4">Card 2 · Response Latency</div>
-            <div class="flex gap-5">
-              <div class="flex-1">
-                <div class="text-[11px] font-black uppercase tracking-wide text-red-600 mb-1">Copilot RAG</div>
-                <div class="text-[28px] font-black text-red-600 leading-none">~8.5s</div>
-                <div class="text-[11.5px] text-slate-400 mt-1">context-stuffing lag</div>
-                <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="bar-fill bg-red-500" style="width:100%;"></div></div>
-              </div>
-              <div class="w-px bg-slate-100 flex-shrink-0"></div>
-              <div class="flex-1">
-                <div class="text-[11px] font-black uppercase tracking-wide text-green-700 mb-1">Claudeforce MCP</div>
-                <div class="text-[28px] font-black text-green-700 leading-none">&lt;1.5s</div>
-                <div class="text-[11.5px] text-slate-400 mt-1">structured tool call</div>
-                <div class="h-1.5 bg-slate-100 rounded mt-2 overflow-hidden"><div class="bar-fill bg-green-500" style="width:17.6%;"></div></div>
-              </div>
-            </div>
-            <div class="mt-4 inline-flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl px-4 py-2.5 text-[13px] font-bold text-green-700">
-              <i data-lucide="zap" class="w-4 h-4"></i> 7× faster average response
-            </div>
-          </div>
-
-          <!-- Card C: Predictable Budget -->
-          <div class="relative bg-gradient-to-br from-[#032D60] to-[#043473] rounded-2xl p-6 shadow-sm overflow-hidden">
-            <div class="text-[11px] font-black tracking-widest uppercase text-white/50 mb-2">Card 3 · Predictable Monthly Compute Budget</div>
-            <div class="text-[46px] font-black text-white leading-none mb-1" id="rC-cost">$3,300</div>
-            <div class="text-[12px] text-white/50 mb-1" id="rC-sub">100 reps × 15 actions × 22 days × $0.10</div>
-            <div class="text-[14px] font-bold text-amber-300 mb-4" id="rC-per">= $33 / user / month</div>
-            <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-[13px] font-bold text-white/90">
-              <i data-lucide="lock" class="w-4 h-4"></i> Fixed credits — no token spikes
+            <div class="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-xl px-4 py-2.5 text-[13px] font-bold text-sf">
+              <i data-lucide="zap" class="w-4 h-4"></i> &lt;1.5s Latency (7× Faster)
             </div>
           </div>
         </div>
-      </div>
 
-    </div>
+        <!-- 4-Card Integrated Formula Breakdown Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-    <!-- ═══ FULL-WIDTH DYNAMIC PRICING & TOKEN MATH BREAKDOWN ═══ -->
-    <div class="w-full mt-6 bg-slate-900 text-white p-6 md:p-8 rounded-2xl border border-slate-700 shadow-xl">
-      <div class="flex items-center gap-3 mb-6 flex-wrap">
-        <span class="text-[13px] font-black tracking-wide text-white">🧮 Dynamic Pricing &amp; Token Math Breakdown</span>
-        <span class="text-[10.5px] font-black tracking-widest uppercase text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2.5 py-1 rounded-lg animate-pulse">LIVE CALCULATIONS</span>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-
-        <!-- Card A: Monthly Action Volume -->
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/[0.08] transition-all">
-          <div class="text-[10px] font-black tracking-widest uppercase text-slate-400 mb-3 flex items-center gap-1.5">
-            <span class="w-5 h-5 rounded-full bg-sf text-white text-[10px] font-black flex items-center justify-center flex-shrink-0">A</span>
-            Monthly Action Volume
+          <!-- Card A: Monthly Action Volume -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all">
+            <div class="text-[10.5px] font-black tracking-widest uppercase text-slate-400 mb-3 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-sf text-white text-[10px] font-black flex items-center justify-center flex-shrink-0">1</span>
+              Monthly Action Volume
+            </div>
+            <div class="text-[11.5px] text-slate-500 mb-3 leading-relaxed font-mono bg-[#F4F6F9] border border-slate-200 rounded-lg px-3 py-2.5">
+              <span class="text-sf font-bold" id="mb-reps">100</span> reps
+              × <span class="text-sf font-bold" id="mb-daily">15</span> actions/day
+              × <span class="text-slate-700 font-semibold">22 biz days</span>
+            </div>
+            <div class="text-[32px] font-black text-slate-900 leading-none" id="mb-total">33,000</div>
+            <div class="text-[11px] text-slate-400 mt-1">Actions / Month</div>
+            <div class="text-[11px] text-slate-400 mt-2 italic">Based on 22 business days per month.</div>
           </div>
-          <div class="text-[11.5px] text-slate-400 mb-3 leading-relaxed font-mono bg-black/30 rounded-lg px-3 py-2.5">
-            <span class="math-val text-sky-300 font-bold" id="mb-reps">100</span> reps
-            × <span class="math-val text-sky-300 font-bold" id="mb-daily">15</span> actions/day
-            × <span class="text-slate-300">22 biz days</span>
-          </div>
-          <div class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">= Total Monthly Actions</div>
-          <div class="text-[34px] font-black text-white leading-none math-val" id="mb-total">33,000</div>
-          <div class="text-[11px] text-slate-500 mt-1">actions / month</div>
-        </div>
 
-        <!-- Card B: Claudeforce Flex Credit Spend -->
-        <div class="bg-white/5 border border-blue-500/30 rounded-2xl p-5 hover:bg-white/[0.08] transition-all">
-          <div class="text-[10px] font-black tracking-widest uppercase text-slate-400 mb-3 flex items-center gap-1.5">
-            <span class="w-5 h-5 rounded-full bg-sf text-white text-[10px] font-black flex items-center justify-center flex-shrink-0">B</span>
-            Claudeforce Flex Credit Spend
+          <!-- Card B: Claudeforce Compute Cost -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all">
+            <div class="text-[10.5px] font-black tracking-widest uppercase text-slate-400 mb-3 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-sf text-white text-[10px] font-black flex items-center justify-center flex-shrink-0">2</span>
+              Claudeforce Compute Cost
+            </div>
+            <div class="text-[11.5px] text-slate-500 mb-3 leading-relaxed font-mono bg-[#F4F6F9] border border-slate-200 rounded-lg px-3 py-2.5">
+              <span class="text-sf font-bold" id="mb-cf-actions">33,000</span> actions
+              × <span class="text-slate-700 font-bold">$0.10 / action</span>
+            </div>
+            <div class="text-[32px] font-black text-sf leading-none" id="mb-cf-cost">$3,300</div>
+            <div class="text-[11px] text-slate-400 mt-1">/ Month</div>
+            <div class="text-[11px] text-slate-400 mt-2 italic">Fixed rate: 20 Flex Credits ($0.10) per executed skill call.</div>
           </div>
-          <div class="text-[11.5px] text-slate-400 mb-3 leading-relaxed font-mono bg-black/30 rounded-lg px-3 py-2.5">
-            <span class="math-val text-sky-300 font-bold" id="mb-cf-actions">33,000</span> actions
-            × <span class="text-amber-300 font-bold">$0.10/action</span>
-            <span class="text-slate-500 text-[10px] block mt-1">(20 credits × $0.005 each)</span>
-          </div>
-          <div class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">= Monthly Compute Budget</div>
-          <div class="text-[34px] font-black text-amber-400 leading-none math-val" id="mb-cf-cost">$3,300</div>
-          <div class="text-[13px] font-bold text-sky-300 mt-1 math-val" id="mb-cf-per">= $33 / user / month</div>
-          <div class="text-[10px] text-slate-500 mt-2">Official rate: $500 per 100,000 Flex Credits</div>
-        </div>
 
-        <!-- Card C: Copilot RAG Token Payload -->
-        <div class="bg-white/5 border border-red-500/30 rounded-2xl p-5 hover:bg-white/[0.08] transition-all">
-          <div class="text-[10px] font-black tracking-widest uppercase text-slate-400 mb-3 flex items-center gap-1.5">
-            <span class="w-5 h-5 rounded-full bg-red-600 text-white text-[10px] font-black flex items-center justify-center flex-shrink-0">C</span>
-            Copilot RAG Token Payload
+          <!-- Card C: Copilot RAW RAG Tokens -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all">
+            <div class="text-[10.5px] font-black tracking-widest uppercase text-slate-400 mb-3 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-red-600 text-white text-[10px] font-black flex items-center justify-center flex-shrink-0">3</span>
+              Copilot Raw RAG Tokens
+            </div>
+            <div class="text-[11.5px] text-slate-500 mb-3 leading-relaxed font-mono bg-red-50 border border-red-200 rounded-lg px-3 py-2.5">
+              <span class="text-red-600 font-bold" id="mb-cop-actions">33,000</span> actions
+              × <span class="text-red-600 font-bold">35,000 tokens</span>
+            </div>
+            <div class="text-[32px] font-black text-red-600 leading-none" id="mb-cop-tokens">1.2T</div>
+            <div class="text-[11px] text-slate-400 mt-1">Tokens / Month</div>
+            <div class="text-[11px] text-slate-400 mt-2 italic">Context-stuffing dumps raw database files into the M365 context window.</div>
           </div>
-          <div class="text-[11.5px] text-slate-400 mb-3 leading-relaxed font-mono bg-black/30 rounded-lg px-3 py-2.5">
-            <span class="math-val text-red-400 font-bold" id="mb-cop-actions">33,000</span> actions
-            × <span class="text-red-400 font-bold">35,000 tokens</span>
-            <span class="text-slate-500 text-[10px] block mt-1">(full CRM context dump)</span>
-          </div>
-          <div class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">= Monthly Token Burn</div>
-          <div class="text-[34px] font-black text-red-400 leading-none math-val" id="mb-cop-tokens">1.2T</div>
-          <div class="text-[11px] text-slate-500 mt-1">tokens / month</div>
-          <div class="text-[10px] text-slate-500 mt-2">Dumps raw DB files into context on every query</div>
-        </div>
 
-        <!-- Card D: Claudeforce MCP Skill Payload -->
-        <div class="bg-white/5 border border-green-500/30 rounded-2xl p-5 hover:bg-white/[0.08] transition-all">
-          <div class="text-[10px] font-black tracking-widest uppercase text-slate-400 mb-3 flex items-center gap-1.5">
-            <span class="w-5 h-5 rounded-full bg-green-600 text-white text-[10px] font-black flex items-center justify-center flex-shrink-0">D</span>
-            Claudeforce MCP Skill Payload
+          <!-- Card D: Claudeforce MCP Tokens -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all">
+            <div class="text-[10.5px] font-black tracking-widest uppercase text-slate-400 mb-3 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-green-600 text-white text-[10px] font-black flex items-center justify-center flex-shrink-0">4</span>
+              Claudeforce MCP Tokens
+            </div>
+            <div class="text-[11.5px] text-slate-500 mb-3 leading-relaxed font-mono bg-green-50 border border-green-200 rounded-lg px-3 py-2.5">
+              <span class="text-green-700 font-bold" id="mb-mcp-actions">33,000</span> actions
+              × <span class="text-green-700 font-bold">1,500 tokens</span>
+            </div>
+            <div class="text-[32px] font-black text-green-700 leading-none" id="mb-mcp-tokens">49.5M</div>
+            <div class="text-[11px] text-slate-400 mt-1">Tokens / Month</div>
+            <div class="text-[11px] text-slate-400 mt-2 italic">Prebuilt MCP skill contracts fetch only exact parameters (~95.7% savings).</div>
           </div>
-          <div class="text-[11.5px] text-slate-400 mb-3 leading-relaxed font-mono bg-black/30 rounded-lg px-3 py-2.5">
-            <span class="math-val text-green-400 font-bold" id="mb-mcp-actions">33,000</span> actions
-            × <span class="text-green-400 font-bold">1,500 tokens</span>
-            <span class="text-slate-500 text-[10px] block mt-1">(structured skill contract)</span>
-          </div>
-          <div class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">= Monthly Token Spend</div>
-          <div class="text-[34px] font-black text-green-400 leading-none math-val" id="mb-mcp-tokens">49.5M</div>
-          <div class="text-[11px] text-slate-500 mt-1">tokens / month</div>
-          <div class="text-[10px] text-slate-500 mt-2">Skill contracts fetch only exact required params (~95.7% savings)</div>
-        </div>
 
-      </div>
-
-      <!-- Summary strip -->
-      <div class="mt-5 flex flex-wrap gap-3 items-center pt-5 border-t border-white/10">
-        <div class="inline-flex items-center gap-2 bg-green-400/10 border border-green-400/30 rounded-xl px-4 py-2.5">
-          <i data-lucide="trending-down" class="w-4 h-4 text-green-400"></i>
-          <span class="text-[13px] font-bold text-green-400"><span id="mb-pct-strip">95.7%</span> token reduction vs. Copilot</span>
-        </div>
-        <div class="inline-flex items-center gap-2 bg-sky-400/10 border border-sky-400/30 rounded-xl px-4 py-2.5">
-          <i data-lucide="zap" class="w-4 h-4 text-sky-400"></i>
-          <span class="text-[13px] font-bold text-sky-400">7× faster (&lt;1.5s vs ~8.5s)</span>
-        </div>
-        <div class="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/30 rounded-xl px-4 py-2.5">
-          <i data-lucide="lock" class="w-4 h-4 text-amber-400"></i>
-          <span class="text-[13px] font-bold text-amber-400">Fixed $0.10/action — Finance can model this</span>
         </div>
       </div>
+
     </div>
 
   </div>
@@ -1170,34 +1087,26 @@
     const cost     = monthlyActions * 0.10;
     const perUser  = reps > 0 ? (cost / reps).toFixed(0) : 0;
 
-    // Display daily action total
+    // Display daily action total (left column)
     document.getElementById('totalActionsDisplay').textContent = daily;
 
-    // Card A
-    document.getElementById('rA-cop').textContent = fmt(ragTok);
-    document.getElementById('rA-cf').textContent  = fmt(mcpTok);
-    document.getElementById('rA-pct').textContent = pct + '% token reduction';
-    document.getElementById('bA-cf').style.width  = Math.max(Number(barPct), 0.5) + '%';
+    // Top summary banner
+    document.getElementById('sum-cost').textContent = fmtD(cost);
+    document.getElementById('sum-per').textContent  = `$${perUser}`;
 
-    // Card C
-    document.getElementById('rC-cost').textContent = fmtD(cost);
-    document.getElementById('rC-sub').textContent  =
-      `${reps.toLocaleString()} reps × ${daily} actions × ${WORK_DAYS} days × $0.10`;
-    document.getElementById('rC-per').textContent  = `= $${perUser} / user / month`;
-
-    // ── Math Breakdown Panel ──────────────────────────────────
+    // ── 4-Card Formula Breakdown (all light-themed) ───────────
     const fmtN = n => n.toLocaleString();
-    document.getElementById('mb-reps').textContent       = reps.toLocaleString();
-    document.getElementById('mb-daily').textContent      = daily;
-    document.getElementById('mb-total').textContent      = fmtN(monthlyActions);
-    document.getElementById('mb-cf-actions').textContent = fmtN(monthlyActions);
-    document.getElementById('mb-cf-cost').textContent    = fmtD(cost);
-    document.getElementById('mb-cf-per').textContent     = `= $${perUser} / user / month`;
+    document.getElementById('mb-reps').textContent        = reps.toLocaleString();
+    document.getElementById('mb-daily').textContent       = daily;
+    document.getElementById('mb-total').textContent       = fmtN(monthlyActions);
+    document.getElementById('mb-cf-actions').textContent  = fmtN(monthlyActions);
+    document.getElementById('mb-cf-cost').textContent     = fmtD(cost);
     document.getElementById('mb-cop-actions').textContent = fmtN(monthlyActions);
     document.getElementById('mb-cop-tokens').textContent  = fmt(ragTok);
     document.getElementById('mb-mcp-actions').textContent = fmtN(monthlyActions);
     document.getElementById('mb-mcp-tokens').textContent  = fmt(mcpTok);
-    document.getElementById('mb-pct-strip').textContent   = pct + '%';
+
+    void pct; void barPct; // retained for reference
   }
 
   // ── cheat sheet drawer ─────────────────────────────────────
