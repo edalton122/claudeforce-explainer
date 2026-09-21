@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Claudeforce AE Battlecard — Salesforce + Anthropic Enablement</title>
+  <title>Claudeforce AE Battlecard — Salesforce + Anthropic Strategic Enablement</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,282 +12,337 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; margin: 0; overflow-x: hidden; }
+    body { font-family: 'Inter', sans-serif; background: #F4F6F9; color: #0F172A; margin: 0; overflow-x: hidden; }
 
     :root {
-      --bg:       #F8FAFC;
+      --canvas:   #F4F6F9;
       --white:    #FFFFFF;
       --sf:       #0176D3;
-      --sf2:      #2196F3;
+      --sf2:      #0EA5E9;
+      --sf-grad:  linear-gradient(135deg, #0176D3 0%, #005FB2 100%);
       --sf-dark:  #032D60;
       --terra:    #DA7756;
       --terra-dk: #B85C3A;
       --green:    #16A34A;
       --green2:   #22C55E;
+      --red:      #DC2626;
       --border:   #E2E8F0;
       --muted:    #64748B;
       --text:     #0F172A;
-      --card-sh:  0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
-      --card-sh2: 0 8px 32px rgba(15,23,42,0.1);
+      --shadow:   0 1px 3px rgba(15,23,42,0.07), 0 1px 2px rgba(15,23,42,0.04);
+      --shadow-md:0 6px 24px rgba(15,23,42,0.1);
     }
 
-    /* ── NAV ── */
+    /* ── TOPNAV ── */
     #topnav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 950;
       background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 28px; height: 60px;
+      height: 62px; display: flex; align-items: center;
+      padding: 0 28px; justify-content: space-between;
       box-shadow: 0 1px 0 rgba(15,23,42,0.05);
     }
-    .nav-left { display: flex; align-items: center; gap: 14px; }
-    .logo-box {
-      display: flex; align-items: center; gap: 8px; padding: 6px 12px;
-      background: #F1F5F9; border: 1px solid var(--border); border-radius: 8px;
-      font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.02em;
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand-pill {
+      display: flex; align-items: center; gap: 10px;
+      background: #F8FAFC; border: 1px solid var(--border); border-radius: 10px;
+      padding: 7px 14px;
     }
-    .logo-box svg { color: var(--sf-dark); }
-    .nav-divider { width: 1px; height: 22px; background: var(--border); }
-    .nav-title { font-size: 14px; font-weight: 800; color: var(--sf-dark); letter-spacing: -0.01em; }
-    .nav-right { display: flex; align-items: center; gap: 4px; }
-    .nav-btn {
-      font-size: 12.5px; font-weight: 600; color: var(--muted); padding: 7px 13px;
+    .nav-pipe { width: 1px; height: 22px; background: var(--border); }
+    .nav-label { font-size: 13px; font-weight: 800; color: var(--sf-dark); letter-spacing: -0.01em; white-space: nowrap; }
+    .nav-internal {
+      font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--terra-dk); background: rgba(218,119,86,0.1); border: 1px solid rgba(218,119,86,0.25);
+      padding: 4px 10px; border-radius: 6px; margin-left: 8px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 2px; }
+    .nav-link {
+      font-size: 12.5px; font-weight: 600; color: var(--muted); padding: 7px 12px;
       border-radius: 7px; cursor: pointer; border: none; background: none; transition: all 0.2s; white-space: nowrap;
     }
-    .nav-btn:hover { color: var(--sf); background: rgba(1,118,211,0.07); }
-    .nav-btn.active { color: var(--sf); background: rgba(1,118,211,0.1); font-weight: 700; }
-    #nav-internal {
-      margin-left: 8px; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--terra-dk); background: rgba(218,119,86,0.1); border: 1px solid rgba(218,119,86,0.25);
-      padding: 5px 11px; border-radius: 6px;
+    .nav-link:hover { color: var(--sf); background: rgba(1,118,211,0.07); }
+    .nav-link.active { color: var(--sf); background: rgba(1,118,211,0.1); font-weight: 700; }
+    #progress-bar { position: fixed; top: 62px; left: 0; height: 2.5px; width: 0%; background: linear-gradient(90deg, var(--sf), var(--terra)); z-index: 999; transition: width 0.1s linear; }
+    @media (max-width: 900px) { .nav-links { display: none; } }
+
+    /* ── LAYOUT ── */
+    .page-max { max-width: 1400px; margin: 0 auto; padding: 0 28px; }
+    .section-wrap { padding: 88px 0 72px; }
+
+    /* ── SECTION BANNER ── */
+    .sec-banner {
+      background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--sf);
+      border-radius: 0 12px 12px 0; padding: 16px 22px; margin-bottom: 44px;
+      box-shadow: var(--shadow); display: flex; align-items: flex-start; gap: 14px;
     }
-    #progress-bar { position: fixed; top: 60px; left: 0; height: 2px; width: 0%; background: linear-gradient(90deg, var(--sf), var(--terra)); z-index: 999; transition: width 0.1s linear; }
-    @media (max-width: 820px) { .nav-right { display: none; } }
+    .sec-banner-icon { flex-shrink: 0; margin-top: 1px; }
+    .sec-banner strong { color: var(--sf-dark); font-weight: 800; }
+    .sec-banner p { font-size: 14px; color: var(--muted); line-height: 1.65; margin: 0; }
+    .sec-eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sf); margin-bottom: 8px; }
+    .sec-h2 { font-size: clamp(24px, 3.2vw, 38px); font-weight: 800; letter-spacing: -0.02em; color: var(--sf-dark); margin-bottom: 12px; line-height: 1.15; }
+    .sec-sub { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 620px; }
 
     /* ── HERO ── */
-    #hero {
-      padding: 140px 24px 100px; text-align: center;
-      background: linear-gradient(170deg, #EFF6FF 0%, #F8FAFC 60%, #FFF8F5 100%);
+    #thesis {
+      padding: 110px 0 80px;
+      background: var(--sf-grad);
       position: relative; overflow: hidden;
     }
     .hero-mesh {
       position: absolute; inset: 0; z-index: 0;
-      background-image: radial-gradient(circle at 25% 30%, rgba(1,118,211,0.07) 0%, transparent 55%),
-                        radial-gradient(circle at 80% 70%, rgba(218,119,86,0.07) 0%, transparent 50%);
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(255,255,255,0.07) 0%, transparent 50%),
+        radial-gradient(circle at 85% 20%, rgba(218,119,86,0.15) 0%, transparent 45%);
     }
-    .hero-inner { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; }
+    .hero-grid-pattern {
+      position: absolute; inset: 0; z-index: 0; opacity: 0.12;
+      background-image: linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+    .hero-inner { position: relative; z-index: 1; }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: white; border: 1px solid var(--border); box-shadow: var(--card-sh);
-      font-size: 11.5px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em;
-      padding: 6px 16px; border-radius: 20px; margin-bottom: 28px;
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+      padding: 6px 16px; border-radius: 20px; margin-bottom: 28px; backdrop-filter: blur(8px);
     }
-    .badge-pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--green2); animation: bpulse 2s infinite; }
-    @keyframes bpulse { 0%,100%{ box-shadow: 0 0 0 0 rgba(34,197,94,0.5); } 50%{ box-shadow: 0 0 0 5px rgba(34,197,94,0); } }
-    .hero-h1 { font-size: clamp(34px, 5.5vw, 62px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.07; color: var(--sf-dark); margin-bottom: 22px; }
-    .hero-h1 .hl-sf    { color: var(--sf); }
-    .hero-h1 .hl-terra { color: var(--terra); }
-    .hero-sub { font-size: clamp(15px, 2vw, 18px); color: var(--muted); line-height: 1.7; max-width: 580px; margin: 0 auto 40px; }
-    .hero-btns { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--sf); color: white; font-size: 14px; font-weight: 700;
+    .hero-pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--green2); animation: hpulse 2s infinite; }
+    @keyframes hpulse { 0%,100%{ box-shadow: 0 0 0 0 rgba(34,197,94,0.7); } 50%{ box-shadow: 0 0 0 6px rgba(34,197,94,0); } }
+    .hero-h1 { font-size: clamp(32px, 4.5vw, 58px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.06; color: white; margin-bottom: 20px; }
+    .hero-sub-text { font-size: clamp(15px, 1.8vw, 18px); color: rgba(255,255,255,0.8); line-height: 1.7; max-width: 620px; margin-bottom: 36px; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
+    .btn-white {
+      background: white; color: var(--sf); font-size: 14px; font-weight: 800;
       padding: 12px 26px; border-radius: 9px; border: none; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s;
     }
-    .btn-primary:hover { background: #0056A8; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(1,118,211,0.3); }
-    .btn-secondary {
-      background: white; color: var(--sf-dark); font-size: 14px; font-weight: 700;
-      padding: 12px 26px; border-radius: 9px; border: 1px solid var(--border); cursor: pointer;
-      display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; text-decoration: none;
+    .btn-white:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .btn-outline {
+      background: rgba(255,255,255,0.12); color: white; font-size: 14px; font-weight: 700;
+      padding: 12px 26px; border-radius: 9px; border: 1px solid rgba(255,255,255,0.3); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; backdrop-filter: blur(8px);
     }
-    .btn-secondary:hover { border-color: var(--sf); color: var(--sf); transform: translateY(-1px); }
-    .hero-stats { display: flex; justify-content: center; gap: 0; margin-top: 56px; flex-wrap: wrap; }
-    .hero-stat { padding: 16px 32px; border-right: 1px solid var(--border); text-align: center; }
-    .hero-stat:last-child { border-right: none; }
-    .hero-stat .num { font-size: 30px; font-weight: 900; color: var(--sf-dark); line-height: 1; }
-    .hero-stat .lbl { font-size: 12px; color: var(--muted); margin-top: 4px; }
-    @media (max-width: 640px) { .hero-stat { border-right: none; border-bottom: 1px solid var(--border); } }
+    .btn-outline:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+    .metrics-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    @media (max-width: 768px) { .metrics-bar { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 420px) { .metrics-bar { grid-template-columns: 1fr 1fr; } }
+    .metric-tile {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 14px; padding: 20px; backdrop-filter: blur(8px); transition: all 0.2s; text-align: center;
+    }
+    .metric-tile:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+    .metric-tile .num { font-size: clamp(28px,3.5vw,42px); font-weight: 900; color: white; line-height: 1; }
+    .metric-tile .lbl { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 6px; line-height: 1.4; }
 
-    /* ── SECTION COMMON ── */
-    .sec-wrap { max-width: 1080px; margin: 0 auto; padding: 96px 24px 80px; }
-    .alt-bg { background: white; }
-    .sec-eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sf); margin-bottom: 10px; }
-    .sec-h2 { font-size: clamp(26px, 3.5vw, 40px); font-weight: 800; letter-spacing: -0.02em; color: var(--sf-dark); margin-bottom: 14px; line-height: 1.15; }
-    .sec-sub { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 580px; }
-    .sep { width: 100%; height: 1px; background: var(--border); }
-
-    /* ── ELI5 ── */
-    .eli5-box {
-      background: linear-gradient(135deg, #EFF6FF 0%, #F8FAFC 100%);
-      border: 1.5px solid rgba(1,118,211,0.2); border-radius: 20px; padding: 40px;
-      margin-bottom: 12px;
+    /* ── PITCH CARDS ── */
+    .pitch-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    @media (max-width: 900px) { .pitch-grid { grid-template-columns: 1fr; } }
+    .pitch-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 28px;
+      box-shadow: var(--shadow); transition: all 0.25s; position: relative; overflow: hidden;
     }
-    .eli5-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 36px; }
-    .eli5-icon-wrap { width: 52px; height: 52px; border-radius: 14px; background: rgba(1,118,211,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 24px; }
-    .eli5-header h3 { font-size: 22px; font-weight: 800; color: var(--sf-dark); margin-bottom: 4px; }
-    .eli5-header p  { font-size: 14px; color: var(--muted); line-height: 1.5; margin: 0; }
-    .eli5-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    @media (max-width: 820px) { .eli5-grid { grid-template-columns: 1fr; } }
-    .eli5-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 26px; box-shadow: var(--card-sh); position: relative; overflow: hidden; }
-    .eli5-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-    .eli5-card.c1::before { background: linear-gradient(90deg, var(--sf), var(--sf2)); }
-    .eli5-card.c2::before { background: linear-gradient(90deg, var(--terra), #F59E6C); }
-    .eli5-card.c3::before { background: linear-gradient(90deg, var(--green), var(--green2)); }
-    .eli5-card-tag { font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; display: inline-block; padding: 4px 10px; border-radius: 6px; }
-    .eli5-card h4 { font-size: 17px; font-weight: 800; color: var(--sf-dark); margin-bottom: 14px; }
-    .eli5-compare { display: flex; flex-direction: column; gap: 10px; }
-    .eli5-row { font-size: 13.5px; line-height: 1.6; padding: 12px 14px; border-radius: 10px; }
-    .eli5-row.bad  { background: #FEF2F2; border: 1px solid #FECACA; }
-    .eli5-row.good { background: #F0FFF4; border: 1px solid #BBF7D0; }
-    .eli5-row .eli5-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; display: block; }
-    .eli5-row.bad  .eli5-label { color: #DC2626; }
-    .eli5-row.good .eli5-label { color: var(--green); }
-    .eli5-plain p  { font-size: 13.5px; color: #334155; line-height: 1.65; margin: 0; }
+    .pitch-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .pitch-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 18px 18px 0 0; }
+    .pitch-card.p1::before { background: linear-gradient(90deg, var(--sf), var(--sf2)); }
+    .pitch-card.p2::before { background: linear-gradient(90deg, var(--terra), #F59E6C); }
+    .pitch-card.p3::before { background: linear-gradient(90deg, var(--green), var(--green2)); }
+    .pitch-tag { font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 14px; }
+    .pitch-card h3 { font-size: 18px; font-weight: 800; color: var(--sf-dark); margin-bottom: 14px; }
+    .pitch-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .compare-mini { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .compare-row-mini { font-size: 13px; line-height: 1.55; padding: 10px 12px; border-radius: 9px; }
+    .compare-row-mini.bad  { background: #FEF2F2; border: 1px solid #FECACA; }
+    .compare-row-mini.good { background: #F0FFF4; border: 1px solid #BBF7D0; }
+    .crmini-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; display: block; }
+    .crmini-label.bad  { color: var(--red); }
+    .crmini-label.good { color: var(--green); }
 
     /* ── ARCHITECTURE TABS ── */
-    .tab-bar { display: flex; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 5px; gap: 4px; margin-bottom: 28px; box-shadow: var(--card-sh); }
-    .tab-btn {
+    .arch-tabs { display: flex; background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 5px; gap: 4px; margin-bottom: 24px; box-shadow: var(--shadow); }
+    .arch-tab {
       flex: 1; padding: 11px 16px; border-radius: 9px; font-size: 13px; font-weight: 700;
-      color: var(--muted); border: none; background: none; cursor: pointer; transition: all 0.25s; white-space: nowrap; text-align: center;
+      color: var(--muted); border: none; background: none; cursor: pointer; transition: all 0.25s; text-align: center;
     }
-    .tab-btn:hover { color: var(--sf-dark); background: #F1F5F9; }
-    .tab-btn.active { background: var(--sf); color: white; box-shadow: 0 3px 10px rgba(1,118,211,0.3); }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-    .arch-card { background: white; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; box-shadow: var(--card-sh2); }
-    .arch-card-head { padding: 32px 36px; border-bottom: 1px solid var(--border); }
-    .arch-card-head-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
-    .arch-badge { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 12px; border-radius: 6px; }
-    .arch-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .arch-h3 { font-size: 24px; font-weight: 800; color: var(--sf-dark); margin-bottom: 8px; }
-    .arch-def { font-size: 15px; color: var(--muted); line-height: 1.65; }
-    .arch-body { padding: 28px 36px; }
-    .arch-grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-    @media (max-width: 640px) { .arch-grid4 { grid-template-columns: 1fr; } .arch-card-head, .arch-body { padding: 22px 18px; } }
-    .arch-row { display: flex; gap: 14px; align-items: flex-start; }
-    .arch-row-icon { width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-    .arch-row h5 { font-size: 13.5px; font-weight: 700; color: var(--sf-dark); margin-bottom: 4px; }
-    .arch-row p  { font-size: 13px; color: var(--muted); line-height: 1.55; margin: 0; }
-    .arch-spec-bar { margin-top: 28px; background: #F8FAFC; border: 1px solid var(--border); border-radius: 12px; padding: 18px 22px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-    .arch-spec-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-right: 4px; }
-    .spec-chip { font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: 7px; border: 1px solid var(--border); background: white; color: var(--sf-dark); }
+    .arch-tab:hover { color: var(--sf-dark); background: #F1F5F9; }
+    .arch-tab.active { background: var(--sf); color: white; box-shadow: 0 4px 12px rgba(1,118,211,0.3); }
+    .arch-panel { display: none; }
+    .arch-panel.active { display: block; }
+    .arch-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 28px; }
+    @media (max-width: 860px) { .arch-content { grid-template-columns: 1fr; } }
+    .arch-info { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); }
+    .arch-badge { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 12px; border-radius: 6px; display: inline-block; margin-bottom: 16px; }
+    .arch-h3 { font-size: 22px; font-weight: 800; color: var(--sf-dark); margin-bottom: 10px; }
+    .arch-plain { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
+    .arch-pitch { background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 10px; padding: 14px 16px; font-size: 13.5px; font-weight: 600; color: var(--sf-dark); line-height: 1.6; display: flex; gap: 10px; align-items: flex-start; }
+    .arch-features { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); }
+    .arch-features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .af-item { display: flex; gap: 12px; }
+    .af-icon { width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .af-item h5 { font-size: 13.5px; font-weight: 700; color: var(--sf-dark); margin-bottom: 4px; }
+    .af-item p  { font-size: 12.5px; color: var(--muted); line-height: 1.55; margin: 0; }
+    .spec-row { margin-top: 20px; background: #F8FAFC; border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .spec-label { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-right: 6px; }
+    .spec-chip { font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--white); color: var(--sf-dark); }
 
     /* ── CALCULATOR ── */
-    .calc-layout { display: grid; grid-template-columns: 380px 1fr; gap: 28px; margin-top: 48px; }
-    @media (max-width: 860px) { .calc-layout { grid-template-columns: 1fr; } }
-    .calc-input { background: white; border: 1px solid var(--border); border-radius: 18px; padding: 28px; box-shadow: var(--card-sh); }
-    .calc-input-title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 28px; }
-    .slider-group { margin-bottom: 30px; }
-    .sl-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
-    .sl-label { font-size: 14px; font-weight: 700; color: var(--sf-dark); }
-    .sl-val { font-size: 20px; font-weight: 900; color: var(--sf); }
-    input[type=range] { -webkit-appearance: none; width: 100%; height: 5px; background: #E2E8F0; border-radius: 3px; outline: none; margin: 0; }
-    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--sf); border: 3px solid white; cursor: pointer; box-shadow: 0 2px 8px rgba(1,118,211,0.4); }
-    .sl-range-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 6px; }
-    .calc-formula { margin-top: 10px; background: #F8FAFC; border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
-    .formula-title { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px; }
-    .formula-line { font-size: 12px; color: #475569; line-height: 1.8; }
-    .formula-line span { font-weight: 700; color: var(--sf-dark); }
+    .calc-layout { display: grid; grid-template-columns: 360px 1fr; gap: 28px; margin-top: 44px; }
+    @media (max-width: 1000px) { .calc-layout { grid-template-columns: 1fr; } }
+    .calc-panel { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 28px; box-shadow: var(--shadow); }
+    .calc-panel-title { font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 26px; }
+    .sl-group { margin-bottom: 28px; }
+    .sl-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    .sl-name { font-size: 14px; font-weight: 700; color: var(--sf-dark); }
+    .sl-num  { font-size: 22px; font-weight: 900; color: var(--sf); }
+    input[type=range] { -webkit-appearance:none; width:100%; height:5px; background:#E2E8F0; border-radius:3px; outline:none; margin:0; cursor:pointer; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:var(--sf); border:3px solid white; cursor:pointer; box-shadow:0 2px 8px rgba(1,118,211,0.4); }
+    .sl-ends { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); margin-top:5px; }
+    .formula-box { background:#F8FAFC; border:1px solid var(--border); border-radius:12px; padding:18px; margin-top:6px; }
+    .formula-title { font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:12px; }
+    .formula-line { font-size:12px; color:#475569; line-height:1.9; }
+    .formula-line b { color:var(--sf-dark); }
+    .formula-note { font-size:11px; color:var(--muted); margin-top:6px; }
+    .calc-results-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; align-content:start; }
+    @media (max-width: 1200px) { .calc-results-grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width: 700px) { .calc-results-grid { grid-template-columns:1fr; } }
+    .rc { background:var(--white); border:1px solid var(--border); border-radius:16px; padding:22px; box-shadow:var(--shadow); transition: box-shadow 0.2s; position:relative; overflow:hidden; }
+    .rc:hover { box-shadow:var(--shadow-md); }
+    .rc::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+    .rc.cA::before { background:linear-gradient(90deg,var(--sf),var(--sf2)); }
+    .rc.cB::before { background:linear-gradient(90deg,var(--terra),#F59E6C); }
+    .rc.cC { background:linear-gradient(135deg,var(--sf-dark),#043473); color:white; border:none; }
+    .rc-lbl { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:14px; }
+    .rc.cC .rc-lbl { color:rgba(255,255,255,0.55); }
+    .rc-vs { display:flex; gap:12px; }
+    .rc-col { flex:1; }
+    .rc-col-lbl { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:5px; }
+    .rc-num { font-size:clamp(18px,2.5vw,24px); font-weight:900; line-height:1.1; }
+    .rc-sub { font-size:11.5px; color:var(--muted); margin-top:2px; }
+    .rc-bar-track { height:6px; background:#F1F5F9; border-radius:3px; margin-top:7px; overflow:hidden; }
+    .rc-bar { height:100%; border-radius:3px; transition:width 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .rc-sep { width:1px; background:var(--border); flex-shrink:0; }
+    .rc-badge { margin-top:14px; padding:9px 13px; border-radius:8px; font-size:12.5px; font-weight:700; display:flex; align-items:center; gap:7px; }
+    .rc-badge.green { background:#F0FFF4; border:1px solid #BBF7D0; color:var(--green); }
+    .rc-badge.blue  { background:#EFF6FF; border:1px solid #BFDBFE; color:var(--sf); }
+    .rc-badge.white { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.9); }
+    .rc-big { font-size:clamp(36px,5vw,52px); font-weight:900; line-height:1; color:white; margin-bottom:8px; }
+    .rc-big-sub { font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:14px; line-height:1.5; }
+    /* empty 4th & 5th cell placeholders for grid */
+    .calc-results-extra { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+    @media (max-width: 700px) { .calc-results-extra { grid-template-columns: 1fr; } }
+    .info-tile { background:var(--white); border:1px solid var(--border); border-radius:16px; padding:20px; box-shadow:var(--shadow); display:flex; gap:14px; align-items:flex-start; }
+    .info-tile-icon { width:42px; height:42px; border-radius:11px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+    .info-tile h5 { font-size:14px; font-weight:700; color:var(--sf-dark); margin-bottom:5px; }
+    .info-tile p  { font-size:13px; color:var(--muted); line-height:1.6; margin:0; }
 
-    .calc-results { display: flex; flex-direction: column; gap: 16px; }
-    .result-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 22px; box-shadow: var(--card-sh); position: relative; overflow: hidden; }
-    .result-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-    .rc-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 14px; }
-    .rc-vs { display: flex; gap: 14px; align-items: stretch; }
-    .rc-col { flex: 1; }
-    .rc-col-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
-    .rc-num { font-size: clamp(20px,3vw,26px); font-weight: 900; line-height: 1.1; }
-    .rc-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
-    .rc-bar-track { height: 7px; background: #F1F5F9; border-radius: 4px; margin-top: 8px; overflow: hidden; }
-    .rc-bar { height: 100%; border-radius: 4px; transition: width 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
-    .rc-sep { width: 1px; background: var(--border); flex-shrink: 0; }
-    .rc-saving { margin-top: 14px; padding: 10px 14px; border-radius: 9px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-    .rc-saving.green { background: #F0FFF4; border: 1px solid #BBF7D0; color: var(--green); }
-    .rc-saving.blue  { background: #EFF6FF; border: 1px solid #BFDBFE; color: var(--sf); }
-    .highlight-card { background: linear-gradient(135deg, var(--sf-dark), #043473); color: white; border: none; }
-    .highlight-card .rc-title { color: rgba(255,255,255,0.55); }
-    .highlight-card .rc-saving { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); }
+    /* ── OBJECTION MATRIX ── */
+    .obj-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+    @media (max-width:1200px) { .obj-grid { grid-template-columns:repeat(3,1fr); } }
+    @media (max-width:860px)  { .obj-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:560px)  { .obj-grid { grid-template-columns:1fr; } }
+    .obj-card { background:var(--white); border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); cursor:pointer; transition:all 0.2s; }
+    .obj-card:hover { border-color:rgba(1,118,211,0.3); box-shadow:var(--shadow-md); transform:translateY(-2px); }
+    .obj-card.open { border-color:rgba(1,118,211,0.4); }
+    .obj-head { padding:20px; display:flex; gap:12px; align-items:flex-start; }
+    .obj-num-badge { width:32px; height:32px; border-radius:8px; background:#EFF6FF; color:var(--sf); font-size:13px; font-weight:900; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+    .obj-q-text { font-size:13.5px; font-weight:700; color:var(--sf-dark); line-height:1.45; flex:1; }
+    .obj-chevron-wrap { margin-left:auto; flex-shrink:0; padding-top:2px; }
+    .obj-chevron-icon { color:var(--muted); transition:transform 0.3s; display:block; }
+    .obj-card.open .obj-chevron-icon { transform:rotate(180deg); }
+    .obj-body { max-height:0; overflow:hidden; transition:max-height 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .obj-card.open .obj-body { max-height:400px; }
+    .obj-inner { padding:0 20px 20px; }
+    .obj-script { background:#EFF6FF; border:1px solid #BFDBFE; border-radius:10px; padding:14px 16px; margin-bottom:10px; }
+    .obj-script-lbl { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:var(--sf); margin-bottom:7px; }
+    .obj-script p { font-size:13px; color:#1e3a5f; line-height:1.65; margin:0; }
+    .obj-divider { height:1px; background:var(--border); margin-bottom:10px; }
+    .obj-footer { display:flex; align-items:center; gap:8px; font-size:11.5px; color:var(--muted); font-weight:600; }
 
-    /* ── OBJECTIONS ── */
-    .obj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 48px; }
-    .obj-tile { background: white; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; box-shadow: var(--card-sh); cursor: pointer; transition: all 0.2s; }
-    .obj-tile:hover { border-color: rgba(1,118,211,0.3); transform: translateY(-3px); box-shadow: var(--card-sh2); }
-    .obj-tile.open { border-color: rgba(1,118,211,0.35); }
-    .obj-tile-head { padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .obj-left { display: flex; align-items: center; gap: 14px; }
-    .obj-num { width: 36px; height: 36px; border-radius: 10px; background: #EFF6FF; color: var(--sf); font-size: 14px; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .obj-q { font-size: 15px; font-weight: 700; color: var(--sf-dark); line-height: 1.4; }
-    .obj-chevron { color: var(--muted); transition: transform 0.35s; flex-shrink: 0; }
-    .obj-tile.open .obj-chevron { transform: rotate(180deg); }
-    .obj-body { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
-    .obj-tile.open .obj-body { max-height: 500px; }
-    .obj-body-inner { padding: 0 24px 24px; display: flex; flex-direction: column; gap: 14px; }
-    .obj-section { border-radius: 12px; padding: 16px 18px; }
-    .obj-section-label { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
-    .obj-section p { font-size: 13.5px; line-height: 1.65; margin: 0; color: #334155; }
+    /* ── FOOTER ── */
+    .site-footer { background:var(--sf-dark); padding:26px 28px; }
+    .site-footer-inner { max-width:1400px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+
+    /* ── SEP ── */
+    .sep { width:100%; height:1px; background:var(--border); }
   </style>
 </head>
 <body>
 
-<!-- ════════ NAV ════════ -->
+<!-- ████ TOP NAV ████ -->
 <nav id="topnav">
-  <div class="nav-left">
-    <div class="logo-box">
-      <i data-lucide="building-2" style="width:15px;height:15px;"></i>
-      Your Corporate Logo
+  <div class="nav-brand">
+    <div class="nav-brand-pill">
+      <!-- Salesforce Cloud SVG -->
+      <svg width="30" height="22" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12.3 5.6C13.2 4.0 14.9 3.0 16.8 3.0C19.2 3.0 21.2 4.6 21.9 6.8C22.5 6.5 23.2 6.4 23.9 6.4C26.2 6.4 28.0 8.2 28.0 10.5C28.0 12.8 26.2 14.6 23.9 14.6H7.8C5.7 14.6 4.0 12.9 4.0 10.8C4.0 8.9 5.3 7.3 7.1 6.9C7.0 6.6 7.0 6.3 7.0 6.0C7.0 3.8 8.8 2.0 11.0 2.0C11.6 2.0 12.1 2.2 12.6 2.4" fill="#0176D3"/>
+        <path d="M12.3 5.6C13.2 4.0 14.9 3.0 16.8 3.0C19.2 3.0 21.2 4.6 21.9 6.8C22.5 6.5 23.2 6.4 23.9 6.4C26.2 6.4 28.0 8.2 28.0 10.5C28.0 12.8 26.2 14.6 23.9 14.6H7.8C5.7 14.6 4.0 12.9 4.0 10.8C4.0 8.9 5.3 7.3 7.1 6.9C7.0 6.6 7.0 6.3 7.0 6.0C7.0 3.8 8.8 2.0 11.0 2.0C11.6 2.0 12.1 2.2 12.6 2.4" stroke="white" stroke-width="0.5" fill="#0176D3"/>
+      </svg>
+      <div class="nav-pipe"></div>
+      <!-- Anthropic / Claude SVG mark -->
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11" cy="11" r="10" fill="#DA7756"/>
+        <path d="M11 4 L13.2 9.8 L19.5 9.8 L14.6 13.4 L16.8 19.2 L11 15.6 L5.2 19.2 L7.4 13.4 L2.5 9.8 L8.8 9.8 Z" fill="white" opacity="0.95"/>
+      </svg>
+      <span style="font-size:13px;font-weight:800;color:var(--sf-dark);">AE Strategic Enablement Hub</span>
     </div>
-    <div class="nav-divider"></div>
-    <div class="nav-title">Salesforce + Claude AE Battlecard</div>
+    <span class="nav-internal">INTERNAL ONLY</span>
   </div>
-  <div class="nav-right">
-    <button class="nav-btn" onclick="goTo('eli5')">30-Second ELI5</button>
-    <button class="nav-btn" onclick="goTo('architecture')">AIforce vs Claudeforce</button>
-    <button class="nav-btn" onclick="goTo('calculator')">Flex Credit Calculator</button>
-    <button class="nav-btn" onclick="goTo('objections')">Objection Matrix</button>
-    <div id="nav-internal">INTERNAL</div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="goTo('thesis')">Executive Thesis</button>
+    <button class="nav-link" onclick="goTo('pitch')">30-Sec Pitch</button>
+    <button class="nav-link" onclick="goTo('architecture')">AIforce vs Claudeforce</button>
+    <button class="nav-link" onclick="goTo('calculator')">Flex Credit Calculator</button>
+    <button class="nav-link" onclick="goTo('objections')">8-Card Objection Matrix</button>
   </div>
 </nav>
 <div id="progress-bar"></div>
 
-<!-- ════════ HERO ════════ -->
-<section id="hero">
+<!-- ████ HERO / THESIS ████ -->
+<section id="thesis">
   <div class="hero-mesh"></div>
-  <div class="hero-inner">
-    <div class="hero-badge">
-      <span class="badge-pulse"></span>
-      Dreamforce 2026 · AE Strategic Enablement · Not for Customer Distribution
+  <div class="hero-grid-pattern"></div>
+  <div class="page-max hero-inner">
+
+    <!-- Core Thesis Banner -->
+    <div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:14px;padding:18px 22px;margin-bottom:40px;backdrop-filter:blur(10px);display:flex;gap:14px;align-items:flex-start;max-width:860px;">
+      <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <i data-lucide="lightbulb" style="width:18px;height:18px;color:rgba(255,255,255,0.9);"></i>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px;">Core Seller Thesis</div>
+        <p style="font-size:14.5px;color:rgba(255,255,255,0.9);line-height:1.65;margin:0;">Copilot acts like a generic temp who has to re-read your entire CRM spreadsheet on every query — wasting thousands of credits and taking 8+ seconds to respond. <strong style="color:white;">Claudeforce speaks Salesforce natively out of the box</strong>, executing tasks in under 1.5 seconds while cutting token costs by 95%.</p>
+      </div>
     </div>
-    <h1 class="hero-h1">
-      Defeat the <span class="hl-terra">Copilot</span> Objection<br>
-      with <span class="hl-sf">CRM-Native AI</span>
-    </h1>
-    <p class="hero-sub">The seller guide to positioning Claudeforce, token efficiency, and predictable Flex Credit economics.</p>
+
+    <div class="hero-badge"><span class="hero-pulse"></span>Dreamforce 2026 · Strategic Enablement · Not for Customer Distribution</div>
+    <h1 class="hero-h1">Defeat the Copilot Objection<br>with <span style="color:#FCD34D;">CRM-Native AI</span></h1>
+    <p class="hero-sub-text">The enterprise seller playbook for positioning Claudeforce, AIforce, and predictable Flex Credit unit economics.</p>
     <div class="hero-btns">
-      <button class="btn-primary" onclick="goTo('calculator')">
+      <button class="btn-white" onclick="goTo('calculator')">
         <i data-lucide="calculator" style="width:16px;height:16px;"></i>
         Open Token Calculator
       </button>
-      <button class="btn-secondary" onclick="goTo('objections')">
+      <button class="btn-outline" onclick="goTo('objections')">
         <i data-lucide="shield" style="width:16px;height:16px;"></i>
-        View Objection Handling
+        Launch Objection Matrix
       </button>
     </div>
-    <div class="hero-stats" style="margin-top:52px;background:white;border:1px solid var(--border);border-radius:16px;max-width:640px;margin-left:auto;margin-right:auto;box-shadow:var(--card-sh);">
-      <div class="hero-stat">
-        <div class="num" style="color:var(--sf);">~95.7%</div>
-        <div class="lbl">Token reduction vs. Copilot RAG</div>
+    <div class="metrics-bar">
+      <div class="metric-tile">
+        <div class="num">95.7%</div>
+        <div class="lbl">Token Reduction vs. Copilot Raw RAG</div>
       </div>
-      <div class="hero-stat">
-        <div class="num" style="color:var(--terra);">37</div>
-        <div class="lbl">Prebuilt MCP sales skills</div>
+      <div class="metric-tile">
+        <div class="num">37</div>
+        <div class="lbl">Native Prebuilt MCP Sales Skills</div>
       </div>
-      <div class="hero-stat">
-        <div class="num" style="color:var(--green);">7×</div>
-        <div class="lbl">Faster AI responses</div>
+      <div class="metric-tile">
+        <div class="num">&lt;1.5s</div>
+        <div class="lbl">Response Latency (vs. 8.5s Copilot)</div>
       </div>
-      <div class="hero-stat">
-        <div class="num" style="color:#7C3AED;">$0.10</div>
-        <div class="lbl">Fixed cost per standard action</div>
+      <div class="metric-tile">
+        <div class="num">$0.10</div>
+        <div class="lbl">Fixed Per-Action Cost (20 Flex Credits)</div>
       </div>
     </div>
   </div>
@@ -295,396 +350,362 @@
 
 <div class="sep"></div>
 
-<!-- ════════ ELI5 ════════ -->
-<section id="eli5">
-  <div class="sec-wrap">
+<!-- ████ SECTION 1: 30-SEC PITCH ████ -->
+<section id="pitch" style="background:var(--canvas);">
+  <div class="page-max section-wrap">
+
+    <div class="sec-banner">
+      <div class="sec-banner-icon"><i data-lucide="megaphone" style="width:20px;height:20px;color:var(--sf);"></i></div>
+      <p><strong>How to Explain Claudeforce in 30 Seconds:</strong> Tell the buyer: "Copilot extracts flat data out of Salesforce into M365, breaking permissions and burning massive tokens. Claudeforce brings Claude's reasoning directly into your existing Salesforce workflows with zero setup, zero data retention, and instant CRM fluency."</p>
+    </div>
+
     <div class="sec-eyebrow">Section 1</div>
     <h2 class="sec-h2">The 30-Second Seller Pitch</h2>
-    <p class="sec-sub">Everything you need to know if you've never heard of Claudeforce before — in plain English.</p>
+    <p class="sec-sub" style="margin-bottom:40px;">Three cards. One per objection stage. Read all three before every Copilot replacement call.</p>
 
-    <div style="margin-top:40px;">
-      <div class="eli5-box">
-        <div class="eli5-header">
-          <div class="eli5-icon-wrap">💡</div>
-          <div>
-            <h3>The 30-Second ELI5</h3>
-            <p>Three cards. That's all you need. Read these before every call involving Copilot.</p>
+    <div class="pitch-grid">
+
+      <div class="pitch-card p1">
+        <div class="pitch-tag" style="background:rgba(1,118,211,0.1);color:var(--sf);">01 · What It Is</div>
+        <h3>Intern vs. Expert</h3>
+        <div class="compare-mini">
+          <div class="compare-row-mini bad">
+            <span class="crmini-label bad">Copilot</span>
+            Treats your CRM like unstructured text documents. Every query forces it to parse raw spreadsheets — breaking permissions and burning 35,000+ tokens before it can answer a single question.
           </div>
-        </div>
-
-        <div class="eli5-grid">
-
-          <!-- Card 1: What Is It -->
-          <div class="eli5-card c1">
-            <div class="eli5-card-tag" style="background:rgba(1,118,211,0.1);color:var(--sf);">Card 1 — What Is It?</div>
-            <h4>The Intern vs. The Expert</h4>
-            <div class="eli5-compare">
-              <div class="eli5-row bad">
-                <span class="eli5-label">Standard AI (Copilot)</span>
-                Like hiring an intern who has never heard of Salesforce. Every query? You hand them a printout of your entire company database and say "here, read this first." That takes forever and costs a fortune in tokens.
-              </div>
-              <div class="eli5-row good">
-                <span class="eli5-label">Claudeforce</span>
-                An AI that already graduated from Salesforce school. It natively understands Accounts, Opportunities, Stage Logic, and Contacts — no raw spreadsheet dump required.
-              </div>
-            </div>
+          <div class="compare-row-mini good">
+            <span class="crmini-label good">Claudeforce</span>
+            Arrives with 37 prebuilt sales skills that natively understand Accounts, Opportunities, Contact Roles, and Stage Logic — no retraining, no custom prompts, no raw data dumps.
           </div>
-
-          <!-- Card 2: Why It Matters -->
-          <div class="eli5-card c2">
-            <div class="eli5-card-tag" style="background:rgba(218,119,86,0.12);color:var(--terra-dk);">Card 2 — Why It Matters</div>
-            <h4>The Token Bill Shock</h4>
-            <div class="eli5-plain">
-              <p>Customers using Copilot are seeing <strong>massive surprise token bills</strong> because Copilot dumps raw text files into context windows — 35,000+ tokens per query.</p>
-              <p style="margin-top:12px;">Claudeforce uses <strong>37 prebuilt MCP skills</strong> to fetch only the exact data needed. That's ~1,500 tokens per query — a <strong>~95% reduction</strong> in token consumption, running <strong>7× faster</strong> than generic RAG.</p>
-            </div>
-          </div>
-
-          <!-- Card 3: How We Sell to CIOs -->
-          <div class="eli5-card c3">
-            <div class="eli5-card-tag" style="background:rgba(22,163,74,0.1);color:var(--green);">Card 3 — CIO Pitch</div>
-            <h4>Cost Control + Revenue Engine</h4>
-            <div class="eli5-plain">
-              <p>CIOs are terrified of <strong>unpredictable AI credit burn</strong>. Sell Claudeforce as the answer:</p>
-              <p style="margin-top:12px;">✓ <strong>Fixed 20 Flex Credits ($0.10) per action</strong> — no surprises<br>
-              ✓ <strong>Zero data retention</strong> — passes InfoSec on first read<br>
-              ✓ <strong>Zero API plumbing</strong> — Salesforce ships as the MCP server, 37 skills live on day one</p>
-            </div>
-          </div>
-
         </div>
       </div>
+
+      <div class="pitch-card p2">
+        <div class="pitch-tag" style="background:rgba(218,119,86,0.12);color:var(--terra-dk);">02 · Why It Matters</div>
+        <h3>The Token Bill Shock</h3>
+        <p>Context-stuffing in Copilot causes extreme latency (~8s) and unpredictable credit burn. Finance teams can't budget against opaque token pools.</p>
+        <p style="margin-top:12px;">Claudeforce uses targeted MCP skill contracts — reducing token payloads from <strong style="color:var(--red);">35,000 tokens</strong> down to <strong style="color:var(--green);">1,500 tokens</strong> per query. Same answer. 23× less compute. 7× faster response.</p>
+        <div style="margin-top:16px;display:flex;gap:10px;">
+          <div style="flex:1;background:#FEF2F2;border:1px solid #FECACA;border-radius:9px;padding:12px;text-align:center;">
+            <div style="font-size:22px;font-weight:900;color:var(--red);">35K</div>
+            <div style="font-size:11px;color:var(--muted);">tokens/query · Copilot</div>
+          </div>
+          <div style="display:flex;align-items:center;color:var(--muted);font-size:13px;font-weight:700;">vs</div>
+          <div style="flex:1;background:#F0FFF4;border:1px solid #BBF7D0;border-radius:9px;padding:12px;text-align:center;">
+            <div style="font-size:22px;font-weight:900;color:var(--green);">1.5K</div>
+            <div style="font-size:11px;color:var(--muted);">tokens/query · Claudeforce</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pitch-card p3">
+        <div class="pitch-tag" style="background:rgba(22,163,74,0.1);color:var(--green);">03 · CIO Pitch</div>
+        <h3>Cost Control Strategy</h3>
+        <p>CIOs fear runaway AI vendor bills. We position Claudeforce as the answer to that exact fear:</p>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:9px;">
+          <div style="display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:#1e3a5f;">
+            <i data-lucide="check-circle" style="width:16px;height:16px;color:var(--green);flex-shrink:0;margin-top:1px;"></i>
+            <span><strong>Fixed $0.10 per action</strong> — Finance can model this on a spreadsheet</span>
+          </div>
+          <div style="display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:#1e3a5f;">
+            <i data-lucide="check-circle" style="width:16px;height:16px;color:var(--green);flex-shrink:0;margin-top:1px;"></i>
+            <span><strong>Zero third-party model training</strong> — passes InfoSec on first read</span>
+          </div>
+          <div style="display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:#1e3a5f;">
+            <i data-lucide="check-circle" style="width:16px;height:16px;color:var(--green);flex-shrink:0;margin-top:1px;"></i>
+            <span><strong>Existing Salesforce permissions enforced</strong> — no new security review</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
 <div class="sep"></div>
 
-<!-- ════════ ARCHITECTURE TABS ════════ -->
-<div class="alt-bg">
-<section id="architecture">
-  <div class="sec-wrap">
+<!-- ████ SECTION 2: ARCHITECTURE ████ -->
+<section id="architecture" style="background:var(--white);">
+  <div class="page-max section-wrap">
+
+    <div class="sec-banner" style="border-left-color:var(--terra);">
+      <div class="sec-banner-icon"><i data-lucide="cpu" style="width:20px;height:20px;color:var(--terra);"></i></div>
+      <p><strong>The Simple Architecture Difference:</strong> AIforce is the invisible engine that exposes Salesforce data and security rules to outside apps, while Claudeforce is Claude operating natively inside Salesforce (or vice versa) using 37 prebuilt sales skills.</p>
+    </div>
+
     <div class="sec-eyebrow">Section 2</div>
-    <h2 class="sec-h2">AIforce vs. Claudeforce — What's the Difference?</h2>
-    <p class="sec-sub">Three components, three distinct value propositions. Know all three to win the architecture conversation.</p>
+    <h2 class="sec-h2">AIforce vs. Claudeforce Architecture</h2>
+    <p class="sec-sub" style="margin-bottom:36px;">Three components. Three distinct value propositions. Know all three to win the architecture conversation.</p>
 
-    <div style="margin-top:44px;">
-      <div class="tab-bar">
-        <button class="tab-btn active" onclick="switchTab(0)">
-          AIforce (The Engine)
-        </button>
-        <button class="tab-btn" onclick="switchTab(1)">
-          Salesforce in Claude (Beta)
-        </button>
-        <button class="tab-btn" onclick="switchTab(2)">
-          Claude in Agentforce
-        </button>
-      </div>
-
-      <!-- Tab 0: AIforce -->
-      <div class="tab-panel active" id="tab-0">
-        <div class="arch-card">
-          <div class="arch-card-head">
-            <div class="arch-card-head-row">
-              <div>
-                <div class="arch-badge" style="background:rgba(1,118,211,0.1);color:var(--sf);">AIforce Interface Layer</div>
-              </div>
-              <div class="arch-icon" style="background:rgba(1,118,211,0.1);">
-                <i data-lucide="layers" style="width:24px;height:24px;color:var(--sf);"></i>
-              </div>
-            </div>
-            <div class="arch-h3">The Headless AI Toolkit</div>
-            <div class="arch-def">AIforce is the foundational infrastructure layer that exposes Salesforce's CRM data, business logic, and sharing rules to external AI surfaces — securely and in real time. It's what makes Claude (or any authorized model) CRM-intelligent without violating governance.</div>
-          </div>
-          <div class="arch-body">
-            <div class="arch-grid4">
-              <div class="arch-row">
-                <div class="arch-row-icon" style="background:rgba(1,118,211,0.08);">
-                  <i data-lucide="database" style="width:18px;height:18px;color:var(--sf);"></i>
-                </div>
-                <div>
-                  <h5>Core Definition</h5>
-                  <p>A headless API toolkit exposing CRM ontology — Accounts, Opportunities, Contacts, Stage Logic — to any authorized AI surface via structured, permission-aware queries.</p>
-                </div>
-              </div>
-              <div class="arch-row">
-                <div class="arch-row-icon" style="background:rgba(1,118,211,0.08);">
-                  <i data-lucide="code-2" style="width:18px;height:18px;color:var(--sf);"></i>
-                </div>
-                <div>
-                  <h5>How It Works (Plain English)</h5>
-                  <p>Instead of dumping your entire CRM as a text file, AIforce lets AI ask structured questions: "Give me Opportunity #123 with its related contacts and last activity." Fast and precise.</p>
-                </div>
-              </div>
-              <div class="arch-row">
-                <div class="arch-row-icon" style="background:rgba(1,118,211,0.08);">
-                  <i data-lucide="trophy" style="width:18px;height:18px;color:var(--sf);"></i>
-                </div>
-                <div>
-                  <h5>Key Benefit for AEs</h5>
-                  <p>Your competitive moat. No generic AI competitor can replicate Salesforce's 25 years of CRM ontology. This is the reason Claudeforce beats Copilot on complex CRM tasks.</p>
-                </div>
-              </div>
-              <div class="arch-row">
-                <div class="arch-row-icon" style="background:rgba(1,118,211,0.08);">
-                  <i data-lucide="shield-check" style="width:18px;height:18px;color:var(--sf);"></i>
-                </div>
-                <div>
-                  <h5>Technical Spec</h5>
-                  <p>Headless REST + GraphQL APIs. Row-level security enforced at query time. Field-level encryption preserved. Org-wide defaults and role hierarchies respected automatically.</p>
-                </div>
-              </div>
-            </div>
-            <div class="arch-spec-bar">
-              <span class="arch-spec-label">Tech Specs:</span>
-              <span class="spec-chip">CRM Ontology Aware</span>
-              <span class="spec-chip">Sharing Rules Enforced</span>
-              <span class="spec-chip">Real-Time API</span>
-              <span class="spec-chip">Permission-Scoped Queries</span>
-              <span class="spec-chip">No RAG Context Stuffing</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 1: Salesforce in Claude -->
-      <div class="tab-panel" id="tab-1">
-        <div class="arch-card">
-          <div class="arch-card-head">
-            <div class="arch-card-head-row">
-              <div>
-                <div class="arch-badge" style="background:rgba(218,119,86,0.12);color:var(--terra-dk);">Salesforce in Claude · Beta</div>
-              </div>
-              <div class="arch-icon" style="background:rgba(218,119,86,0.1);">
-                <i data-lucide="cpu" style="width:24px;height:24px;color:var(--terra);"></i>
-              </div>
-            </div>
-            <div class="arch-h3">Claude as the Client. Salesforce as the Server.</div>
-            <div class="arch-def">37 prebuilt sales skills delivered via Model Context Protocol (MCP). Users interact with Claude in natural language — Claude calls structured Salesforce skills to retrieve exactly the data needed. 1,500 tokens instead of 35,000. No API configuration required.</div>
-          </div>
-          <div class="arch-body">
-            <div class="arch-grid4">
-              <div class="arch-row">
-                <div class="arch-row-icon" style="background:rgba(218,119,86,0.1);">
-                  <i data-lucide="server" style="width:18px;height:18px;color:var(--terra);"></i>
-                </div>
-                <div>
-                  <h5>Core Definition</h5>
-                  <p>Salesforce ships as a prebuilt MCP server. Claude is the AI client. Natural language queries trigger structured skill calls — no custom connectors, no developer work.</p>
-                </div>
-              </div>
-              <div class="arch-row">
-                <div class="arch-row-icon" style="background:rgba(218,119,86,0.1);">
-                  <i data-lucide="message-circle" style="width:18px;height:18px;color:var(--terra);"></i>
-                </div>
-                <div>
-                  <h5>How It Works (Plain English)</h5>
-                  <p>Rep asks Claude: "What deals are at risk this quarter?" Claude calls the risk-scoring MCP skill → gets a 1,500-token structured answer → presents it in plain English. 7× faster than Copilot.</p>
-                </div>
-              </div>
-              <div class="arch-row">
-                <div class="arch-row-icon" style="background:rgba(218,119,86,0.1);">
-                  <i data-lucide="zap" style="width:18px;height:18px;color:var(--terra);"></i>
-                </div>
-                <div>
-                  <h5>Key Benefit for AEs</h5>
-                  <p>Close the "we already have Claude" objection instantly. Yes — but Claude without 37 prebuilt Salesforce skills is just a generic chatbot. This is Claude that already knows your CRM.</p>
-                </div>
-              </div>
-              <div class="arch-row">
-                <div class="arch-row-icon" style="background:rgba(218,119,86,0.1);">
-                  <i data-lucide="git-branch" style="width:18px;height:18px;color:var(--terra);"></i>
-                </div>
-                <div>
-                  <h5>Technical Spec</h5>
-                  <p>MCP (Model Context Protocol) — open standard. Salesforce = MCP server. Claude = MCP client. 37 sales skills prebuilt. Works in Claude Desktop + Slack. Zero API plumbing required.</p>
-                </div>
-              </div>
-            </div>
-            <div class="arch-spec-bar">
-              <span class="arch-spec-label">Tech Specs:</span>
-              <span class="spec-chip">MCP Protocol</span>
-              <span class="spec-chip">37 Sales Skills</span>
-              <span class="spec-chip">1,500 tokens/query</span>
-              <span class="spec-chip">Claude Desktop + Slack</span>
-              <span class="spec-chip">Zero API Setup</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 2: Claude in Agentforce -->
-      <div class="tab-panel" id="tab-2">
-        <div class="arch-card">
-          <div class="arch-card-head">
-            <div class="arch-card-head-row">
-              <div>
-                <div class="arch-badge" style="background:rgba(22,163,74,0.1);color:var(--green);">Claude in Agentforce</div>
-              </div>
-              <div class="arch-icon" style="background:rgba(22,163,74,0.1);">
-                <i data-lucide="brain" style="width:24px;height:24px;color:var(--green);"></i>
-              </div>
-            </div>
-            <div class="arch-h3">Frontier Reasoning Inside the Trust Boundary</div>
-            <div class="arch-def">Claude 3.5 and 3.7 Sonnet serve as the default reasoning engine inside Agentforce — powered by Amazon Bedrock with Zero Data Retention enforced. Enterprise-grade AI capability with enterprise-grade governance. Not a consumer product.</div>
-          </div>
-          <div class="arch-body">
-            <div class="arch-grid4">
-              <div class="arch-row">
-                <div class="arch-row-icon" style="background:rgba(22,163,74,0.1);">
-                  <i data-lucide="sparkles" style="width:18px;height:18px;color:var(--green);"></i>
-                </div>
-                <div>
-                  <h5>Core Definition</h5>
-                  <p>When an Agentforce agent needs to reason, draft, or analyze — Claude 3.5/3.7 is the model doing the thinking. Best-in-class frontier reasoning, inside your existing Salesforce platform.</p>
-                </div>
-              </div>
-              <div class="arch-row">
-                <div class="arch-row-icon" style="background:rgba(22,163,74,0.1);">
-                  <i data-lucide="shield" style="width:18px;height:18px;color:var(--green);"></i>
-                </div>
-                <div>
-                  <h5>How It Works (Plain English)</h5>
-                  <p>An Agentforce deal coach agent is triggered. Claude handles the heavy reasoning — analyzing deal health, drafting exec summaries, scoring objections. Salesforce governs and logs every action.</p>
-                </div>
-              </div>
-              <div class="arch-row">
-                <div class="arch-row-icon" style="background:rgba(22,163,74,0.1);">
-                  <i data-lucide="lock" style="width:18px;height:18px;color:var(--green);"></i>
-                </div>
-                <div>
-                  <h5>Key Benefit for AEs</h5>
-                  <p>Demolishes the "AI isn't safe for enterprise" objection. Zero Data Retention means your customer records are never retained, never logged, never used for model training. Period.</p>
-                </div>
-              </div>
-              <div class="arch-row">
-                <div class="arch-row-icon" style="background:rgba(22,163,74,0.1);">
-                  <i data-lucide="cloud" style="width:18px;height:18px;color:var(--green);"></i>
-                </div>
-                <div>
-                  <h5>Technical Spec</h5>
-                  <p>Amazon Bedrock — Zero Data Retention (ZDR). Einstein Trust Layer. Claude 3.5 Sonnet + Claude 3.7 Sonnet. Every inference is stateless. Fully auditable under Salesforce Event Monitoring.</p>
-                </div>
-              </div>
-            </div>
-            <div class="arch-spec-bar">
-              <span class="arch-spec-label">Tech Specs:</span>
-              <span class="spec-chip">Amazon Bedrock ZDR</span>
-              <span class="spec-chip">Claude 3.5 / 3.7 Sonnet</span>
-              <span class="spec-chip">Einstein Trust Layer</span>
-              <span class="spec-chip">Stateless Inference</span>
-              <span class="spec-chip">Event Monitoring</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <div class="arch-tabs">
+      <button class="arch-tab active" onclick="switchTab(0)">AIforce (The Engine)</button>
+      <button class="arch-tab" onclick="switchTab(1)">Salesforce in Claude (Beta)</button>
+      <button class="arch-tab" onclick="switchTab(2)">Claude in Agentforce</button>
     </div>
+
+    <!-- Tab 0 -->
+    <div class="arch-panel active" id="atab-0">
+      <div class="arch-content">
+        <div class="arch-info">
+          <div class="arch-badge" style="background:rgba(1,118,211,0.1);color:var(--sf);">AIforce · Interface Layer</div>
+          <div class="arch-h3">The Headless Governance Engine</div>
+          <div class="arch-plain">The headless connector that makes your Salesforce workflows, sharing rules, and data accessible to any AI surface without custom API coding. It's the reason Claudeforce can't be replicated by a Microsoft Graph connector.</div>
+          <div class="arch-pitch">
+            <i data-lucide="quote" style="width:15px;height:15px;color:var(--sf);flex-shrink:0;margin-top:2px;"></i>
+            "AIforce ensures your security rules follow the AI wherever it works — there's no way to query data you don't already have permission to see."
+          </div>
+        </div>
+        <div class="arch-features">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:20px;">Feature Breakdown</div>
+          <div class="arch-features-grid">
+            <div class="af-item">
+              <div class="af-icon" style="background:rgba(1,118,211,0.08);"><i data-lucide="database" style="width:18px;height:18px;color:var(--sf);"></i></div>
+              <div><h5>Core Definition</h5><p>A permission-aware API layer exposing CRM ontology — Accounts, Opps, Contacts, Stage Logic — to any authorized AI surface via structured queries.</p></div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:rgba(1,118,211,0.08);"><i data-lucide="code-2" style="width:18px;height:18px;color:var(--sf);"></i></div>
+              <div><h5>Plain English</h5><p>Instead of dumping your entire CRM as a text wall, AIforce lets AI ask structured questions: "Give me Opp #123 with related contacts and last activity." Precise. Fast. Permission-scoped.</p></div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:rgba(1,118,211,0.08);"><i data-lucide="trophy" style="width:18px;height:18px;color:var(--sf);"></i></div>
+              <div><h5>Key AE Benefit</h5><p>Your competitive moat. No competitor can replicate 25 years of Salesforce CRM ontology. This is exactly why Claudeforce beats Copilot on complex CRM tasks — every time.</p></div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:rgba(1,118,211,0.08);"><i data-lucide="shield-check" style="width:18px;height:18px;color:var(--sf);"></i></div>
+              <div><h5>Technical Spec</h5><p>Headless REST + GraphQL. Row-level security enforced at query time. Field-level encryption preserved. Org-wide defaults and role hierarchies respected automatically.</p></div>
+            </div>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Specs:</span>
+            <span class="spec-chip">CRM Ontology Aware</span>
+            <span class="spec-chip">Sharing Rules Enforced</span>
+            <span class="spec-chip">Real-Time API</span>
+            <span class="spec-chip">No RAG Stuffing</span>
+            <span class="spec-chip">Permission-Scoped</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 1 -->
+    <div class="arch-panel" id="atab-1">
+      <div class="arch-content">
+        <div class="arch-info">
+          <div class="arch-badge" style="background:rgba(218,119,86,0.12);color:var(--terra-dk);">Salesforce in Claude · Beta</div>
+          <div class="arch-h3">37 Skills. Zero API Setup.</div>
+          <div class="arch-plain">Working directly inside Claude Desktop or Web, using 37 prebuilt MCP skills to query pipeline metrics without opening browser tabs. Salesforce ships as the MCP server — Claude is the client. 1,500 tokens instead of 35,000.</div>
+          <div class="arch-pitch" style="background:#FFF7F4;border-color:rgba(218,119,86,0.25);">
+            <i data-lucide="quote" style="width:15px;height:15px;color:var(--terra);flex-shrink:0;margin-top:2px;"></i>
+            <span style="color:#5a2a1a;">"Sellers who prefer Claude can manage their entire CRM directly from their chat workspace — no browser tabs, no logins, no context switching."</span>
+          </div>
+        </div>
+        <div class="arch-features">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:20px;">Feature Breakdown</div>
+          <div class="arch-features-grid">
+            <div class="af-item">
+              <div class="af-icon" style="background:rgba(218,119,86,0.1);"><i data-lucide="server" style="width:18px;height:18px;color:var(--terra);"></i></div>
+              <div><h5>Core Definition</h5><p>Salesforce becomes a prebuilt MCP server. Users query Claude in natural language — Claude executes against live CRM data via 37 structured MCP skill calls.</p></div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:rgba(218,119,86,0.1);"><i data-lucide="message-circle" style="width:18px;height:18px;color:var(--terra);"></i></div>
+              <div><h5>Plain English</h5><p>Rep asks: "What deals are at risk this quarter?" Claude calls the risk-scoring skill → 1,500-token answer → plain English response. 7× faster than Copilot RAG.</p></div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:rgba(218,119,86,0.1);"><i data-lucide="zap" style="width:18px;height:18px;color:var(--terra);"></i></div>
+              <div><h5>Key AE Benefit</h5><p>Close the "we already have Claude" objection instantly. Yes — but Claude without 37 native Salesforce skills is a generic chatbot. This is Claude that graduated from Salesforce school.</p></div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:rgba(218,119,86,0.1);"><i data-lucide="git-branch" style="width:18px;height:18px;color:var(--terra);"></i></div>
+              <div><h5>Technical Spec</h5><p>MCP (Model Context Protocol) — open standard. Salesforce = MCP server. Claude = MCP client. Works in Claude Desktop, Claude Web, and Slack. Zero API plumbing required.</p></div>
+            </div>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Specs:</span>
+            <span class="spec-chip">MCP Protocol</span>
+            <span class="spec-chip">37 Sales Skills</span>
+            <span class="spec-chip">1,500 tokens/query</span>
+            <span class="spec-chip">Claude Desktop + Slack</span>
+            <span class="spec-chip">Zero API Setup</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 2 -->
+    <div class="arch-panel" id="atab-2">
+      <div class="arch-content">
+        <div class="arch-info">
+          <div class="arch-badge" style="background:rgba(22,163,74,0.1);color:var(--green);">Claude in Agentforce</div>
+          <div class="arch-h3">Frontier AI. Trust Layer Enforced.</div>
+          <div class="arch-plain">Claude 3.5/3.7 integrated as the default reasoning engine inside Salesforce Lightning and Agentforce Coworker. Enterprise-grade AI capability — with Zero Data Retention enforced via Amazon Bedrock. Not a consumer product.</div>
+          <div class="arch-pitch" style="background:#F0FFF4;border-color:rgba(22,163,74,0.25);">
+            <i data-lucide="quote" style="width:15px;height:15px;color:var(--green);flex-shrink:0;margin-top:2px;"></i>
+            <span style="color:#14532d;">"Deep, autonomous CRM action execution directly on your Lightning record pages — with every move logged, permissioned, and reversible."</span>
+          </div>
+        </div>
+        <div class="arch-features">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:20px;">Feature Breakdown</div>
+          <div class="arch-features-grid">
+            <div class="af-item">
+              <div class="af-icon" style="background:rgba(22,163,74,0.1);"><i data-lucide="sparkles" style="width:18px;height:18px;color:var(--green);"></i></div>
+              <div><h5>Core Definition</h5><p>When Agentforce needs to reason, draft, or analyze — Claude 3.5/3.7 Sonnet is the model doing the thinking. Best-in-class frontier reasoning inside your existing Salesforce org.</p></div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:rgba(22,163,74,0.1);"><i data-lucide="shield" style="width:18px;height:18px;color:var(--green);"></i></div>
+              <div><h5>Plain English</h5><p>An Agentforce deal-coach agent is triggered on a Lightning page. Claude handles the heavy reasoning — scoring deal health, drafting exec summaries, surfacing next best actions.</p></div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:rgba(22,163,74,0.1);"><i data-lucide="lock" style="width:18px;height:18px;color:var(--green);"></i></div>
+              <div><h5>Key AE Benefit</h5><p>Demolishes "AI isn't safe for enterprise." ZDR means your customer records are never retained, logged, or used for model training. Your IP stays yours. Full stop.</p></div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:rgba(22,163,74,0.1);"><i data-lucide="cloud" style="width:18px;height:18px;color:var(--green);"></i></div>
+              <div><h5>Technical Spec</h5><p>Amazon Bedrock ZDR. Einstein Trust Layer. Claude 3.5 + 3.7 Sonnet. Every inference is stateless. Full audit via Salesforce Event Monitoring.</p></div>
+            </div>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Specs:</span>
+            <span class="spec-chip">Amazon Bedrock ZDR</span>
+            <span class="spec-chip">Claude 3.5 / 3.7 Sonnet</span>
+            <span class="spec-chip">Einstein Trust Layer</span>
+            <span class="spec-chip">Stateless Inference</span>
+            <span class="spec-chip">Event Monitoring</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
-</div>
 
 <div class="sep"></div>
 
-<!-- ════════ CALCULATOR ════════ -->
-<section id="calculator">
-  <div class="sec-wrap">
+<!-- ████ SECTION 3: CALCULATOR ████ -->
+<section id="calculator" style="background:var(--canvas);">
+  <div class="page-max section-wrap">
+
+    <div class="sec-banner" style="border-left-color:var(--green);">
+      <div class="sec-banner-icon"><i data-lucide="calculator" style="width:20px;height:20px;color:var(--green);"></i></div>
+      <p><strong>Why We Built This Calculator:</strong> Use this tool during client meetings to prove to CIOs that Copilot's context-stuffing model creates massive, unpredictable token bills — whereas Claudeforce's skill-based architecture delivers guaranteed <strong>$0.10 unit economics</strong>.</p>
+    </div>
+
     <div class="sec-eyebrow">Section 3</div>
     <h2 class="sec-h2">Interactive Flex Credit &amp; Token Calculator</h2>
-    <p class="sec-sub">Grounded in official Salesforce pricing: $500 / 100K Flex Credits · 20 credits per action ($0.10) · Move the sliders to match your prospect's team size.</p>
+    <p class="sec-sub" style="margin-bottom:0;">Official pricing: $500 / 100K Flex Credits · 20 credits per action = $0.10 per action.</p>
 
     <div class="calc-layout">
-
-      <!-- Inputs -->
-      <div class="calc-input">
-        <div class="calc-input-title">Configure Your Team</div>
-        <div class="slider-group">
-          <div class="sl-row">
-            <div class="sl-label">Number of Sales Reps</div>
-            <div class="sl-val" id="repVal">100</div>
+      <div class="calc-panel">
+        <div class="calc-panel-title">Configure Your Team</div>
+        <div class="sl-group">
+          <div class="sl-head">
+            <span class="sl-name">Sales Reps</span>
+            <span class="sl-num" id="repVal">100</span>
           </div>
           <input type="range" id="repSlider" min="10" max="1000" value="100" step="10" oninput="calc()">
-          <div class="sl-range-labels"><span>10</span><span>1,000</span></div>
+          <div class="sl-ends"><span>10</span><span>1,000</span></div>
         </div>
-        <div class="slider-group">
-          <div class="sl-row">
-            <div class="sl-label">Daily Queries per Rep</div>
-            <div class="sl-val" id="qryVal">20</div>
+        <div class="sl-group">
+          <div class="sl-head">
+            <span class="sl-name">Daily CRM Queries / Rep</span>
+            <span class="sl-num" id="qryVal">20</span>
           </div>
           <input type="range" id="qrySlider" min="5" max="50" value="20" step="1" oninput="calc()">
-          <div class="sl-range-labels"><span>5</span><span>50</span></div>
+          <div class="sl-ends"><span>5</span><span>50</span></div>
         </div>
-        <div class="calc-formula">
-          <div class="formula-title">Pricing Math</div>
-          <div class="formula-line">Copilot RAG: Reps × Queries × 30d × <span>35,000 tokens</span></div>
-          <div class="formula-line">Claudeforce MCP: Reps × Queries × 30d × <span>1,500 tokens</span></div>
-          <div class="formula-line" style="margin-top:6px;">Action Cost: Reps × Queries × 30d × <span>20 credits @ $0.005</span></div>
-          <div class="formula-line" style="color:var(--muted);font-size:11px;margin-top:6px;">$500 / 100K credits = $0.005/credit · 20 credits/action = $0.10/action</div>
+        <div class="formula-box">
+          <div class="formula-title">How the Math Works</div>
+          <div class="formula-line">Copilot RAG: Reps × Queries × 30d × <b>35,000 tokens</b></div>
+          <div class="formula-line">Claudeforce: Reps × Queries × 30d × <b>1,500 tokens</b></div>
+          <div class="formula-line" style="margin-top:6px;">Action Cost: Reps × Queries × 30d × <b>20 credits @ $0.005</b></div>
+          <div class="formula-note">$500 / 100K credits = $0.005 per credit · 20 credits/action = $0.10/action</div>
         </div>
       </div>
 
-      <!-- Results -->
-      <div class="calc-results">
+      <div>
+        <div class="calc-results-grid">
 
-        <!-- Token Load -->
-        <div class="result-card" style="border-top:3px solid var(--sf);">
-          <div class="rc-title">Monthly Token Load Comparison</div>
-          <div class="rc-vs">
-            <div class="rc-col">
-              <div class="rc-col-label" style="color:#DC2626;">Copilot RAG</div>
-              <div class="rc-num" style="color:#DC2626;" id="r-copilot">105B</div>
-              <div class="rc-sub">tokens / month</div>
-              <div class="rc-bar-track"><div class="rc-bar" id="b-copilot" style="background:#EF4444;width:100%;"></div></div>
+          <!-- Card A: Token Bloat -->
+          <div class="rc cA">
+            <div class="rc-lbl">Monthly Token Bloat Saved</div>
+            <div class="rc-vs">
+              <div class="rc-col">
+                <div class="rc-col-lbl" style="color:var(--red);">Copilot RAG</div>
+                <div class="rc-num" style="color:var(--red);" id="rA-copilot">105B</div>
+                <div class="rc-sub">tokens / month</div>
+                <div class="rc-bar-track"><div class="rc-bar" id="bA-copilot" style="background:var(--red);width:100%;"></div></div>
+              </div>
+              <div class="rc-sep"></div>
+              <div class="rc-col">
+                <div class="rc-col-lbl" style="color:var(--sf);">Claudeforce MCP</div>
+                <div class="rc-num" style="color:var(--sf);" id="rA-claude">4.5B</div>
+                <div class="rc-sub">tokens / month</div>
+                <div class="rc-bar-track"><div class="rc-bar" id="bA-claude" style="background:var(--sf);width:4.3%;"></div></div>
+              </div>
             </div>
-            <div class="rc-sep"></div>
-            <div class="rc-col">
-              <div class="rc-col-label" style="color:var(--sf);">Claudeforce MCP</div>
-              <div class="rc-num" style="color:var(--sf);" id="r-claude">4.5B</div>
-              <div class="rc-sub">tokens / month</div>
-              <div class="rc-bar-track"><div class="rc-bar" id="b-claude" style="background:var(--sf);width:4.3%;"></div></div>
+            <div class="rc-badge green">
+              <i data-lucide="trending-down" style="width:14px;height:14px;"></i>
+              <span id="rA-pct">95.7% token reduction</span>
             </div>
           </div>
-          <div class="rc-saving green">
-            <i data-lucide="trending-down" style="width:15px;height:15px;"></i>
-            <span id="r-pct">95.7% token reduction</span>
+
+          <!-- Card B: Latency -->
+          <div class="rc cB">
+            <div class="rc-lbl">Response Latency Comparison</div>
+            <div class="rc-vs">
+              <div class="rc-col">
+                <div class="rc-col-lbl" style="color:var(--red);">Copilot RAG</div>
+                <div class="rc-num" style="color:var(--red);">~8.5s</div>
+                <div class="rc-sub">context-stuffing lag</div>
+                <div class="rc-bar-track"><div class="rc-bar" style="background:var(--red);width:100%;"></div></div>
+              </div>
+              <div class="rc-sep"></div>
+              <div class="rc-col">
+                <div class="rc-col-lbl" style="color:var(--green);">Claudeforce MCP</div>
+                <div class="rc-num" style="color:var(--green);">&lt;1.5s</div>
+                <div class="rc-sub">structured tool call</div>
+                <div class="rc-bar-track"><div class="rc-bar" style="background:var(--green);width:17.6%;"></div></div>
+              </div>
+            </div>
+            <div class="rc-badge green">
+              <i data-lucide="zap" style="width:14px;height:14px;"></i>
+              7× faster average response time
+            </div>
           </div>
+
+          <!-- Card C: Cost -->
+          <div class="rc cC">
+            <div class="rc-lbl">Predictable Monthly Compute Cost</div>
+            <div class="rc-big" id="rC-cost">$6,000</div>
+            <div class="rc-big-sub" id="rC-sub">100 reps × 20 queries × 30d × 20 credits × $0.005</div>
+            <div class="rc-badge white">
+              <i data-lucide="lock" style="width:14px;height:14px;"></i>
+              Fixed Flex Credits — no token consumption spikes
+            </div>
+          </div>
+
         </div>
 
-        <!-- Latency -->
-        <div class="result-card" style="border-top:3px solid var(--terra);">
-          <div class="rc-title">Query Response Latency</div>
-          <div class="rc-vs">
-            <div class="rc-col">
-              <div class="rc-col-label" style="color:#DC2626;">Copilot RAG</div>
-              <div class="rc-num" style="color:#DC2626;">~8.5s</div>
-              <div class="rc-sub">context-stuffing lag</div>
-              <div class="rc-bar-track"><div class="rc-bar" style="background:#EF4444;width:100%;"></div></div>
+        <!-- 2 extra info tiles -->
+        <div class="calc-results-extra">
+          <div class="info-tile">
+            <div class="info-tile-icon" style="background:rgba(1,118,211,0.08);">
+              <i data-lucide="bar-chart-2" style="width:20px;height:20px;color:var(--sf);"></i>
             </div>
-            <div class="rc-sep"></div>
-            <div class="rc-col">
-              <div class="rc-col-label" style="color:var(--green);">Claudeforce MCP</div>
-              <div class="rc-num" style="color:var(--green);">~1.2s</div>
-              <div class="rc-sub">structured tool call</div>
-              <div class="rc-bar-track"><div class="rc-bar" style="background:var(--green);width:14.1%;"></div></div>
+            <div>
+              <h5>Why Fixed Credits Win Budget Meetings</h5>
+              <p>Finance teams can audit Flex Credit consumption by user, workflow, and department — unlike opaque token pools that spike unpredictably at month-end.</p>
             </div>
           </div>
-          <div class="rc-saving green">
-            <i data-lucide="zap" style="width:15px;height:15px;"></i>
-            7.08× faster average response time
+          <div class="info-tile">
+            <div class="info-tile-icon" style="background:rgba(22,163,74,0.1);">
+              <i data-lucide="shield-check" style="width:20px;height:20px;color:var(--green);"></i>
+            </div>
+            <div>
+              <h5>Cost Predictability = Security Approval</h5>
+              <p>ZDR means no new vendor data risk. Fixed Flex Credits mean no surprise invoices. These two facts together get Claudeforce past both InfoSec and Finance in one meeting.</p>
+            </div>
           </div>
         </div>
-
-        <!-- Flex Credit Cost -->
-        <div class="result-card highlight-card" style="border-top:3px solid rgba(255,255,255,0.3);">
-          <div class="rc-title">Monthly Action Cost (Flex Credits)</div>
-          <div style="font-size:clamp(32px,5vw,48px);font-weight:900;color:white;line-height:1.1;" id="r-cost">$6,000</div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:6px;" id="r-cost-sub">100 reps × 20 queries × 30d × 20 credits × $0.005</div>
-          <div class="rc-saving">
-            <i data-lucide="lock" style="width:15px;height:15px;"></i>
-            Fixed, predictable cost — no token consumption spikes
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -692,80 +713,184 @@
 
 <div class="sep"></div>
 
-<!-- ════════ OBJECTIONS ════════ -->
-<div class="alt-bg">
-<section id="objections">
-  <div class="sec-wrap">
+<!-- ████ SECTION 4: 8-CARD OBJECTION MATRIX ████ -->
+<section id="objections" style="background:var(--white);">
+  <div class="page-max section-wrap">
+
+    <div class="sec-banner" style="border-left-color:#7C3AED;">
+      <div class="sec-banner-icon"><i data-lucide="swords" style="width:20px;height:20px;color:#7C3AED;"></i></div>
+      <p><strong>Why This Matrix Wins Deals:</strong> Customers often default to Microsoft Copilot because it is bundled with M365. Use these 8 interactive battlecards to immediately turn customer pushback into a clear Claudeforce value win.</p>
+    </div>
+
     <div class="sec-eyebrow">Section 4</div>
-    <h2 class="sec-h2">Interactive Objection Matrix</h2>
-    <p class="sec-sub">Click any card to reveal the exact AE talking track and CIO business value point. Memorize these three before every enterprise call.</p>
+    <h2 class="sec-h2">8-Card Competitive Objection Matrix</h2>
+    <p class="sec-sub" style="margin-bottom:36px;">Click any card to reveal the 30-second AE script. Use these verbatim — they're tested talking tracks.</p>
 
     <div class="obj-grid">
 
-      <!-- Objection 1 -->
-      <div class="obj-tile" onclick="toggleObj(this)">
-        <div class="obj-tile-head">
-          <div class="obj-left">
-            <div class="obj-num">01</div>
-            <div class="obj-q">"We already pay $30/user/month for Microsoft Copilot."</div>
-          </div>
-          <i data-lucide="chevron-down" class="obj-chevron" style="width:18px;height:18px;"></i>
+      <!-- 1 -->
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-num-badge">01</div>
+          <div class="obj-q-text">"We already pay $30/user/month for Microsoft Copilot."</div>
+          <div class="obj-chevron-wrap"><i data-lucide="chevron-down" class="obj-chevron-icon" style="width:17px;height:17px;"></i></div>
         </div>
         <div class="obj-body">
-          <div class="obj-body-inner">
-            <div class="obj-section" style="background:#EFF6FF;border:1px solid #BFDBFE;">
-              <div class="obj-section-label" style="color:var(--sf);">AE Talking Track</div>
-              <p>That $30 buys generic AI that lacks native CRM ontology. Copilot pulls flat data into M365, breaking workflow rules and creating context-stuffing bloat. Studies show active Copilot usage drops to <strong>~8% on complex CRM tasks</strong>. You're paying per-seat for a tool your reps actively route around when it matters most.</p>
+          <div class="obj-inner">
+            <div class="obj-script">
+              <div class="obj-script-lbl">30-Sec AE Script</div>
+              <p>Copilot is great for drafting emails in Word, but it <strong>lacks CRM ontology</strong>. It pulls flat data out of Salesforce, breaking permissions and forcing context-stuffing. Active Copilot usage on CRM tasks drops below 10% due to slow response times — you're paying per-seat for a tool your reps route around.</p>
             </div>
-            <div class="obj-section" style="background:#F0FFF4;border:1px solid #BBF7D0;">
-              <div class="obj-section-label" style="color:var(--green);">CIO Business Value Point</div>
-              <p>Claudeforce is the only AI that runs inside the Salesforce data model you already own. Fixed 20 Flex Credits per action ($0.10) vs. unpredictable per-token billing. At 100 reps × 20 queries/day, you eliminate 100B unnecessary tokens per month and cut AI response time by 7×.</p>
+            <div class="obj-footer">
+              <i data-lucide="target" style="width:14px;height:14px;color:var(--sf);"></i>
+              CIO Hook: Fixed $0.10/action vs. unpredictable token pools
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Objection 2 -->
-      <div class="obj-tile" onclick="toggleObj(this)">
-        <div class="obj-tile-head">
-          <div class="obj-left">
-            <div class="obj-num">02</div>
-            <div class="obj-q">"Is our data safe when it enters Claude?"</div>
-          </div>
-          <i data-lucide="chevron-down" class="obj-chevron" style="width:18px;height:18px;"></i>
+      <!-- 2 -->
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-num-badge">02</div>
+          <div class="obj-q-text">"Why can't we just build custom connectors between Teams and Salesforce?"</div>
+          <div class="obj-chevron-wrap"><i data-lucide="chevron-down" class="obj-chevron-icon" style="width:17px;height:17px;"></i></div>
         </div>
         <div class="obj-body">
-          <div class="obj-body-inner">
-            <div class="obj-section" style="background:#EFF6FF;border:1px solid #BFDBFE;">
-              <div class="obj-section-label" style="color:var(--sf);">AE Talking Track</div>
-              <p><strong>Zero Data Retention — guaranteed.</strong> Every Claude inference runs inside the Salesforce Trust Boundary via Amazon Bedrock with ZDR enforced. Your data is never retained, never logged between sessions, and never used to train any third-party AI model. It's the same infrastructure securing hundreds of billions in financial transactions daily.</p>
+          <div class="obj-inner">
+            <div class="obj-script">
+              <div class="obj-script-lbl">30-Sec AE Script</div>
+              <p>Custom connectors require ongoing API maintenance, custom security mappings, and continuous prompt engineering — a months-long IT project with permanent ongoing cost. <strong>Claudeforce delivers 37 prebuilt, native sales skills out of the box</strong> with zero custom code, zero ongoing maintenance, and zero API versioning risk.</p>
             </div>
-            <div class="obj-section" style="background:#F0FFF4;border:1px solid #BBF7D0;">
-              <div class="obj-section-label" style="color:var(--green);">CIO Business Value Point</div>
-              <p>This passes InfoSec review without a new vendor risk assessment. ZDR means no new data egress risk, no AI training on your IP, and no new audit exposure. The Einstein Trust Layer provides full event monitoring and audit trails for every AI call — fully compliant with SOC 2, GDPR, and HIPAA frameworks.</p>
+            <div class="obj-footer">
+              <i data-lucide="target" style="width:14px;height:14px;color:var(--sf);"></i>
+              CIO Hook: Live in days, not quarters — zero IT scope creep
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Objection 3 -->
-      <div class="obj-tile" onclick="toggleObj(this)">
-        <div class="obj-tile-head">
-          <div class="obj-left">
-            <div class="obj-num">03</div>
-            <div class="obj-q">"How hard is deployment? We don't have bandwidth for a long IT project."</div>
-          </div>
-          <i data-lucide="chevron-down" class="obj-chevron" style="width:18px;height:18px;"></i>
+      <!-- 3 -->
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-num-badge">03</div>
+          <div class="obj-q-text">"Is sending CRM data to Claude a security or compliance risk?"</div>
+          <div class="obj-chevron-wrap"><i data-lucide="chevron-down" class="obj-chevron-icon" style="width:17px;height:17px;"></i></div>
         </div>
         <div class="obj-body">
-          <div class="obj-body-inner">
-            <div class="obj-section" style="background:#EFF6FF;border:1px solid #BFDBFE;">
-              <div class="obj-section-label" style="color:var(--sf);">AE Talking Track</div>
-              <p><strong>Zero API plumbing.</strong> Salesforce ships as the prebuilt MCP server — 37 ready-to-use sales skills, live on day one. Compare that to Copilot Plugins: dedicated dev resources, Microsoft Graph API permission work, months of custom connector builds, and ongoing maintenance. With Claudeforce, your reps are using it in days, not quarters.</p>
+          <div class="obj-inner">
+            <div class="obj-script">
+              <div class="obj-script-lbl">30-Sec AE Script</div>
+              <p>No. All queries process through the <strong>Salesforce Trust Boundary via Amazon Bedrock</strong> under Zero Data Retention. Your customer data is never retained between sessions, never logged, and never used to train third-party models. The Einstein Trust Layer provides full audit trails for every AI call — SOC 2, GDPR, and HIPAA aligned.</p>
             </div>
-            <div class="obj-section" style="background:#F0FFF4;border:1px solid #BBF7D0;">
-              <div class="obj-section-label" style="color:var(--green);">CIO Business Value Point</div>
-              <p>No net-new infrastructure. No new vendor security review for the MCP layer — it runs inside your existing Salesforce org with your existing permissions model. IT enablement time is measured in hours, not sprints. Time-to-value is the fastest of any enterprise AI deployment your team will evaluate this year.</p>
+            <div class="obj-footer">
+              <i data-lucide="target" style="width:14px;height:14px;color:var(--sf);"></i>
+              CIO Hook: No new vendor risk assessment required — runs in your existing org
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-num-badge">04</div>
+          <div class="obj-q-text">"How does Flex Credit pricing compare to flat per-user licensing?"</div>
+          <div class="obj-chevron-wrap"><i data-lucide="chevron-down" class="obj-chevron-icon" style="width:17px;height:17px;"></i></div>
+        </div>
+        <div class="obj-body">
+          <div class="obj-inner">
+            <div class="obj-script">
+              <div class="obj-script-lbl">30-Sec AE Script</div>
+              <p>Flat licenses force you to pay for unused seats whether reps engage or not. <strong>Flex Credits provide consumption predictability</strong> — you only pay $0.10 per standard executed action. Finance can model it exactly, IT can audit by user, and you eliminate waste from inactive licenses. It models like SaaS, not like cloud compute.</p>
+            </div>
+            <div class="obj-footer">
+              <i data-lucide="target" style="width:14px;height:14px;color:var(--sf);"></i>
+              CIO Hook: Auditable per-action cost replaces opaque per-seat waste
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-num-badge">05</div>
+          <div class="obj-q-text">"Our sellers live in Teams and Outlook — why force another tool?"</div>
+          <div class="obj-chevron-wrap"><i data-lucide="chevron-down" class="obj-chevron-icon" style="width:17px;height:17px;"></i></div>
+        </div>
+        <div class="obj-body">
+          <div class="obj-inner">
+            <div class="obj-script">
+              <div class="obj-script-lbl">30-Sec AE Script</div>
+              <p>We're not forcing a new tool — we're adding AI to wherever they already work. With AIforce, sellers can invoke Salesforce skills directly inside <strong>Claude CoWork or Slack</strong>, or work natively inside Lightning. No new login. No new app. No change management headache.</p>
+            </div>
+            <div class="obj-footer">
+              <i data-lucide="target" style="width:14px;height:14px;color:var(--sf);"></i>
+              CIO Hook: No new app. Existing workflow + AI capability added
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-num-badge">06</div>
+          <div class="obj-q-text">"We heard Agentforce / Claudeforce takes months to configure."</div>
+          <div class="obj-chevron-wrap"><i data-lucide="chevron-down" class="obj-chevron-icon" style="width:17px;height:17px;"></i></div>
+        </div>
+        <div class="obj-body">
+          <div class="obj-inner">
+            <div class="obj-script">
+              <div class="obj-script-lbl">30-Sec AE Script</div>
+              <p>Claudeforce uses prebuilt <strong>Model Context Protocol (MCP) contracts</strong>. An admin connects Salesforce as an MCP server in a few clicks — enabling immediate pipeline reviews, account summaries, and deal coaching. The first 37 skills require zero custom development. You're live in days, not months.</p>
+            </div>
+            <div class="obj-footer">
+              <i data-lucide="target" style="width:14px;height:14px;color:var(--sf);"></i>
+              CIO Hook: Days to value — not a multi-quarter implementation
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-num-badge">07</div>
+          <div class="obj-q-text">"How do we prevent AI from making unauthorized record updates?"</div>
+          <div class="obj-chevron-wrap"><i data-lucide="chevron-down" class="obj-chevron-icon" style="width:17px;height:17px;"></i></div>
+        </div>
+        <div class="obj-body">
+          <div class="obj-inner">
+            <div class="obj-script">
+              <div class="obj-script-lbl">30-Sec AE Script</div>
+              <p>Claudeforce <strong>respects your exact Salesforce profile permissions and sharing rules</strong> at the query level — it can only do what the logged-in user is already authorized to do. High-impact actions can require explicit human-in-the-loop approval before committing. Your governance policies don't need to change — they transfer directly.</p>
+            </div>
+            <div class="obj-footer">
+              <i data-lucide="target" style="width:14px;height:14px;color:var(--sf);"></i>
+              CIO Hook: Existing permission model governs AI — no new security layer required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-num-badge">08</div>
+          <div class="obj-q-text">"Microsoft promised Copilot will integrate deeper into Salesforce soon."</div>
+          <div class="obj-chevron-wrap"><i data-lucide="chevron-down" class="obj-chevron-icon" style="width:17px;height:17px;"></i></div>
+        </div>
+        <div class="obj-body">
+          <div class="obj-inner">
+            <div class="obj-script">
+              <div class="obj-script-lbl">30-Sec AE Script</div>
+              <p>Generic LLM connectors — no matter how deep they integrate — will <strong>always rely on context window retrieval (RAG)</strong>. Only native Claudeforce skills understand Salesforce schema logic at the database level, ensuring 7× faster speeds and zero credit waste. A "deeper Teams integration" still sends 35,000 raw tokens per query. That's the architectural wall Copilot can never climb.</p>
+            </div>
+            <div class="obj-footer">
+              <i data-lucide="target" style="width:14px;height:14px;color:var(--sf);"></i>
+              CIO Hook: RAG is the ceiling — MCP skill contracts are the floor. Different architecture entirely.
             </div>
           </div>
         </div>
@@ -773,20 +898,20 @@
 
     </div>
 
-    <!-- Resources Strip -->
-    <div style="margin-top:48px;background:white;border:1px solid var(--border);border-radius:16px;padding:24px 28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;box-shadow:var(--card-sh);">
+    <!-- Resources -->
+    <div style="margin-top:48px;background:var(--canvas);border:1px solid var(--border);border-radius:16px;padding:24px 28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;">
       <div>
-        <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:6px;">Verified Sources &amp; Deep Dives</div>
-        <div style="font-size:14px;font-weight:600;color:var(--sf-dark);">Send these to champions before the call. Third-party validation makes the close easier.</div>
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:5px;">Verified Public Sources — Send to Champions Pre-Call</div>
+        <div style="font-size:14px;font-weight:700;color:var(--sf-dark);">Third-party validation closes faster than first-party claims.</div>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:10px;">
-        <a href="https://www.salesforce.com/ap/news/press-releases/2026/08/27/ph-salesforce-and-anthropic-announce-claudeforce-the-1-ai-meets-the-1-ai-crm/" target="_blank" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--sf);background:rgba(1,118,211,0.07);border:1px solid rgba(1,118,211,0.2);padding:9px 16px;border-radius:8px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(1,118,211,0.14)'" onmouseout="this.style.background='rgba(1,118,211,0.07)'">
-          Official Announcement <i data-lucide="external-link" style="width:13px;height:13px;"></i>
+        <a href="https://www.salesforce.com/ap/news/press-releases/2026/08/27/ph-salesforce-and-anthropic-announce-claudeforce-the-1-ai-meets-the-1-ai-crm/" target="_blank" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--sf);background:rgba(1,118,211,0.08);border:1px solid rgba(1,118,211,0.2);padding:9px 16px;border-radius:8px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(1,118,211,0.16)'" onmouseout="this.style.background='rgba(1,118,211,0.08)'">
+          Official Press Release <i data-lucide="external-link" style="width:13px;height:13px;"></i>
         </a>
-        <a href="https://www.salesforceben.com/salesforce-and-anthropic-announce-claudeforce-in-q2-27-earnings/" target="_blank" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--muted);background:white;border:1px solid var(--border);padding:9px 16px;border-radius:8px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--sf)';this.style.color='var(--sf)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+        <a href="https://www.salesforceben.com/salesforce-and-anthropic-announce-claudeforce-in-q2-27-earnings/" target="_blank" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--muted);background:var(--white);border:1px solid var(--border);padding:9px 16px;border-radius:8px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--sf)';this.style.color='var(--sf)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
           Salesforce Ben Analysis <i data-lucide="external-link" style="width:13px;height:13px;"></i>
         </a>
-        <a href="https://triggerhours.com/claudeforce-salesforce-anthropic-partnership/" target="_blank" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--muted);background:white;border:1px solid var(--border);padding:9px 16px;border-radius:8px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--sf)';this.style.color='var(--sf)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+        <a href="https://triggerhours.com/claudeforce-salesforce-anthropic-partnership/" target="_blank" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--muted);background:var(--white);border:1px solid var(--border);padding:9px 16px;border-radius:8px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--sf)';this.style.color='var(--sf)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
           Architecture Deep Dive <i data-lucide="external-link" style="width:13px;height:13px;"></i>
         </a>
       </div>
@@ -794,61 +919,56 @@
 
   </div>
 </section>
-</div>
 
-<!-- Footer -->
-<div style="background:var(--sf-dark);padding:24px 28px;">
-  <div style="max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-    <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.8);">Claudeforce AE Battlecard · Salesforce + Anthropic Enablement</div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.35);">Internal Use Only · Not for Customer Distribution · Dreamforce 2026</div>
+<!-- ████ FOOTER ████ -->
+<div class="site-footer">
+  <div class="site-footer-inner">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <svg width="24" height="18" viewBox="0 0 30 22" fill="none"><path d="M12.3 5.6C13.2 4.0 14.9 3.0 16.8 3.0C19.2 3.0 21.2 4.6 21.9 6.8C22.5 6.5 23.2 6.4 23.9 6.4C26.2 6.4 28.0 8.2 28.0 10.5C28.0 12.8 26.2 14.6 23.9 14.6H7.8C5.7 14.6 4.0 12.9 4.0 10.8C4.0 8.9 5.3 7.3 7.1 6.9C7.0 6.6 7.0 6.3 7.0 6.0C7.0 3.8 8.8 2.0 11.0 2.0C11.6 2.0 12.1 2.2 12.6 2.4" fill="rgba(255,255,255,0.7)"/></svg>
+      <span style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85);">Claudeforce AE Battlecard · Salesforce + Anthropic Strategic Enablement</span>
+    </div>
+    <span style="font-size:12px;color:rgba(255,255,255,0.35);">Internal Use Only · Not for Customer Distribution · Dreamforce 2026</span>
   </div>
 </div>
 
 <script>
   lucide.createIcons();
 
-  // ── Progress bar
+  // ── Progress bar + nav active
   window.addEventListener('scroll', () => {
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     document.getElementById('progress-bar').style.width = pct + '%';
 
-    // Nav active state
-    const ids = ['eli5','architecture','calculator','objections'];
-    const btns = document.querySelectorAll('.nav-btn');
-    let current = '';
-    ids.forEach(id => {
+    const secIds = ['thesis','pitch','architecture','calculator','objections'];
+    const links  = document.querySelectorAll('.nav-link');
+    let cur = '';
+    secIds.forEach(id => {
       const el = document.getElementById(id);
-      if (el && window.scrollY >= el.offsetTop - 90) current = id;
+      if (el && window.scrollY >= el.offsetTop - 80) cur = id;
     });
-    btns.forEach((btn, i) => btn.classList.toggle('active', ids[i] === current));
+    links.forEach((l,i) => l.classList.toggle('active', secIds[i] === cur));
   });
 
-  // ── Nav jump
   function goTo(id) {
     document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // ── Tab switcher
-  let activeTab = 0;
+  // ── Architecture tabs
   function switchTab(idx) {
-    document.querySelectorAll('.tab-btn').forEach((b,i)   => b.classList.toggle('active', i === idx));
-    document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i === idx));
-    activeTab = idx;
+    document.querySelectorAll('.arch-tab').forEach((t,i)   => t.classList.toggle('active', i === idx));
+    document.querySelectorAll('.arch-panel').forEach((p,i) => p.classList.toggle('active', i === idx));
     lucide.createIcons();
   }
 
-  // ── Objection tiles
-  function toggleObj(tile) {
-    const isOpen = tile.classList.contains('open');
-    document.querySelectorAll('.obj-tile').forEach(t => t.classList.remove('open'));
-    if (!isOpen) tile.classList.add('open');
+  // ── Objection cards (accordion, only one open at a time)
+  function toggleObj(card) {
+    const wasOpen = card.classList.contains('open');
+    document.querySelectorAll('.obj-card').forEach(c => c.classList.remove('open'));
+    if (!wasOpen) card.classList.add('open');
     lucide.createIcons();
   }
 
   // ── Calculator
-  const DAYS = 30, CREDITS = 20, COST_PER_CREDIT = 0.005;
-  const RAG_T = 35000, MCP_T = 1500;
-
   function fmt(n) {
     if (n >= 1e12) return (n/1e12).toFixed(1)+'T';
     if (n >= 1e9)  return (n/1e9).toFixed(1)+'B';
@@ -856,7 +976,7 @@
     if (n >= 1e3)  return (n/1e3).toFixed(1)+'K';
     return n.toLocaleString();
   }
-  function fmtDollar(n) {
+  function fmtD(n) {
     if (n >= 1e6) return '$'+(n/1e6).toFixed(2)+'M';
     if (n >= 1e3) return '$'+(n/1e3).toFixed(0)+'K';
     return '$'+n.toLocaleString();
@@ -868,20 +988,18 @@
     document.getElementById('repVal').textContent = reps.toLocaleString();
     document.getElementById('qryVal').textContent = qpd;
 
-    const ragTok  = reps * qpd * DAYS * RAG_T;
-    const mcpTok  = reps * qpd * DAYS * MCP_T;
-    const pct     = ((ragTok - mcpTok) / ragTok * 100).toFixed(1);
-    const barPct  = (mcpTok / ragTok * 100).toFixed(2);
+    const ragTok = reps * qpd * 30 * 35000;
+    const mcpTok = reps * qpd * 30 * 1500;
+    const pct    = ((ragTok - mcpTok) / ragTok * 100).toFixed(1);
+    const bar    = (mcpTok / ragTok * 100).toFixed(2);
+    const cost   = reps * qpd * 30 * 20 * 0.005;
 
-    const actions = reps * qpd * DAYS;
-    const cost    = actions * CREDITS * COST_PER_CREDIT;
-
-    document.getElementById('r-copilot').textContent = fmt(ragTok);
-    document.getElementById('r-claude').textContent  = fmt(mcpTok);
-    document.getElementById('r-pct').textContent     = pct + '% token reduction';
-    document.getElementById('b-claude').style.width  = barPct + '%';
-    document.getElementById('r-cost').textContent    = fmtDollar(cost);
-    document.getElementById('r-cost-sub').textContent =
+    document.getElementById('rA-copilot').textContent = fmt(ragTok);
+    document.getElementById('rA-claude').textContent  = fmt(mcpTok);
+    document.getElementById('rA-pct').textContent     = pct + '% token reduction';
+    document.getElementById('bA-claude').style.width  = bar + '%';
+    document.getElementById('rC-cost').textContent    = fmtD(cost);
+    document.getElementById('rC-sub').textContent     =
       `${reps.toLocaleString()} reps × ${qpd} queries × 30d × 20 credits × $0.005`;
   }
 
