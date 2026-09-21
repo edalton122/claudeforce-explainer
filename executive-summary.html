@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Claudeforce — Executive Summary</title>
+  <meta name="description" content="A clear, non-technical overview of Claudeforce for CIOs and RVPs. Your CRM, fluent in AI."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; margin: 0; overflow-x: hidden; }
+
+    :root {
+      --bg:       #F8FAFC;
+      --white:    #FFFFFF;
+      --sf:       #0176D3;
+      --sf2:      #0EA5E9;
+      --sf-dark:  #032D60;
+      --terra:    #DA7756;
+      --terra2:   #C95F3C;
+      --green:    #16A34A;
+      --green2:   #22C55E;
+      --border:   #E2E8F0;
+      --muted:    #64748B;
+      --text:     #0F172A;
+      --card-sh:  0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --card-sh2: 0 10px 40px rgba(0,0,0,0.1);
+    }
+
+    /* ── NAV ── */
+    #topnav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 60px;
+    }
+    .nav-wordmark { font-size: 16px; font-weight: 800; letter-spacing: -0.02em; color: var(--sf-dark); }
+    .nav-wordmark em { font-style: normal; color: var(--terra); }
+    .nav-tag { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+    .nav-steps { display: flex; gap: 6px; }
+    .nav-step {
+      font-size: 12px; font-weight: 600; color: var(--muted); padding: 5px 12px;
+      border-radius: 6px; cursor: pointer; border: none; background: none; transition: all 0.2s;
+    }
+    .nav-step:hover { color: var(--sf); background: rgba(1,118,211,0.06); }
+    @media (max-width: 680px) { .nav-steps { display: none; } .nav-tag { display: none; } }
+
+    /* ── PROGRESS ── */
+    #progress { position: fixed; top: 60px; left: 0; height: 2px; width: 0%; background: linear-gradient(90deg, var(--sf), var(--terra)); z-index: 999; transition: width 0.1s linear; }
+
+    /* ── SECTIONS ── */
+    .page-section { padding: 100px 24px 80px; max-width: 1060px; margin: 0 auto; }
+    .alt-bg { background: var(--white); }
+
+    /* ── STEP LABEL ── */
+    .step-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 20px; margin-bottom: 18px;
+    }
+    .step-badge.blue   { background: rgba(1,118,211,0.1); color: var(--sf); }
+    .step-badge.terra  { background: rgba(218,119,86,0.12); color: var(--terra2); }
+    .step-badge.green  { background: rgba(22,163,74,0.1); color: var(--green); }
+    .step-badge.purple { background: rgba(139,92,246,0.1); color: #7C3AED; }
+
+    .sec-h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.12; color: var(--sf-dark); margin-bottom: 14px; }
+    .sec-lead { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 580px; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      background: linear-gradient(160deg, #EFF6FF 0%, #F8FAFC 55%, #FFF7F4 100%);
+      padding: 80px 24px 60px; position: relative; overflow: hidden;
+    }
+    .hero-ring {
+      position: absolute; border-radius: 50%; pointer-events: none;
+    }
+    .hero-ring-1 { width: 600px; height: 600px; top: -150px; right: -100px; background: radial-gradient(circle, rgba(1,118,211,0.07) 0%, transparent 70%); }
+    .hero-ring-2 { width: 400px; height: 400px; bottom: -80px; left: -60px; background: radial-gradient(circle, rgba(218,119,86,0.08) 0%, transparent 70%); }
+    .hero-inner { max-width: 1060px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
+    .hero-split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    @media (max-width: 800px) { .hero-split { grid-template-columns: 1fr; gap: 40px; } }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: white; border: 1px solid var(--border); box-shadow: var(--card-sh);
+      font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em;
+      padding: 6px 16px; border-radius: 20px; margin-bottom: 28px;
+    }
+    .hero-eyebrow .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green2); box-shadow: 0 0 6px var(--green2); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{ opacity:1; } 50%{ opacity:0.4; } }
+    .hero-h1 { font-size: clamp(40px, 6vw, 68px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.04; color: var(--sf-dark); margin-bottom: 24px; }
+    .hero-h1 .color-sf   { color: var(--sf); }
+    .hero-h1 .color-terra{ color: var(--terra); }
+    .hero-sub { font-size: clamp(15px, 2vw, 19px); color: var(--muted); line-height: 1.65; margin-bottom: 40px; }
+    .hero-proof { display: flex; flex-direction: column; gap: 12px; }
+    .proof-row { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--sf-dark); }
+    .proof-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    /* Hero right: animated visual */
+    .hero-visual { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--card-sh2); }
+    .hv-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 16px; }
+    .hv-pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .hv-pill {
+      display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700;
+      padding: 6px 12px; border-radius: 8px; border: 1px solid;
+    }
+    .hv-divider { height: 1px; background: var(--border); margin: 20px 0; }
+    .hv-stat-row { display: flex; gap: 12px; }
+    .hv-stat { flex: 1; background: #F8FAFC; border-radius: 12px; padding: 16px; text-align: center; }
+    .hv-stat-num { font-size: 28px; font-weight: 900; }
+    .hv-stat-lbl { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+
+    /* ── STEP 1: THE PROBLEM ── */
+    .problem-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: center; margin-top: 52px; }
+    @media (max-width: 720px) { .problem-grid { grid-template-columns: 1fr; } .vs-col { display: none; } }
+    .prob-card { border-radius: 20px; padding: 32px; }
+    .prob-bad { background: #FEF2F2; border: 1px solid #FECACA; }
+    .prob-good { background: #F0FFF4; border: 1px solid #BBF7D0; }
+    .prob-head { font-size: 13px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .prob-head.bad  { color: #DC2626; }
+    .prob-head.good { color: var(--green); }
+    .prob-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; font-size: 14px; line-height: 1.55; }
+    .prob-item .bullet { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; }
+    .bullet.bad-b  { background: #FEE2E2; color: #DC2626; }
+    .bullet.good-b { background: #DCFCE7; color: var(--green); }
+    .vs-col { display: flex; align-items: center; justify-content: center; }
+    .vs-circle { width: 48px; height: 48px; border-radius: 50%; background: white; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--muted); box-shadow: var(--card-sh); }
+    .tax-callout { margin-top: 32px; background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px; display: flex; align-items: center; gap: 20px; box-shadow: var(--card-sh); }
+    @media (max-width: 640px) { .tax-callout { flex-direction: column; align-items: flex-start; gap: 12px; } }
+    .tax-num { font-size: 48px; font-weight: 900; color: #DC2626; line-height: 1; flex-shrink: 0; }
+    .tax-text h4 { font-size: 16px; font-weight: 800; color: var(--sf-dark); margin-bottom: 4px; }
+    .tax-text p  { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+    /* ── STEP 2: TOGGLE ── */
+    .toggle-wrapper { margin-top: 52px; }
+    .toggle-switch-row { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+    .toggle-track {
+      width: 64px; height: 34px; border-radius: 17px; background: #E2E8F0;
+      border: 2px solid #CBD5E1; cursor: pointer; position: relative; transition: all 0.3s; flex-shrink: 0;
+    }
+    .toggle-track.on { background: var(--sf); border-color: var(--sf); }
+    .toggle-thumb {
+      position: absolute; top: 3px; left: 3px; width: 24px; height: 24px;
+      border-radius: 50%; background: white; transition: all 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .toggle-track.on .toggle-thumb { left: 33px; }
+    .toggle-label { font-size: 15px; font-weight: 700; color: var(--sf-dark); }
+    .toggle-label .opt-a, .toggle-label .opt-b { transition: all 0.3s; }
+    .toggle-panels { position: relative; }
+    .toggle-panel { display: none; }
+    .toggle-panel.active { display: block; }
+    .panel-card { background: white; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--card-sh2); overflow: hidden; }
+    .panel-header { padding: 32px 36px 24px; border-bottom: 1px solid var(--border); }
+    .panel-header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+    .panel-tag { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 12px; border-radius: 6px; }
+    .panel-h3 { font-size: 24px; font-weight: 800; color: var(--sf-dark); margin-bottom: 8px; }
+    .panel-sub { font-size: 15px; color: var(--muted); line-height: 1.65; }
+    .panel-body { padding: 28px 36px; }
+    .panel-features { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    @media (max-width: 600px) { .panel-features { grid-template-columns: 1fr; } .panel-header, .panel-body { padding: 24px 20px; } }
+    .feature-item { display: flex; gap: 12px; align-items: flex-start; }
+    .feature-icon { width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .feature-item h5 { font-size: 14px; font-weight: 700; color: var(--sf-dark); margin-bottom: 4px; }
+    .feature-item p  { font-size: 13px; color: var(--muted); line-height: 1.55; margin: 0; }
+
+    /* ── STEP 3: EFFICIENCY ── */
+    .rep-selector { display: flex; gap: 10px; margin: 48px 0 40px; }
+    .rep-btn {
+      flex: 1; max-width: 160px; padding: 12px 0; border-radius: 10px; border: 2px solid var(--border);
+      font-size: 14px; font-weight: 700; color: var(--muted); background: white; cursor: pointer;
+      transition: all 0.25s; text-align: center;
+    }
+    .rep-btn:hover { border-color: var(--sf); color: var(--sf); }
+    .rep-btn.active { border-color: var(--sf); background: var(--sf); color: white; box-shadow: 0 4px 14px rgba(1,118,211,0.3); }
+    .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    @media (max-width: 720px) { .metrics-grid { grid-template-columns: 1fr; } }
+    .metric-card { background: white; border: 1px solid var(--border); border-radius: 18px; padding: 28px; box-shadow: var(--card-sh); position: relative; overflow: hidden; }
+    .metric-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .metric-card.m1::before { background: linear-gradient(90deg, var(--sf), var(--sf2)); }
+    .metric-card.m2::before { background: linear-gradient(90deg, var(--terra), #F59E6C); }
+    .metric-card.m3::before { background: linear-gradient(90deg, var(--green), #4ADE80); }
+    .metric-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 20px; }
+    .metric-row { display: flex; flex-direction: column; gap: 12px; }
+    .metric-item { }
+    .metric-item-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .metric-item-label.bad  { color: #DC2626; }
+    .metric-item-label.good { color: var(--green); }
+    .metric-num { font-size: clamp(22px, 3vw, 28px); font-weight: 900; line-height: 1.1; }
+    .metric-num.bad  { color: #DC2626; }
+    .metric-num.good { color: var(--green); }
+    .metric-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .metric-bar-track { height: 6px; background: #F1F5F9; border-radius: 3px; margin-top: 8px; overflow: hidden; }
+    .metric-bar { height: 100%; border-radius: 3px; transition: width 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .metric-divider { height: 1px; background: var(--border); margin: 12px 0; }
+    .saving-badge { margin-top: 16px; background: #F0FFF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 700; color: var(--green); display: flex; align-items: center; gap: 7px; }
+
+    /* ── STEP 4: TRUST ── */
+    .trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
+    @media (max-width: 720px) { .trust-grid { grid-template-columns: 1fr; } }
+    .trust-card { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: var(--card-sh); transition: all 0.3s; }
+    .trust-card:hover { transform: translateY(-4px); box-shadow: var(--card-sh2); }
+    .trust-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+    .trust-card h3 { font-size: 19px; font-weight: 800; color: var(--sf-dark); margin-bottom: 10px; }
+    .trust-card p  { font-size: 14px; color: var(--muted); line-height: 1.7; margin: 0; }
+    .trust-proof   { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 12px; font-weight: 600; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+
+    /* ── CLOSE CTA ── */
+    .close-cta {
+      background: linear-gradient(135deg, var(--sf-dark) 0%, #043473 100%);
+      padding: 80px 24px; text-align: center; position: relative; overflow: hidden;
+    }
+    .close-cta::before {
+      content: ''; position: absolute; inset: 0; z-index: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+    .cta-inner { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; }
+    .cta-inner h2 { font-size: clamp(28px, 5vw, 44px); font-weight: 900; color: white; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .cta-inner p { font-size: 17px; color: rgba(255,255,255,0.65); line-height: 1.65; margin-bottom: 36px; }
+    .cta-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .btn-w { background: white; color: var(--sf); font-size: 14px; font-weight: 800; padding: 13px 28px; border-radius: 10px; border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+    .btn-w:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.3); }
+    .btn-ghost { background: rgba(255,255,255,0.1); color: white; font-size: 14px; font-weight: 700; padding: 13px 28px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.18); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--sf-dark); padding: 28px 32px; }
+    .footer-row { max-width: 1060px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-brand { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.8); }
+    .footer-meta  { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+    /* ── SECTION SEPARATOR ── */
+    .sep { width: 100%; height: 1px; background: var(--border); }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="topnav">
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="nav-wordmark">Claudeforce<em>™</em></div>
+    <div class="nav-tag">Executive Summary</div>
+  </div>
+  <div class="nav-steps">
+    <button class="nav-step" onclick="goTo('problem')">The Problem</button>
+    <button class="nav-step" onclick="goTo('ways')">How It Works</button>
+    <button class="nav-step" onclick="goTo('efficiency')">Efficiency</button>
+    <button class="nav-step" onclick="goTo('trust')">Trust</button>
+  </div>
+</nav>
+<div id="progress"></div>
+
+<!-- ══════════════════════
+     HERO
+══════════════════════ -->
+<section id="hero">
+  <div class="hero-ring hero-ring-1"></div>
+  <div class="hero-ring hero-ring-2"></div>
+  <div class="hero-inner">
+    <div class="hero-split">
+
+      <div>
+        <div class="hero-eyebrow">
+          <span class="live-dot"></span>
+          Salesforce × Anthropic · Announced August 2026
+        </div>
+        <h1 class="hero-h1">
+          Your <span class="color-sf">CRM,</span><br>
+          Fluent in <span class="color-terra">AI.</span>
+        </h1>
+        <p class="hero-sub">Stop forcing generic AI to parse massive spreadsheets. Give your sales organization AI that natively understands your pipeline.</p>
+        <div class="hero-proof">
+          <div class="proof-row">
+            <div class="proof-icon" style="background:rgba(1,118,211,0.1);">
+              <i data-lucide="database" style="width:16px;height:16px;color:var(--sf);"></i>
+            </div>
+            Reads Accounts, Opportunities, and Stage Logic — natively
+          </div>
+          <div class="proof-row">
+            <div class="proof-icon" style="background:rgba(22,163,74,0.1);">
+              <i data-lucide="shield-check" style="width:16px;height:16px;color:var(--green);"></i>
+            </div>
+            Zero Data Retention — your data never leaves the Trust Boundary
+          </div>
+          <div class="proof-row">
+            <div class="proof-icon" style="background:rgba(218,119,86,0.12);">
+              <i data-lucide="zap" style="width:16px;height:16px;color:var(--terra);"></i>
+            </div>
+            37 prebuilt sales skills — live on day one, no IT project required
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hv-label">Claudeforce understands your CRM objects natively</div>
+        <div class="hv-pill-row">
+          <div class="hv-pill" style="background:rgba(1,118,211,0.08);border-color:rgba(1,118,211,0.2);color:var(--sf);">
+            <i data-lucide="briefcase" style="width:13px;height:13px;"></i> Accounts
+          </div>
+          <div class="hv-pill" style="background:rgba(218,119,86,0.08);border-color:rgba(218,119,86,0.2);color:var(--terra2);">
+            <i data-lucide="trending-up" style="width:13px;height:13px;"></i> Opportunities
+          </div>
+          <div class="hv-pill" style="background:rgba(22,163,74,0.08);border-color:rgba(22,163,74,0.2);color:var(--green);">
+            <i data-lucide="git-branch" style="width:13px;height:13px;"></i> Stage Logic
+          </div>
+          <div class="hv-pill" style="background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.2);color:#7C3AED;">
+            <i data-lucide="users" style="width:13px;height:13px;"></i> Contacts
+          </div>
+          <div class="hv-pill" style="background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.2);color:#D97706;">
+            <i data-lucide="activity" style="width:13px;height:13px;"></i> Activities
+          </div>
+        </div>
+        <div class="hv-divider"></div>
+        <div class="hv-stat-row">
+          <div class="hv-stat">
+            <div class="hv-stat-num" style="color:var(--sf);">1.2s</div>
+            <div class="hv-stat-lbl">Avg. AI response time</div>
+          </div>
+          <div class="hv-stat">
+            <div class="hv-stat-num" style="color:var(--green);">95.7%</div>
+            <div class="hv-stat-lbl">Fewer tokens than generic RAG</div>
+          </div>
+          <div class="hv-stat">
+            <div class="hv-stat-num" style="color:var(--terra);">37</div>
+            <div class="hv-stat-lbl">Native sales skills, day one</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ══════════════════════
+     STEP 1: THE PROBLEM
+══════════════════════ -->
+<div>
+<section id="problem" class="page-section">
+  <div class="step-badge terra">Step 1 · The Problem</div>
+  <h2 class="sec-h2">The AI Tax your team is already paying.</h2>
+  <p class="sec-lead">Every time a generic LLM touches your CRM, it converts structured relationship data into a wall of raw text — then burns through thousands of tokens just to read it back. That's slow, expensive, and brittle.</p>
+
+  <div class="problem-grid">
+    <div class="prob-card prob-bad">
+      <div class="prob-head bad">
+        <i data-lucide="x-circle" style="width:18px;height:18px;"></i>
+        Generic AI + CRM
+      </div>
+      <div class="prob-item">
+        <span class="bullet bad-b"><i data-lucide="x" style="width:11px;height:11px;"></i></span>
+        <span>Converts CRM records into <strong>raw text walls</strong> — destroying the relational structure your team built.</span>
+      </div>
+      <div class="prob-item">
+        <span class="bullet bad-b"><i data-lucide="x" style="width:11px;height:11px;"></i></span>
+        <span>Context-stuffs <strong>35,000+ tokens</strong> per query, even for a simple pipeline question.</span>
+      </div>
+      <div class="prob-item">
+        <span class="bullet bad-b"><i data-lucide="x" style="width:11px;height:11px;"></i></span>
+        <span>No awareness of <strong>sharing rules, record ownership,</strong> or stage-specific business logic.</span>
+      </div>
+      <div class="prob-item">
+        <span class="bullet bad-b"><i data-lucide="x" style="width:11px;height:11px;"></i></span>
+        <span><strong>~8.5 second</strong> average response. Reps give up and go back to manual work.</span>
+      </div>
+    </div>
+
+    <div class="vs-col">
+      <div class="vs-circle">VS</div>
+    </div>
+
+    <div class="prob-card prob-good">
+      <div class="prob-head good">
+        <i data-lucide="check-circle" style="width:18px;height:18px;"></i>
+        Claudeforce
+      </div>
+      <div class="prob-item">
+        <span class="bullet good-b"><i data-lucide="check" style="width:11px;height:11px;"></i></span>
+        <span>Reads CRM objects <strong>natively via MCP</strong> — Accounts, Opportunities, and Stage Logic stay structured.</span>
+      </div>
+      <div class="prob-item">
+        <span class="bullet good-b"><i data-lucide="check" style="width:11px;height:11px;"></i></span>
+        <span>Executes via <strong>1,500-token structured action calls</strong> — a 96% reduction in token consumption.</span>
+      </div>
+      <div class="prob-item">
+        <span class="bullet good-b"><i data-lucide="check" style="width:11px;height:11px;"></i></span>
+        <span><strong>Sharing rules and field-level permissions</strong> are enforced automatically at every query.</span>
+      </div>
+      <div class="prob-item">
+        <span class="bullet good-b"><i data-lucide="check" style="width:11px;height:11px;"></i></span>
+        <span><strong>~1.2 second</strong> average response. Reps get answers without breaking their workflow.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tax-callout">
+    <div class="tax-num">23×</div>
+    <div class="tax-text">
+      <h4>The Token Bloat Multiplier</h4>
+      <p>Generic AI uses 23× more tokens per CRM query than Claudeforce. At 100 reps running 20 queries per day, that's 100 billion unnecessary tokens consumed per month — before any AI work actually gets done.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="sep"></div>
+
+<!-- ══════════════════════
+     STEP 2: TWO WAYS
+══════════════════════ -->
+<div class="alt-bg">
+<section id="ways" class="page-section">
+  <div class="step-badge blue">Step 2 · How It Works</div>
+  <h2 class="sec-h2">Two ways to use it. One decision to make.</h2>
+  <p class="sec-lead">Your team doesn't have to change how they work. Claudeforce meets them where they already are — inside Salesforce or inside Claude.</p>
+
+  <div class="toggle-wrapper">
+    <div class="toggle-switch-row">
+      <div class="toggle-track" id="toggleTrack" onclick="switchToggle()">
+        <div class="toggle-thumb"></div>
+      </div>
+      <div class="toggle-label">
+        <span class="opt-a" id="labelA" style="color:var(--muted);">Inside Salesforce</span>
+        <span style="margin:0 10px;color:var(--border);">·</span>
+        <span class="opt-b" id="labelB" style="color:var(--sf);font-weight:800;">Inside Claude &amp; Slack</span>
+      </div>
+    </div>
+
+    <div class="toggle-panels">
+
+      <!-- Panel A: Agentforce -->
+      <div class="toggle-panel" id="panelA">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-header-top">
+              <div>
+                <div class="panel-tag" style="background:rgba(1,118,211,0.1);color:var(--sf);">Option A — Agentforce Coworker</div>
+              </div>
+              <div style="width:48px;height:48px;border-radius:12px;background:rgba(1,118,211,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="monitor" style="width:22px;height:22px;color:var(--sf);"></i>
+              </div>
+            </div>
+            <h3 class="panel-h3">AI built into Salesforce Lightning</h3>
+            <p class="panel-sub">Claude powers guided deal execution, automated summaries, and live pipeline updates — all without leaving the Salesforce interface your team already knows.</p>
+          </div>
+          <div class="panel-body">
+            <div class="panel-features">
+              <div class="feature-item">
+                <div class="feature-icon" style="background:rgba(1,118,211,0.08);">
+                  <i data-lucide="file-text" style="width:18px;height:18px;color:var(--sf);"></i>
+                </div>
+                <div>
+                  <h5>Deal Summaries on Demand</h5>
+                  <p>One click generates a full deal summary — next steps, risk flags, stakeholder map — pulled from live CRM data.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon" style="background:rgba(1,118,211,0.08);">
+                  <i data-lucide="refresh-cw" style="width:18px;height:18px;color:var(--sf);"></i>
+                </div>
+                <div>
+                  <h5>Pipeline Updates Without Typing</h5>
+                  <p>Reps describe what happened in a call. Agentforce transcribes, categorizes, and logs the update automatically.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon" style="background:rgba(1,118,211,0.08);">
+                  <i data-lucide="bell" style="width:18px;height:18px;color:var(--sf);"></i>
+                </div>
+                <div>
+                  <h5>Guided Next-Step Coaching</h5>
+                  <p>Claude surfaces the most strategic next action for each deal — personalized to stage, account history, and buyer signals.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon" style="background:rgba(1,118,211,0.08);">
+                  <i data-lucide="bar-chart-2" style="width:18px;height:18px;color:var(--sf);"></i>
+                </div>
+                <div>
+                  <h5>Forecast Confidence Scores</h5>
+                  <p>AI-generated confidence scores on every open opportunity, updated in real time as activity and stage data changes.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel B: MCP -->
+      <div class="toggle-panel active" id="panelB">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-header-top">
+              <div>
+                <div class="panel-tag" style="background:rgba(218,119,86,0.1);color:var(--terra2);">Option B — Salesforce in Claude via MCP</div>
+              </div>
+              <div style="width:48px;height:48px;border-radius:12px;background:rgba(218,119,86,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="message-square" style="width:22px;height:22px;color:var(--terra);"></i>
+              </div>
+            </div>
+            <h3 class="panel-h3">Your CRM, accessible from anywhere Claude runs</h3>
+            <p class="panel-sub">Access 37 prebuilt sales skills directly in Claude Desktop or Slack threads. Live CRM data, right where your team is already working. No browser tab required.</p>
+          </div>
+          <div class="panel-body">
+            <div class="panel-features">
+              <div class="feature-item">
+                <div class="feature-icon" style="background:rgba(218,119,86,0.1);">
+                  <i data-lucide="search" style="width:18px;height:18px;color:var(--terra);"></i>
+                </div>
+                <div>
+                  <h5>Natural Language CRM Queries</h5>
+                  <p>"Show me all deals over $200K closing this quarter with no activity in 14 days" — answered in plain English from live data.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon" style="background:rgba(218,119,86,0.1);">
+                  <i data-lucide="mail" style="width:18px;height:18px;color:var(--terra);"></i>
+                </div>
+                <div>
+                  <h5>Context-Aware Email Drafting</h5>
+                  <p>Draft follow-up emails that reference the account's actual deal stage, last activity, and open next steps — automatically.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon" style="background:rgba(218,119,86,0.1);">
+                  <i data-lucide="slack" style="width:18px;height:18px;color:var(--terra);"></i>
+                </div>
+                <div>
+                  <h5>Slack-Native Deal Briefings</h5>
+                  <p>Ask for a deal briefing in a Slack thread and get a structured summary — stage, contacts, open risks, last touch — without opening Salesforce.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon" style="background:rgba(218,119,86,0.1);">
+                  <i data-lucide="list-checks" style="width:18px;height:18px;color:var(--terra);"></i>
+                </div>
+                <div>
+                  <h5>37 Prebuilt Sales Skills</h5>
+                  <p>From account research to competitor tracking to renewal risk scoring — all pre-connected to your CRM with no setup required.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="sep"></div>
+
+<!-- ══════════════════════
+     STEP 3: EFFICIENCY
+══════════════════════ -->
+<section id="efficiency" class="page-section">
+  <div class="step-badge green">Step 3 · Speed &amp; Efficiency</div>
+  <h2 class="sec-h2">The numbers, at your team's actual scale.</h2>
+  <p class="sec-lead">Select your team size to see how Claudeforce performs against generic RAG-based AI using verified Salesforce rate card data.</p>
+
+  <div class="rep-selector">
+    <button class="rep-btn active" onclick="setReps(100, this)">100 Reps</button>
+    <button class="rep-btn" onclick="setReps(500, this)">500 Reps</button>
+    <button class="rep-btn" onclick="setReps(1000, this)">1,000 Reps</button>
+  </div>
+
+  <div class="metrics-grid">
+
+    <!-- Token Window -->
+    <div class="metric-card m1">
+      <div class="metric-title">Token Window Payload / Month</div>
+      <div class="metric-row">
+        <div class="metric-item">
+          <div class="metric-item-label bad">Generic RAG</div>
+          <div class="metric-num bad" id="t-rag">105B tokens</div>
+          <div class="metric-sub" id="t-rag-sub">100 reps × 20 queries × 30d × 35K</div>
+          <div class="metric-bar-track"><div class="metric-bar" id="b-rag" style="background:#EF4444;width:100%;"></div></div>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <div class="metric-item-label good">Claudeforce MCP</div>
+          <div class="metric-num good" id="t-cf">4.5B tokens</div>
+          <div class="metric-sub" id="t-cf-sub">100 reps × 20 queries × 30d × 1.5K</div>
+          <div class="metric-bar-track"><div class="metric-bar" id="b-cf" style="background:var(--green);width:4.3%;"></div></div>
+        </div>
+      </div>
+      <div class="saving-badge">
+        <i data-lucide="trending-down" style="width:15px;height:15px;"></i>
+        <span id="t-saving">95.7% fewer tokens consumed</span>
+      </div>
+    </div>
+
+    <!-- Query Latency -->
+    <div class="metric-card m2">
+      <div class="metric-title">Query Response Latency</div>
+      <div class="metric-row">
+        <div class="metric-item">
+          <div class="metric-item-label bad">Generic RAG</div>
+          <div class="metric-num bad">~8.5 seconds</div>
+          <div class="metric-sub">Context-stuffing overhead</div>
+          <div class="metric-bar-track"><div class="metric-bar" style="background:#EF4444;width:100%;"></div></div>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <div class="metric-item-label good">Claudeforce MCP</div>
+          <div class="metric-num good">~1.2 seconds</div>
+          <div class="metric-sub">Structured tool call</div>
+          <div class="metric-bar-track"><div class="metric-bar" style="background:var(--green);width:14.1%;"></div></div>
+        </div>
+      </div>
+      <div class="saving-badge">
+        <i data-lucide="zap" style="width:15px;height:15px;"></i>
+        7.08× faster average response time
+      </div>
+    </div>
+
+    <!-- Billing -->
+    <div class="metric-card m3">
+      <div class="metric-title">Billing Transparency</div>
+      <div class="metric-row">
+        <div class="metric-item">
+          <div class="metric-item-label bad">Generic AI Billing</div>
+          <div class="metric-num bad">Unpredictable</div>
+          <div class="metric-sub">Token consumption spikes at scale</div>
+          <div class="metric-bar-track"><div class="metric-bar" style="background:#EF4444;width:100%;"></div></div>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <div class="metric-item-label good">Claudeforce Flex Credits</div>
+          <div class="metric-num good" id="fc-cost">$6,000/mo</div>
+          <div class="metric-sub" id="fc-sub">20 credits × $0.10 × 30K monthly actions</div>
+          <div class="metric-bar-track"><div class="metric-bar" id="b-fc" style="background:var(--green);width:100%;"></div></div>
+        </div>
+      </div>
+      <div class="saving-badge">
+        <i data-lucide="dollar-sign" style="width:15px;height:15px;"></i>
+        Fixed, auditable cost — models like SaaS licensing
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ══════════════════════
+     STEP 4: TRUST
+══════════════════════ -->
+<div class="alt-bg">
+<section id="trust" class="page-section">
+  <div class="step-badge purple">Step 4 · Enterprise Trust</div>
+  <h2 class="sec-h2">Three pillars your InfoSec team will actually approve.</h2>
+  <p class="sec-lead">Claudeforce is designed for enterprise governance from the ground up — not bolted on after the fact.</p>
+
+  <div class="trust-grid">
+
+    <div class="trust-card">
+      <div class="trust-icon" style="background:rgba(22,163,74,0.1);">
+        <i data-lucide="shield-off" style="width:26px;height:26px;color:var(--green);"></i>
+      </div>
+      <h3>Zero Data Retention</h3>
+      <p>Every Claude inference call is stateless and isolated. No conversation history is stored. No customer data is logged. No records are used to train any AI model — by Anthropic or by Salesforce.</p>
+      <div class="trust-proof">
+        <i data-lucide="check" style="width:14px;height:14px;color:var(--green);"></i>
+        Enforced via Amazon Bedrock · Einstein Trust Layer
+      </div>
+    </div>
+
+    <div class="trust-card">
+      <div class="trust-icon" style="background:rgba(1,118,211,0.1);">
+        <i data-lucide="lock" style="width:26px;height:26px;color:var(--sf);"></i>
+      </div>
+      <h3>Enforced User Sharing Rules</h3>
+      <p>Claude can only access records the requesting user is already authorized to see. Org-wide defaults, role hierarchies, and field-level security are all respected — automatically, at query time.</p>
+      <div class="trust-proof">
+        <i data-lucide="check" style="width:14px;height:14px;color:var(--green);"></i>
+        Built into the AIforce Interface Layer
+      </div>
+    </div>
+
+    <div class="trust-card">
+      <div class="trust-icon" style="background:rgba(139,92,246,0.1);">
+        <i data-lucide="sliders-horizontal" style="width:26px;height:26px;color:#7C3AED;"></i>
+      </div>
+      <h3>Deterministic Action Guardrails</h3>
+      <p>Every AI action is scoped, logged, and reversible. Admins define exactly what Claude can and cannot do — no open-ended agentic execution without explicit permission boundaries in place.</p>
+      <div class="trust-proof">
+        <i data-lucide="check" style="width:14px;height:14px;color:var(--green);"></i>
+        Agentforce Topic &amp; Action permission model
+      </div>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════════
+     CTA
+══════════════════════ -->
+<div class="close-cta">
+  <div class="cta-inner">
+    <h2>Ready to brief your team?</h2>
+    <p>Read the official Salesforce and Anthropic announcement, or go deeper with the technical architecture breakdown.</p>
+    <div class="cta-btns">
+      <a href="https://www.salesforce.com/ap/news/press-releases/2026/08/27/ph-salesforce-and-anthropic-announce-claudeforce-the-1-ai-meets-the-1-ai-crm/" target="_blank" class="btn-w">
+        Official Announcement <i data-lucide="external-link" style="width:15px;height:15px;"></i>
+      </a>
+      <a href="https://triggerhours.com/claudeforce-salesforce-anthropic-partnership/" target="_blank" class="btn-ghost">
+        Architecture Deep Dive <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-row">
+    <div class="footer-brand">Claudeforce™ — Salesforce × Anthropic · Executive Summary</div>
+    <div class="footer-meta">Dreamforce 2026 · Salesforce Strategic Enablement</div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+
+  // ── Progress bar + scroll
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+    document.getElementById('progress').style.width = pct + '%';
+  });
+
+  function goTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ── Toggle switch
+  let toggleState = true; // true = B (Claude/Slack) shown by default
+  function switchToggle() {
+    toggleState = !toggleState;
+    const track  = document.getElementById('toggleTrack');
+    const labelA = document.getElementById('labelA');
+    const labelB = document.getElementById('labelB');
+    const panelA = document.getElementById('panelA');
+    const panelB = document.getElementById('panelB');
+
+    if (toggleState) {
+      // Show B
+      track.classList.add('on');
+      labelA.style.color  = 'var(--muted)';   labelA.style.fontWeight = '600';
+      labelB.style.color  = 'var(--sf)';       labelB.style.fontWeight = '800';
+      panelA.classList.remove('active');
+      panelB.classList.add('active');
+    } else {
+      // Show A
+      track.classList.remove('on');
+      labelA.style.color  = 'var(--sf)';       labelA.style.fontWeight = '800';
+      labelB.style.color  = 'var(--muted)';    labelB.style.fontWeight = '600';
+      panelA.classList.add('active');
+      panelB.classList.remove('active');
+    }
+    lucide.createIcons();
+  }
+
+  // ── Rep selector + live metrics
+  const QUERIES_PER_DAY = 20;
+  const DAYS = 30;
+
+  function fmt(n) {
+    if (n >= 1e12) return (n/1e12).toFixed(1) + 'T';
+    if (n >= 1e9)  return (n/1e9).toFixed(1) + 'B';
+    if (n >= 1e6)  return (n/1e6).toFixed(1) + 'M';
+    if (n >= 1e3)  return (n/1e3).toFixed(1) + 'K';
+    return n.toLocaleString();
+  }
+  function fmtDollar(n) {
+    if (n >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M/mo';
+    if (n >= 1e3) return '$' + (n/1e3).toFixed(0) + 'K/mo';
+    return '$' + n.toLocaleString() + '/mo';
+  }
+
+  function setReps(reps, btn) {
+    document.querySelectorAll('.rep-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const ragTokens = reps * QUERIES_PER_DAY * DAYS * 35000;
+    const cfTokens  = reps * QUERIES_PER_DAY * DAYS * 1500;
+    const saving    = ((ragTokens - cfTokens) / ragTokens * 100).toFixed(1);
+    const ratio     = (cfTokens / ragTokens * 100).toFixed(2);
+
+    const totalActions = reps * QUERIES_PER_DAY * DAYS;
+    const flexCost     = totalActions * 20 * 0.10;
+
+    document.getElementById('t-rag').textContent    = fmt(ragTokens) + ' tokens';
+    document.getElementById('t-cf').textContent     = fmt(cfTokens)  + ' tokens';
+    document.getElementById('t-rag-sub').textContent = `${reps.toLocaleString()} reps × 20 queries × 30d × 35K`;
+    document.getElementById('t-cf-sub').textContent  = `${reps.toLocaleString()} reps × 20 queries × 30d × 1.5K`;
+    document.getElementById('t-saving').textContent  = saving + '% fewer tokens consumed';
+    document.getElementById('b-cf').style.width      = ratio + '%';
+
+    document.getElementById('fc-cost').textContent = fmtDollar(flexCost);
+    document.getElementById('fc-sub').textContent  = `20 credits × $0.10 × ${fmt(totalActions)} monthly actions`;
+  }
+</script>
+</body>
+</html>
