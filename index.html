@@ -616,6 +616,12 @@
           </div>
         </div>
 
+        <!-- Illustrative-vs-official disclosure badge -->
+        <div class="inline-flex items-start gap-2 bg-blue-50 border border-blue-200 rounded-xl px-4 py-2.5 text-[13px] font-bold text-sf mb-4">
+          <span class="flex-shrink-0">ℹ️</span>
+          <span>Token figures are an illustrative model, not vendor-published data. Flex Credit pricing below IS official Salesforce rate-card pricing.</span>
+        </div>
+
         <!-- 4-Card Integrated Formula Breakdown Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
@@ -648,6 +654,7 @@
             <div class="text-[32px] font-black text-sf leading-none" id="mb-cf-cost">$3,300</div>
             <div class="text-[11px] text-slate-400 mt-1">/ Month</div>
             <div class="text-[11px] text-slate-400 mt-2 italic">Fixed rate: 20 Flex Credits ($0.10) per executed skill call.</div>
+            <div class="text-[11px] text-slate-400 mt-1 italic">Assumes each action stays under the 10,000-token-per-action ceiling.</div>
           </div>
 
           <!-- Card C: Copilot RAW RAG Tokens -->
@@ -662,7 +669,7 @@
             </div>
             <div class="text-[32px] font-black text-red-600 leading-none" id="mb-cop-tokens">1.2T</div>
             <div class="text-[11px] text-slate-400 mt-1">Tokens / Month</div>
-            <div class="text-[11px] text-slate-400 mt-2 italic">Context-stuffing dumps raw database files into the M365 context window.</div>
+            <div class="text-[11px] text-slate-400 mt-2 italic">Illustrative architecture model based on typical RAG context-stuffing patterns — not a published Microsoft benchmark.</div>
           </div>
 
           <!-- Card D: Claudeforce MCP Tokens -->
@@ -677,7 +684,7 @@
             </div>
             <div class="text-[32px] font-black text-green-700 leading-none" id="mb-mcp-tokens">49.5M</div>
             <div class="text-[11px] text-slate-400 mt-1">Tokens / Month</div>
-            <div class="text-[11px] text-slate-400 mt-2 italic">Prebuilt MCP skill contracts fetch only exact parameters (~95.7% savings).</div>
+            <div class="text-[11px] text-slate-400 mt-2 italic">Illustrative architecture model based on typical MCP tool-calling patterns — not a published Anthropic/Salesforce benchmark.</div>
           </div>
 
         </div>
@@ -748,9 +755,10 @@
         <div class="obj-body"><div class="px-5 pb-5">
           <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
             <div class="text-[10px] font-black text-sf uppercase tracking-widest mb-2">30-Sec AE Script</div>
-            <p class="text-[13px] text-slate-700 leading-relaxed">Copilot is great for drafting emails in Word, but it <strong>lacks CRM ontology</strong>. It pulls flat data from Salesforce, breaking permissions and forcing context-stuffing. Active Copilot usage on CRM tasks drops below 10% due to slow response times.</p>
+            <p class="text-[13px] text-slate-700 leading-relaxed">That $30 is the add-on only — the real cost is <strong>$42–$90/user/month all-in (Microsoft's $30 add-on + required base license)</strong>. And Copilot still <strong>lacks CRM ontology</strong>: it pulls flat data from Salesforce, breaking permissions and forcing context-stuffing. Active Copilot usage on CRM tasks drops below 10% due to slow response times.</p>
+            <p class="text-[11px] text-slate-400 mt-2 italic">Microsoft 365 Copilot is priced as an add-on requiring a qualifying base plan; range reflects Business Standard through E5.</p>
           </div>
-          <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Fixed $0.10/action vs. unpredictable token pools</div>
+          <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide"><i data-lucide="target" class="w-3.5 h-3.5 text-sf"></i> CIO Hook: Fixed $0.10/action vs. $42–$90/user/mo all-in Copilot</div>
         </div></div>
       </div>
 
@@ -871,6 +879,8 @@
         <a href="https://www.salesforce.com/ap/news/press-releases/2026/08/27/ph-salesforce-and-anthropic-announce-claudeforce-the-1-ai-meets-the-1-ai-crm/" target="_blank" class="inline-flex items-center gap-2 text-[13px] font-bold text-sf bg-blue-50 border border-blue-200 px-4 py-2 rounded-lg hover:bg-blue-100 transition-all no-underline">Official Press Release <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>
         <a href="https://www.salesforceben.com/salesforce-and-anthropic-announce-claudeforce-in-q2-27-earnings/" target="_blank" class="inline-flex items-center gap-2 text-[13px] font-bold text-slate-600 bg-white border border-slate-200 px-4 py-2 rounded-lg hover:border-sf hover:text-sf transition-all no-underline">Salesforce Ben Analysis <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>
         <a href="https://triggerhours.com/claudeforce-salesforce-anthropic-partnership/" target="_blank" class="inline-flex items-center gap-2 text-[13px] font-bold text-slate-600 bg-white border border-slate-200 px-4 py-2 rounded-lg hover:border-sf hover:text-sf transition-all no-underline">Architecture Deep Dive <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>
+        <a href="https://www.salesforce.com/agentforce/pricing/" target="_blank" class="inline-flex items-center gap-2 text-[13px] font-bold text-slate-600 bg-white border border-slate-200 px-4 py-2 rounded-lg hover:border-sf hover:text-sf transition-all no-underline">Official Salesforce Agentforce Pricing <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>
+        <a href="https://www.microsoft.com/en-us/microsoft-365-copilot/pricing" target="_blank" class="inline-flex items-center gap-2 text-[13px] font-bold text-slate-600 bg-white border border-slate-200 px-4 py-2 rounded-lg hover:border-sf hover:text-sf transition-all no-underline">Microsoft 365 Copilot Pricing <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>
       </div>
     </div>
 
@@ -978,6 +988,13 @@
           <div>
             <div class="text-[13px] font-bold text-slate-900">Build pipeline forecast + send exec summary + flag 3 at-risk deals</div>
             <div class="text-[11.5px] text-slate-500">3 discrete outputs = 3 Actions = $0.30</div>
+          </div>
+        </div>
+        <div class="flex gap-3 items-start bg-amber-50 border border-amber-200 rounded-xl p-3.5">
+          <span class="text-amber-600 font-black text-[13px] flex-shrink-0">→</span>
+          <div>
+            <div class="text-[13px] font-bold text-slate-900">The 10,000-token-per-action ceiling</div>
+            <div class="text-[11.5px] text-slate-500">Each action includes up to 10,000 tokens. If a task needs more (e.g., a very large account history pull), it counts as multiple actions — e.g., 20,001 tokens = 3 actions = $0.30.</div>
           </div>
         </div>
       </div>
