@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sources &amp; Methodology: Flex Credit and Token Efficiency Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-slate-800">
+  <div class="max-w-3xl mx-auto px-6 py-12 leading-relaxed">
+
+    <a href="index.html" class="text-sm text-slate-500 underline hover:text-slate-700">&larr; Back to Battlecard</a>
+
+    <h1 class="text-2xl font-bold text-slate-900 mt-8 mb-6">Sources &amp; Methodology: Flex Credit and Token Efficiency Calculator</h1>
+
+    <p class="mb-8">This page discloses the sources, assumptions, and methodology behind the cost and efficiency figures shown in the interactive calculator. This tool is intended for illustrative and educational purposes to support internal sales conversations. It is not a quote, guarantee, or binding cost estimate for any customer engagement. Actual costs vary based on account-specific configuration, usage patterns, contract terms, and pricing changes by either vendor.</p>
+
+    <hr class="border-slate-200 my-8"/>
+
+    <h2 class="text-lg font-bold text-slate-900 mb-3">1. Salesforce Flex Credit Pricing (Officially Sourced)</h2>
+    <p class="mb-3">The following figures are taken directly from Salesforce's official, published rate card as of September 22, 2026 and are not estimates:</p>
+    <ul class="list-disc pl-6 mb-4 space-y-1.5">
+      <li>$500 USD per 100,000 Flex Credits ($0.005 per credit)</li>
+      <li>Standard Agentforce action = 20 Flex Credits = $0.10 per action</li>
+      <li>Voice Agentforce action = 30 Flex Credits = $0.15 per action</li>
+      <li>Each action includes processing of up to 10,000 tokens. Actions requiring more tokens are billed as multiple actions (e.g., 20,001 tokens = 3 actions = $0.30).</li>
+    </ul>
+    <p class="text-[13px] font-mono text-slate-600 mb-4 break-words">Source: Salesforce Agentforce Pricing, https://www.salesforce.com/agentforce/pricing/ — Salesforce Help: Agentforce Pricing, https://help.salesforce.com/s/articleView?id=004811240&amp;language=en_US&amp;type=1</p>
+    <p class="mb-8 italic text-slate-600">Salesforce's rate card states pricing, tiers, and multipliers may be updated at any time. Confirm current rates with your Salesforce Account Executive before presenting to a customer.</p>
+
+    <hr class="border-slate-200 my-8"/>
+
+    <h2 class="text-lg font-bold text-slate-900 mb-3">2. Microsoft 365 Copilot &amp; Copilot Studio Pricing (Officially Sourced)</h2>
+    <p class="mb-3">The following figures are taken from Microsoft's official published pricing pages as of September 22, 2026:</p>
+    <ul class="list-disc pl-6 mb-4 space-y-1.5">
+      <li>Microsoft 365 Copilot Enterprise add-on: $30 USD per user per month, billed annually. This is an add-on price and REQUIRES a qualifying Microsoft 365 base license (Business Standard, Business Premium, E3, or E5). All-in cost to the customer ranges from approximately $42 to $90 per user per month depending on base license tier.</li>
+      <li>Copilot Studio: $200 USD per month per 25,000 Copilot Credits (prepaid), or $0.01 per credit pay-as-you-go.</li>
+      <li><strong>IMPORTANT CAVEAT:</strong> Copilot Studio credit consumption per interaction is NOT fixed. Per Microsoft's own documentation, a single interaction can range from 1 credit (a simple scripted answer) to 200+ credits (a reasoning-model or agent-action response). The $200/25,000-credit rate represents a pricing floor, not a typical per-query cost.</li>
+    </ul>
+    <p class="text-[13px] font-mono text-slate-600 mb-4 break-words">Source: Microsoft 365 Copilot Pricing, https://www.microsoft.com/en-us/microsoft-365-copilot/pricing — Microsoft Copilot Studio Pricing, https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/copilot-studio — Microsoft Learn: Copilot Studio Billing Rates, https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management</p>
+    <p class="mb-8 italic text-slate-600">Microsoft pricing and packaging are subject to change without notice. Confirm current pricing directly with Microsoft or the customer's Microsoft account team before presenting to a customer.</p>
+
+    <hr class="border-slate-200 my-8"/>
+
+    <h2 class="text-lg font-bold text-slate-900 mb-3">3. Token Consumption Estimates (Illustrative Model — NOT a Vendor-Published Figure)</h2>
+    <p class="text-base font-bold text-slate-900 mb-4">&#9888; THE FOLLOWING FIGURES ARE NOT OFFICIAL VENDOR DATA.</p>
+    <p class="mb-3">The calculator illustrates a comparison between two architectural approaches to answering a CRM query: (1) a generic AI assistant retrieving raw, unstructured records and dumping them into a model's context window ("context stuffing" or naive RAG), estimated at approximately 35,000 tokens per query; versus (2) a schema-aware tool-calling approach using prebuilt, structured skill contracts that fetch only required parameters, estimated at approximately 1,500 tokens per query.</p>
+    <p class="mb-3">Neither Microsoft nor Salesforce nor Anthropic has published an official average token count per CRM query for their respective products. These figures are internal estimates built by our team to illustrate the architectural difference between context-stuffing and structured tool-calling. They should be presented to customers as an illustrative model of how these architectures typically behave — not as a quoted statistic, vendor benchmark, or guaranteed outcome.</p>
+    <p class="mb-8">Actual token consumption for any specific query depends on the complexity of the request, the size of the underlying data, the specific implementation, and configuration choices made by the customer's IT team.</p>
+
+    <hr class="border-slate-200 my-8"/>
+
+    <h2 class="text-lg font-bold text-slate-900 mb-3">4. General Disclaimer</h2>
+    <p class="mb-8">This calculator and its underlying figures are provided for internal sales enablement and illustrative discussion purposes only. They do not constitute an offer, quote, contractual commitment, or guarantee of cost, performance, or savings for any customer. Pricing for both Salesforce and Microsoft products is subject to change and varies by contract, region, edition, and negotiated terms. Sellers should direct customers to their official Salesforce and Microsoft account teams for binding pricing and should not represent any figure on this page as guaranteed savings.</p>
+
+    <hr class="border-slate-200 my-8"/>
+
+    <p class="text-sm text-slate-500">Last reviewed: September 22, 2026. For questions about these figures, contact [Internal Team/Contact Placeholder].</p>
+
+  </div>
+</body>
+</html>
